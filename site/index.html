@@ -145,6 +145,40 @@
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       font-size: 0.9rem;
     }
+    .section-title {
+      margin: 42px 0 12px;
+      font-size: 1.2rem;
+      letter-spacing: 0.01em;
+    }
+    .list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .snapshot {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .metric .k {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .metric .v {
+      margin-top: 6px;
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
   </style>
 </head>
 <body>
@@ -183,6 +217,37 @@
         <p>Incubation area for experiments and candidate features before they move into stable surfaces.</p>
       </article>
     </section>
+
+    <h2 class="section-title">Highlights from Docs</h2>
+    <ul class="list">
+      <li>Hybrid migration strategy: automated extraction plus curated template authoring for high-impact parent styles.</li>
+      <li>Strict oracle-based fidelity tracking with scenario fixtures and style-level compatibility reporting.</li>
+      <li>Type-safe schema and explicit style behavior principles to keep processing deterministic and maintainable.</li>
+    </ul>
+
+    <h2 class="section-title">Compatibility Snapshot</h2>
+    <div class="snapshot" aria-label="Compatibility Snapshot">
+      <div class="metric">
+        <div class="k">Core Styles</div>
+        <div class="v">141</div>
+      </div>
+      <div class="metric">
+        <div class="k">Coverage</div>
+        <div class="v">74.22%</div>
+      </div>
+      <div class="metric">
+        <div class="k">Citations</div>
+        <div class="v">95.9%</div>
+      </div>
+      <div class="metric">
+        <div class="k">Quality (SQI)</div>
+        <div class="v">67.6%</div>
+      </div>
+    </div>
+    <div class="cta-row" style="margin-top:14px">
+      <a class="btn secondary" href="https://docs.citum.org/compat.html">Full Compatibility Report</a>
+      <a class="btn secondary" href="https://docs.citum.org/TIER_STATUS.md">Tier Status</a>
+    </div>
   </main>
 </body>
 </html>
