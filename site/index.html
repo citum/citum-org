@@ -4,188 +4,276 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Citum</title>
-  <meta name="description" content="Citum is the modern, declarative citation platform built on Rust and YAML.">
+  <meta name="description" content="Citum helps scholars produce submission-ready citations with less formatting churn.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      color-scheme: light;
-      --bg: #f7f8fb;
-      --ink: #0f172a;
-      --muted: #475569;
-      --line: #dbeafe;
-      --panel: #ffffff;
-      --brand: #0369a1;
-      --brand-2: #0ea5e9;
-      --accent: #0f766e;
-      --ring: rgba(3, 105, 161, 0.24);
+      --bg: #f6f4ef;
+      --paper: #fffdf8;
+      --ink: #1b1a18;
+      --muted: #58544e;
+      --line: #d8d1c4;
+      --brand: #b4472a;
+      --brand-dark: #8f2f16;
+      --soft: #f3e5d7;
+      --soft-2: #eceff5;
+      --ring: rgba(180, 71, 42, 0.22);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      font-family: "Work Sans", "Segoe UI", sans-serif;
       color: var(--ink);
       background:
-        radial-gradient(900px 420px at -6% -10%, #e2e8f0 0%, transparent 62%),
-        radial-gradient(840px 380px at 105% -10%, #bae6fd 0%, transparent 64%),
+        radial-gradient(900px 460px at 0% -8%, #ece6db 0%, transparent 64%),
+        radial-gradient(820px 420px at 102% -15%, #e7ebf4 0%, transparent 62%),
         var(--bg);
       min-height: 100vh;
     }
     .wrap {
-      max-width: 1040px;
+      width: min(1100px, calc(100% - 2.4rem));
       margin: 0 auto;
-      padding: 0 20px;
     }
-    header {
+    .top {
       position: sticky;
       top: 0;
-      z-index: 10;
-      background: rgba(247, 248, 251, 0.9);
+      z-index: 12;
       backdrop-filter: blur(8px);
+      background: rgba(246, 244, 239, 0.88);
       border-bottom: 1px solid var(--line);
     }
     .nav {
-      min-height: 68px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
+      padding: 8px 0;
     }
     .brand {
-      text-decoration: none;
-      color: var(--ink);
-      font-weight: 800;
+      font-weight: 700;
+      font-size: 1.03rem;
       letter-spacing: 0.02em;
-      font-size: 1.04rem;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
     }
-    nav a {
+    .links {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .links a {
       text-decoration: none;
       color: var(--muted);
       font-weight: 600;
-      padding: 6px 10px;
-      border-radius: 10px;
+      font-size: 0.92rem;
+      padding: 7px 11px;
+      border-radius: 999px;
+      white-space: nowrap;
     }
-    nav a[aria-current="page"],
-    nav a:hover {
-      background: #e0f2fe;
+    .links a[aria-current="page"],
+    .links a:hover {
       color: var(--ink);
+      background: #efe8dc;
     }
     main {
-      padding: 58px 0 76px;
+      padding: 54px 0 76px;
+    }
+    .hero-kicker {
+      display: inline-block;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brand-dark);
+      background: var(--soft);
+      border: 1px solid #e8d6c0;
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-weight: 700;
     }
     h1 {
-      margin: 0;
-      font-size: clamp(2.1rem, 5.8vw, 3.6rem);
-      line-height: 1.06;
+      margin: 16px 0 0;
+      font-family: "Newsreader", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 6.5vw, 4.2rem);
+      line-height: 1.02;
       letter-spacing: -0.02em;
+      max-width: 15ch;
     }
     .lead {
-      margin: 18px 0 0;
-      max-width: 72ch;
+      margin: 16px 0 0;
+      font-size: 1.08rem;
       color: var(--muted);
       line-height: 1.65;
-      font-size: 1.08rem;
+      max-width: 66ch;
     }
     .cta-row {
-      margin-top: 28px;
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
     }
     .btn {
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      text-decoration: none;
       font-weight: 700;
-      border-radius: 11px;
-      padding: 11px 16px;
+      border-radius: 12px;
+      padding: 11px 15px;
       border: 1px solid transparent;
+      font-size: 0.94rem;
     }
     .btn.primary {
       color: #fff;
-      background: linear-gradient(130deg, var(--brand), var(--brand-2));
-      box-shadow: 0 10px 22px var(--ring);
+      background: linear-gradient(130deg, var(--brand), var(--brand-dark));
+      box-shadow: 0 10px 24px var(--ring);
     }
     .btn.secondary {
       color: var(--ink);
-      background: var(--panel);
+      background: var(--paper);
       border-color: var(--line);
     }
-    .grid {
-      margin-top: 38px;
+    .section {
+      margin-top: 44px;
+    }
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: 1.35rem;
+      letter-spacing: 0.01em;
+    }
+    .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 14px;
     }
     .card {
-      background: var(--panel);
+      background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 18px;
-      box-shadow: 0 8px 20px rgba(2, 6, 23, 0.04);
+      box-shadow: 0 8px 22px rgba(26, 24, 22, 0.05);
     }
-    .card h2 {
+    .card h3 {
       margin: 0 0 8px;
       font-size: 1.02rem;
     }
     .card p {
       margin: 0;
       color: var(--muted);
-      font-size: 0.96rem;
       line-height: 1.58;
+      font-size: 0.95rem;
     }
-    .install {
-      margin-top: 34px;
-      background: #0f172a;
-      color: #e2e8f0;
-      border-radius: 12px;
-      border: 1px solid #1e293b;
-      padding: 14px 16px;
-      overflow-x: auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.9rem;
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      counter-reset: item;
     }
-    .section-title {
-      margin: 42px 0 12px;
-      font-size: 1.2rem;
-      letter-spacing: 0.01em;
+    .step {
+      position: relative;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 16px 16px 52px;
     }
-    .list {
+    .step::before {
+      counter-increment: item;
+      content: counter(item);
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      background: #eee5d7;
+      color: var(--brand-dark);
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      font-size: 0.86rem;
+    }
+    .step h3 {
+      margin: 0 0 7px;
+      font-size: 0.98rem;
+    }
+    .step p {
       margin: 0;
-      padding-left: 18px;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .proof {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 14px;
+    }
+    .panel {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+    }
+    .panel p {
+      margin: 0;
       color: var(--muted);
       line-height: 1.6;
+      font-size: 0.95rem;
     }
-    .snapshot {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
+    .panel + .panel {
+      background: linear-gradient(180deg, var(--paper), #f6f8fc);
     }
-    .metric {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 14px;
+    .final {
+      margin-top: 44px;
+      background: linear-gradient(125deg, #2d2621, #46352b);
+      color: #f9f3eb;
+      border-radius: 18px;
+      padding: 24px;
+      border: 1px solid #5f4c3f;
     }
-    .metric .k {
-      color: var(--muted);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    .final h2 {
+      margin: 0;
+      font-family: "Newsreader", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      line-height: 1.12;
     }
-    .metric .v {
-      margin-top: 6px;
-      font-size: 1.25rem;
-      font-weight: 800;
+    .final p {
+      margin: 10px 0 0;
+      color: #e9ded1;
+      line-height: 1.62;
+      max-width: 60ch;
+    }
+    .final .cta-row {
+      margin-top: 16px;
+    }
+    .final .btn.secondary {
+      background: transparent;
+      border-color: #8a7262;
+      color: #f9f3eb;
+    }
+    footer {
+      margin-top: 28px;
+      color: #7f776e;
+      font-size: 0.82rem;
+    }
+    @media (max-width: 860px) {
+      .proof {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
+  <header class="top">
     <div class="wrap nav">
       <a class="brand" href="https://citum.org">Citum</a>
-      <nav aria-label="Global">
+      <nav class="links" aria-label="Global">
         <a href="https://citum.org" aria-current="page">Home</a>
         <a href="https://docs.citum.org">Docs</a>
         <a href="https://hub.citum.org">Hub</a>
@@ -193,61 +281,102 @@
       </nav>
     </div>
   </header>
+
   <main class="wrap">
-    <h1>Spend less time fixing citations</h1>
-    <p class="lead">Citum helps you keep writing while citation formatting stays under control. Move across journal styles with less manual cleanup and more confidence that output is correct.</p>
+    <span class="hero-kicker">For busy scholars</span>
+    <h1>Citations that do not hijack your writing time</h1>
+    <p class="lead">Citum is built for people who need clean references under deadline pressure. You keep momentum in your draft, switch formatting targets with less friction, and get fewer submission-day surprises.</p>
     <div class="cta-row">
-      <a class="btn primary" href="https://docs.citum.org">Read Docs</a>
-      <a class="btn secondary" href="https://github.com/citum/citum-core">View Source</a>
+      <a class="btn primary" href="https://hub.citum.org">Try Hub</a>
+      <a class="btn secondary" href="https://docs.citum.org/examples.html">See Real Examples</a>
+      <a class="btn secondary" href="https://docs.citum.org/compat.html">Check Current Coverage</a>
     </div>
 
-    <div class="install">cargo install --git https://github.com/citum/citum-core --bin citum</div>
-
-    <section class="grid" aria-label="Surfaces">
-      <article class="card">
-        <h2>Docs</h2>
-        <p>Quick start guides, practical examples, and compatibility reports when you need details.</p>
-      </article>
-      <article class="card">
-        <h2>Hub</h2>
-        <p>Find, compare, and edit styles in one place. Built for real-world writing workflows.</p>
-      </article>
-      <article class="card">
-        <h2>Labs</h2>
-        <p>Preview what is coming next and try new ideas before they are part of stable releases.</p>
-      </article>
+    <section class="section" aria-label="Why people switch">
+      <h2>Why people switch</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>Less last-minute reformatting</h3>
+          <p>When journals or supervisors ask for style changes, you spend less time manually reworking every line of the bibliography.</p>
+        </article>
+        <article class="card">
+          <h3>Better handling of real-world edge cases</h3>
+          <p>Complex citations, multilingual sources, and grouped bibliographies are treated as normal needs, not awkward exceptions.</p>
+        </article>
+        <article class="card">
+          <h3>Clearer confidence before submission</h3>
+          <p>You can see what is working well now and what is still improving, instead of guessing if a style will hold up.</p>
+        </article>
+      </div>
     </section>
 
-    <h2 class="section-title">Why busy scholars care</h2>
-    <ul class="list">
-      <li>Write first, format later: switch style targets without reworking every citation by hand.</li>
-      <li>Fewer submission surprises: compatibility checks make style output more predictable before deadline day.</li>
-      <li>Clear status, not guesswork: you can see what is solid today and what is still improving.</li>
-    </ul>
+    <section class="section" aria-label="How it fits your workflow">
+      <h2>How it fits your workflow</h2>
+      <div class="steps">
+        <article class="step">
+          <h3>Write first</h3>
+          <p>Focus on argument and evidence. Do not break flow to polish citation punctuation mid-draft.</p>
+        </article>
+        <article class="step">
+          <h3>Adjust style quickly</h3>
+          <p>Move to a new target style with less cleanup churn when requirements change.</p>
+        </article>
+        <article class="step">
+          <h3>Submit with fewer surprises</h3>
+          <p>Use examples and compatibility status to sanity-check output before the deadline crunch.</p>
+        </article>
+      </div>
+    </section>
 
-    <h2 class="section-title">What this means in practice</h2>
-    <div class="snapshot" aria-label="Compatibility Snapshot">
-      <div class="metric">
-        <div class="k">Styles Tracked</div>
-        <div class="v">141</div>
+    <section class="section" aria-label="Common pressure points">
+      <h2>Common pressure points we designed for</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3>Journal resubmission pivots</h3>
+          <p>You got a revise-and-resubmit with a different style requirement and zero extra time.</p>
+        </article>
+        <article class="card">
+          <h3>Mixed-language bibliographies</h3>
+          <p>Your references include multiple languages, scripts, or transliteration demands.</p>
+        </article>
+        <article class="card">
+          <h3>Primary vs secondary source structure</h3>
+          <p>Your bibliography needs meaningful sections, not just one monolithic alphabetized block.</p>
+        </article>
       </div>
-      <div class="metric">
-        <div class="k">Portfolio Coverage</div>
-        <div class="v">74.22%</div>
+    </section>
+
+    <section class="section" aria-label="Proof and details">
+      <h2>Proof when you need it, details when you want them</h2>
+      <div class="proof">
+        <article class="panel">
+          <p>Homepage messaging stays practical. Full technical detail, compatibility reports, and implementation notes live in docs where they belong.</p>
+          <div class="cta-row">
+            <a class="btn secondary" href="https://docs.citum.org/compat.html">Compatibility Report</a>
+            <a class="btn secondary" href="https://docs.citum.org/TIER_STATUS.md">Status Tracker</a>
+          </div>
+        </article>
+        <article class="panel">
+          <p>Want hands-on context? Browse concrete examples of advanced citations, grouped bibliographies, multilingual output, and output-format targets.</p>
+          <div class="cta-row">
+            <a class="btn secondary" href="https://docs.citum.org/examples.html">Examples</a>
+          </div>
+        </article>
       </div>
-      <div class="metric">
-        <div class="k">Citation Match Rate</div>
-        <div class="v">95.9%</div>
+    </section>
+
+    <section class="final" aria-label="Final call to action">
+      <h2>Write more. Fight formatting less.</h2>
+      <p>Start with the Hub for hands-on workflow, or open docs for concrete examples and current compatibility.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="https://hub.citum.org">Open Hub</a>
+        <a class="btn secondary" href="https://docs.citum.org">Open Docs</a>
       </div>
-      <div class="metric">
-        <div class="k">Quality Progress</div>
-        <div class="v">67.6%</div>
-      </div>
-    </div>
-    <div class="cta-row" style="margin-top:14px">
-      <a class="btn secondary" href="https://docs.citum.org/compat.html">Full Compatibility Report</a>
-      <a class="btn secondary" href="https://docs.citum.org/TIER_STATUS.md">Tier Status</a>
-    </div>
+    </section>
+
+    <footer>
+      Citum project surfaces: Home, Docs, Hub, Labs.
+    </footer>
   </main>
 </body>
 </html>
