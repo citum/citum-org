@@ -4,379 +4,328 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Citum</title>
-  <meta name="description" content="Citum helps scholars produce submission-ready citations with less formatting churn.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f6f4ef;
-      --paper: #fffdf8;
-      --ink: #1b1a18;
-      --muted: #58544e;
-      --line: #d8d1c4;
-      --brand: #b4472a;
-      --brand-dark: #8f2f16;
-      --soft: #f3e5d7;
-      --soft-2: #eceff5;
-      --ring: rgba(180, 71, 42, 0.22);
+  <meta name="description" content="Citum formats citations accurately across hundreds of academic styles, so you spend less time fixing output and more time writing.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style type="text/tailwindcss">
+    /* ─────────────────────────────────────────────────────────────
+       THEME A — Warm terracotta (active)
+       Newsreader serif headings · Work Sans body
+    ───────────────────────────────────────────────────────────── */
+    @theme {
+      --color-bg:        #f6f4ef;
+      --color-paper:     #fffdf8;
+      --color-ink:       #1b1a18;
+      --color-muted:     #58544e;
+      --color-line:      #d8d1c4;
+      --color-brand:     #b4472a;
+      --color-brand-dk:  #8f2f16;
+      --color-soft:      #f3e5d7;
+      --color-soft2:     #eceff5;
+      --color-ring:      rgba(180,71,42,0.22);
+      --font-sans:       "Work Sans", "Segoe UI", sans-serif;
+      --font-serif:      "Newsreader", Georgia, serif;
     }
-    * { box-sizing: border-box; }
+
+    /* ─────────────────────────────────────────────────────────────
+       THEME B — Cool teal (matches hub/labs) — swap: comment A,
+       uncomment B, reload.
+    ───────────────────────────────────────────────────────────── */
+    /*
+    @theme {
+      --color-bg:        #f0f4f4;
+      --color-paper:     #ffffff;
+      --color-ink:       #0f172a;
+      --color-muted:     #475569;
+      --color-line:      #cbd5e1;
+      --color-brand:     #0f766e;
+      --color-brand-dk:  #0d5f58;
+      --color-soft:      #ccfbf1;
+      --color-soft2:     #e0f2fe;
+      --color-ring:      rgba(15,118,110,0.22);
+      --font-sans:       "Lexend", "Inter", system-ui, sans-serif;
+      --font-serif:      "Lexend", system-ui, sans-serif;
+    }
+    */
+
+    @import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Work+Sans:wght@400;500;600;700&display=swap");
+
     body {
-      margin: 0;
-      font-family: "Work Sans", "Segoe UI", sans-serif;
-      color: var(--ink);
-      background:
+      font-family: var(--font-sans);
+      background-color: var(--color-bg);
+      color: var(--color-ink);
+      background-image:
         radial-gradient(900px 460px at 0% -8%, #ece6db 0%, transparent 64%),
-        radial-gradient(820px 420px at 102% -15%, #e7ebf4 0%, transparent 62%),
-        var(--bg);
-      min-height: 100vh;
+        radial-gradient(820px 420px at 102% -15%, #e7ebf4 0%, transparent 62%);
     }
-    .wrap {
-      width: min(1100px, calc(100% - 2.4rem));
-      margin: 0 auto;
-    }
-    .top {
-      position: sticky;
-      top: 0;
-      z-index: 12;
-      backdrop-filter: blur(8px);
-      background: rgba(246, 244, 239, 0.88);
-      border-bottom: 1px solid var(--line);
-    }
-    .nav {
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-      padding: 8px 0;
-    }
-    .brand {
-      font-weight: 700;
-      font-size: 1.03rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .links {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .links a {
-      text-decoration: none;
-      color: var(--muted);
+
+    h1, .serif { font-family: var(--font-serif); }
+
+    .nav-link {
+      color: var(--color-muted);
       font-weight: 600;
       font-size: 0.92rem;
       padding: 7px 11px;
-      border-radius: 999px;
+      border-radius: 9999px;
+      text-decoration: none;
       white-space: nowrap;
     }
-    .links a[aria-current="page"],
-    .links a:hover {
-      color: var(--ink);
+    .nav-link:hover, .nav-link[aria-current="page"] {
+      color: var(--color-ink);
       background: #efe8dc;
     }
-    main {
-      padding: 54px 0 76px;
+    .soon {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: var(--color-soft);
+      color: var(--color-brand-dk);
+      border: 1px solid var(--color-line);
+      border-radius: 9999px;
+      padding: 1px 6px;
+      vertical-align: middle;
+      margin-left: 3px;
     }
-    .hero-kicker {
+
+    .kicker {
       display: inline-block;
       font-size: 0.78rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--brand-dark);
-      background: var(--soft);
+      color: var(--color-brand-dk);
+      background: var(--color-soft);
       border: 1px solid #e8d6c0;
-      border-radius: 999px;
+      border-radius: 9999px;
       padding: 7px 12px;
       font-weight: 700;
     }
-    h1 {
-      margin: 16px 0 0;
-      font-family: "Newsreader", Georgia, serif;
-      font-weight: 700;
-      font-size: clamp(2.2rem, 6.5vw, 4.2rem);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      max-width: 15ch;
-    }
-    .lead {
-      margin: 16px 0 0;
-      font-size: 1.08rem;
-      color: var(--muted);
-      line-height: 1.65;
-      max-width: 66ch;
-    }
-    .cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
-    }
-    .btn {
-      text-decoration: none;
+
+    .btn-primary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
       border-radius: 12px;
-      padding: 11px 15px;
-      border: 1px solid transparent;
+      padding: 11px 18px;
       font-size: 0.94rem;
-    }
-    .btn.primary {
       color: #fff;
-      background: linear-gradient(130deg, var(--brand), var(--brand-dark));
-      box-shadow: 0 10px 24px var(--ring);
+      background: linear-gradient(130deg, var(--color-brand), var(--color-brand-dk));
+      box-shadow: 0 10px 24px var(--color-ring);
+      text-decoration: none;
     }
-    .btn.secondary {
-      color: var(--ink);
-      background: var(--paper);
-      border-color: var(--line);
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 11px 18px;
+      font-size: 0.94rem;
+      color: var(--color-ink);
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
+      text-decoration: none;
     }
-    .section {
-      margin-top: 44px;
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      border-radius: 12px;
+      padding: 11px 18px;
+      font-size: 0.94rem;
+      color: #f9f3eb;
+      background: transparent;
+      border: 1px solid #8a7262;
+      text-decoration: none;
     }
-    .section h2 {
-      margin: 0 0 12px;
-      font-size: 1.35rem;
-      letter-spacing: 0.01em;
-    }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 14px;
-    }
+
     .card {
-      background: var(--paper);
-      border: 1px solid var(--line);
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 16px;
-      padding: 18px;
-      box-shadow: 0 8px 22px rgba(26, 24, 22, 0.05);
+      padding: 20px;
+      box-shadow: 0 8px 22px rgba(26,24,22,0.05);
     }
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 1.02rem;
-    }
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.58;
-      font-size: 0.95rem;
-    }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 12px;
-      counter-reset: item;
-    }
+    .card p { color: var(--color-muted); }
+
     .step {
       position: relative;
-      background: var(--paper);
-      border: 1px solid var(--line);
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 16px;
-      padding: 16px 16px 16px 52px;
+      padding: 18px 18px 18px 56px;
     }
-    .step::before {
-      counter-increment: item;
-      content: counter(item);
+    .step-num {
       position: absolute;
-      left: 14px;
-      top: 14px;
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
+      left: 14px; top: 16px;
+      width: 28px; height: 28px;
+      border-radius: 9999px;
       background: #eee5d7;
-      color: var(--brand-dark);
+      color: var(--color-brand-dk);
       font-weight: 800;
+      font-size: 0.86rem;
       display: grid;
       place-items: center;
-      font-size: 0.86rem;
     }
-    .step h3 {
-      margin: 0 0 7px;
-      font-size: 0.98rem;
-    }
-    .step p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-    .proof {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 14px;
-    }
+    .step p { color: var(--color-muted); }
+
     .panel {
-      background: var(--paper);
-      border: 1px solid var(--line);
+      background: var(--color-paper);
+      border: 1px solid var(--color-line);
       border-radius: 16px;
-      padding: 18px;
+      padding: 22px;
     }
-    .panel p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
-      font-size: 0.95rem;
+    .panel p { color: var(--color-muted); }
+
+    .callout {
+      background: var(--color-soft);
+      border: 1px solid #e8d6c0;
+      border-radius: 16px;
+      padding: 22px 24px;
     }
-    .panel + .panel {
-      background: linear-gradient(180deg, var(--paper), #f6f8fc);
-    }
-    .final {
-      margin-top: 44px;
+
+    .dark-cta {
       background: linear-gradient(125deg, #2d2621, #46352b);
       color: #f9f3eb;
       border-radius: 18px;
-      padding: 24px;
+      padding: 28px;
       border: 1px solid #5f4c3f;
     }
-    .final h2 {
-      margin: 0;
-      font-family: "Newsreader", Georgia, serif;
-      font-weight: 700;
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      line-height: 1.12;
-    }
-    .final p {
-      margin: 10px 0 0;
-      color: #e9ded1;
-      line-height: 1.62;
-      max-width: 60ch;
-    }
-    .final .cta-row {
-      margin-top: 16px;
-    }
-    .final .btn.secondary {
-      background: transparent;
-      border-color: #8a7262;
-      color: #f9f3eb;
-    }
-    footer {
-      margin-top: 28px;
-      color: #7f776e;
-      font-size: 0.82rem;
-    }
-    @media (max-width: 860px) {
-      .proof {
-        grid-template-columns: 1fr;
-      }
-    }
+    .dark-cta p { color: #e9ded1; }
   </style>
 </head>
-<body>
-  <header class="top">
-    <div class="wrap nav">
-      <a class="brand" href="https://citum.org">Citum</a>
-      <nav class="links" aria-label="Global">
-        <a href="https://citum.org" aria-current="page">Home</a>
-        <a href="https://docs.citum.org">Docs</a>
-        <a href="https://hub.citum.org">Hub</a>
-        <a href="https://labs.citum.org">Labs</a>
+<body class="min-h-screen">
+
+  <!-- Nav -->
+  <header class="sticky top-0 z-10 backdrop-blur-sm border-b" style="background:rgba(246,244,239,0.88);border-color:var(--color-line)">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[70px]">
+      <a href="https://citum.org" class="font-bold text-[1.03rem] tracking-wide no-underline" style="color:var(--color-ink)">Citum</a>
+      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
+        <a class="nav-link" href="https://citum.org" aria-current="page">Home</a>
+        <a class="nav-link" href="https://docs.citum.org">Docs</a>
+        <a class="nav-link" href="https://hub.citum.org">Hub <span class="soon">soon</span></a>
+        <a class="nav-link" href="https://labs.citum.org">Labs <span class="soon">soon</span></a>
       </nav>
     </div>
   </header>
 
-  <main class="wrap">
-    <span class="hero-kicker">Beyond CSL 1.0</span>
-    <h1>Next-generation citation logic for a multilingual world</h1>
-    <p class="lead">Citum is built to solve the hardest problems in scholarly publishing. While CSL 1.0 transformed citation management, Citum moves further—providing native support for multi-script bibliographies, complex source grouping, and the precision required for high-stakes research.</p>
-    <div class="cta-row">
-      <a class="btn primary" href="https://hub.citum.org">Try Citum Hub</a>
-      <a class="btn secondary" href="https://docs.citum.org/examples.html">Advanced Examples</a>
-      <a class="btn secondary" href="https://docs.citum.org/compat.html">CSL Compatibility</a>
+  <main class="mx-auto max-w-[1100px] px-5 py-14 pb-20">
+
+    <!-- Hero -->
+    <span class="kicker">Citation formatting, done right</span>
+    <h1 class="serif mt-4 mb-0 font-bold leading-[1.02] tracking-tight" style="font-size:clamp(2.2rem,6.5vw,4.2rem);max-width:16ch">
+      Accurate styles.<br>Less correction.
+    </h1>
+    <p class="mt-4 text-[1.08rem] leading-relaxed max-w-[66ch]" style="color:var(--color-muted)">
+      Citation styles have a lot of rules. Citum applies them consistently — across hundreds of styles, across source types, across the formatting details that usually require a manual fix after export.
+    </p>
+    <div class="flex flex-wrap gap-3 mt-6">
+      <a class="btn-primary" href="https://docs.citum.org/compat.html">See compatibility report</a>
+      <a class="btn-secondary" href="https://docs.citum.org">Read the docs</a>
     </div>
 
-    <section class="section" aria-label="Beyond standard CSL">
-      <h2>Why Citum?</h2>
-      <div class="grid-3">
+    <!-- What it does -->
+    <section class="mt-12" aria-label="What Citum does">
+      <h2 class="text-[1.35rem] font-semibold mb-4 tracking-tight" style="color:var(--color-ink)">What it does</h2>
+      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
         <article class="card">
-          <h3>High-Performance Engine</h3>
-          <p>Built for speed and real-time reactive workflows. Citum is engineered to handle massive bibliographies and instant updates without lag.</p>
+          <h3 class="font-semibold text-[1rem] mb-2">Style-accurate output</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Hundreds of journal and institutional styles supported, each tested against a shared fixture set so edge cases get caught before your manuscript does.
+          </p>
         </article>
         <article class="card">
-          <h3>Advanced Date Support</h3>
-          <p>Full EDTF 2019 support—handle approximate dates, seasons, and complex ranges with the precision required for historical research.</p>
+          <h3 class="font-semibold text-[1rem] mb-2">Formatting edge cases handled</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Name disambiguation, ibid logic, delimiter variation by source type, date ranges — the details that require manual fixes in most tools are covered here by the style definition itself.
+          </p>
         </article>
         <article class="card">
-          <h3>Native Multilingualism</h3>
-          <p>Go beyond basic field mapping. Citum handles transliteration, translation, and multi-script requirements as core logic, not as after-the-fact hacks.</p>
+          <h3 class="font-semibold text-[1rem] mb-2">Works with sources you already have</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Accepts the same reference fields used by common reference managers. No re-entry required; Citum maps existing metadata to style output.
+          </p>
         </article>
       </div>
     </section>
 
-    <section class="section" aria-label="Solving CSL 1.0 pain points">
-      <h2>Beyond the limits of CSL 1.0</h2>
-      <div class="steps">
-        <article class="step">
-          <h3>Relational Modeling</h3>
-          <p>Model complex relationships between items, such as original works and their translations, reprints, or subsequent reviews.</p>
-        </article>
-        <article class="step">
-          <h3>Hierarchical Layouts</h3>
-          <p>Native support for splitting references into Primary, Secondary, and Archival sections without brittle workarounds.</p>
-        </article>
-        <article class="step">
-          <h3>Submission-grade precision</h3>
-          <p>Verify your output against rigorous edge-case tests designed for the most demanding journal and archival requirements.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" aria-label="Engineered for complexity">
-      <h2>Engineered for complexity</h2>
-      <div class="grid-3">
-        <article class="card">
-          <h3>Hierarchical Layouts</h3>
-          <p>Native support for splitting references into Primary, Secondary, and Archival sections without brittle workarounds.</p>
-        </article>
-        <article class="card">
-          <h3>Legal & Archive Materials</h3>
-          <p>Advanced support for primary sources and legal citations that often exceed the capabilities of standard implementations.</p>
-        </article>
-        <article class="card">
-          <h3>Extensible Logic</h3>
-          <p>A foundation built for Citum, ensuring your citation workflows are ready for the next decade of scholarly standards.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" aria-label="Proof and details">
-      <h2>Proof when you need it, details when you want them</h2>
-      <div class="proof">
+    <!-- See before you commit -->
+    <section class="mt-12" aria-label="Transparency and current state">
+      <h2 class="text-[1.35rem] font-semibold mb-4 tracking-tight" style="color:var(--color-ink)">See before you commit</h2>
+      <div class="grid gap-4" style="grid-template-columns:1.3fr 1fr">
         <article class="panel">
-          <p>The homepage stays practical. Full detail, compatibility reports, and implementation notes are available in docs when you need them.</p>
-          <div class="cta-row">
-            <a class="btn secondary" href="https://docs.citum.org/compat.html">Compatibility Report</a>
-            <a class="btn secondary" href="https://docs.citum.org/TIER_STATUS.md">Status Tracker</a>
+          <h3 class="font-semibold text-[1rem] mb-2">Compatibility report</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-4">
+            The compat report shows exactly which styles pass the full citation fixture — and which don't. No "supports X styles" without evidence.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <a class="btn-secondary" href="https://docs.citum.org/compat.html">Open report</a>
+            <a class="btn-secondary" href="https://docs.citum.org/TIER_STATUS.md">Status tracker</a>
           </div>
         </article>
-        <article class="panel">
-          <p>Need concrete context? Browse worked examples for advanced citations, grouped bibliographies, multilingual output, and output targets.</p>
-          <div class="cta-row">
-            <a class="btn secondary" href="https://docs.citum.org/examples.html">Examples</a>
+        <article class="panel" style="background:linear-gradient(180deg,var(--color-paper),#f6f8fc)">
+          <h3 class="font-semibold text-[1rem] mb-2">Worked examples</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-4">
+            Browse concrete output for books, journal articles, reports, and multi-author citations across different styles.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <a class="btn-secondary" href="https://docs.citum.org/examples.html">Examples</a>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="final" aria-label="Final call to action">
-      <h2>More writing time, less citation churn.</h2>
-      <p>Start with Hub for hands-on workflow, or open docs for examples and current compatibility status.</p>
-      <div class="cta-row">
-        <a class="btn primary" href="https://hub.citum.org">Open Hub</a>
-        <a class="btn secondary" href="https://docs.citum.org">Open Docs</a>
+    <!-- How it works -->
+    <section class="mt-12" aria-label="How citation processing works">
+      <h2 class="text-[1.35rem] font-semibold mb-4 tracking-tight" style="color:var(--color-ink)">How it works</h2>
+      <div class="grid gap-3" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));counter-reset:step">
+        <article class="step">
+          <span class="step-num">1</span>
+          <h3 class="font-semibold text-[0.98rem] mb-1">Bring your references</h3>
+          <p class="text-[0.92rem] leading-relaxed">Pass in your references as structured data — the same fields used by common reference managers.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">2</span>
+          <h3 class="font-semibold text-[0.98rem] mb-1">Pick a style</h3>
+          <p class="text-[0.92rem] leading-relaxed">Choose from the built-in style library or load a custom Citum YAML style. Styles declare behaviour; the engine applies it.</p>
+        </article>
+        <article class="step">
+          <span class="step-num">3</span>
+          <h3 class="font-semibold text-[0.98rem] mb-1">Get formatted output</h3>
+          <p class="text-[0.92rem] leading-relaxed">Citations and bibliography rendered according to style rules — ready to copy into your document or manuscript.</p>
+        </article>
       </div>
     </section>
 
-    <footer>
-      Citum project surfaces: Home, Docs, Hub, Labs.
+    <!-- Hub / Labs callout -->
+    <section class="mt-12" aria-label="Interactive tooling — coming soon">
+      <div class="callout">
+        <h3 class="font-semibold text-[1rem] mb-1" style="color:var(--color-ink)">Interactive tooling in development <span class="soon">coming soon</span></h3>
+        <p class="text-[0.95rem] leading-relaxed max-w-[70ch]" style="color:var(--color-muted)">
+          Hub will provide a browser-based interface for testing styles interactively and previewing output. Labs will offer experimental features before they land in the main engine. Both are in active development — sign up for updates on GitHub.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          <a class="btn-secondary" href="https://github.com/citum">Follow on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="dark-cta mt-12" aria-label="Call to action">
+      <h2 class="serif font-bold leading-tight" style="font-size:clamp(1.6rem,4vw,2.2rem)">Less time fixing citations.</h2>
+      <p class="mt-2 leading-relaxed max-w-[56ch]">Start with the docs and the compatibility report to see where Citum stands for your target styles.</p>
+      <div class="flex flex-wrap gap-3 mt-5">
+        <a class="btn-primary" href="https://docs.citum.org">Open Docs</a>
+        <a class="btn-ghost" href="https://docs.citum.org/compat.html">Compatibility Report</a>
+      </div>
+    </section>
+
+    <footer class="mt-8 text-[0.82rem]" style="color:#7f776e">
+      Citum — Home &middot; <a href="https://docs.citum.org" style="color:inherit">Docs</a> &middot; Hub (soon) &middot; Labs (soon)
     </footer>
+
   </main>
+
 </body>
 </html>
