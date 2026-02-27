@@ -6,201 +6,152 @@
   <title>Citum</title>
   <meta name="description" content="Citum formats citations accurately across hundreds of academic styles, so you spend less time fixing output and more time writing.">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <style type="text/tailwindcss">
-    /* ─────────────────────────────────────────────────────────────
-       THEME A — Warm terracotta (active)
-       Newsreader serif headings · Work Sans body
-    ───────────────────────────────────────────────────────────── */
-    @theme {
-      --color-bg:        #f6f4ef;
-      --color-paper:     #fffdf8;
-      --color-ink:       #1b1a18;
-      --color-muted:     #58544e;
-      --color-line:      #d8d1c4;
-      --color-brand:     #b4472a;
-      --color-brand-dk:  #8f2f16;
-      --color-soft:      #f3e5d7;
-      --color-soft2:     #eceff5;
-      --color-ring:      rgba(180,71,42,0.22);
-      --font-sans:       "Work Sans", "Segoe UI", sans-serif;
-      --font-serif:      "Newsreader", Georgia, serif;
-    }
-
-    /* ─────────────────────────────────────────────────────────────
-       THEME B — Cool teal (matches hub/labs) — swap: comment A,
-       uncomment B, reload.
-    ───────────────────────────────────────────────────────────── */
-    /*
-    @theme {
-      --color-bg:        #f0f4f4;
-      --color-paper:     #ffffff;
-      --color-ink:       #0f172a;
-      --color-muted:     #475569;
-      --color-line:      #cbd5e1;
-      --color-brand:     #0f766e;
-      --color-brand-dk:  #0d5f58;
-      --color-soft:      #ccfbf1;
-      --color-soft2:     #e0f2fe;
-      --color-ring:      rgba(15,118,110,0.22);
-      --font-sans:       "Lexend", "Inter", system-ui, sans-serif;
-      --font-serif:      "Lexend", system-ui, sans-serif;
-    }
-    */
-
-    @import url("https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,700&family=Work+Sans:wght@400;500;600;700&display=swap");
-
     body {
-      font-family: var(--font-sans);
-      background-color: var(--color-bg);
-      color: var(--color-ink);
-      background-image:
-        radial-gradient(900px 460px at 0% -8%, #ece6db 0%, transparent 64%),
-        radial-gradient(820px 420px at 102% -15%, #e7ebf4 0%, transparent 62%);
+      font-family: 'Inter', sans-serif;
+      background-color: #fdfbf7;
+      color: #374151;
     }
-
-    h1, .serif { font-family: var(--font-serif); }
-
+    .glass-nav {
+      background: rgba(253,251,247,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(42,148,214,0.12);
+    }
     .nav-link {
-      color: var(--color-muted);
-      font-weight: 600;
+      color: #6b7280;
+      font-weight: 500;
       font-size: 0.92rem;
-      padding: 7px 11px;
+      padding: 6px 11px;
       border-radius: 9999px;
       text-decoration: none;
       white-space: nowrap;
     }
     .nav-link:hover, .nav-link[aria-current="page"] {
-      color: var(--color-ink);
-      background: #efe8dc;
+      color: #1f2937;
+      background: rgba(42,148,214,0.08);
     }
     .soon {
       font-size: 0.68rem;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      background: var(--color-soft);
-      color: var(--color-brand-dk);
-      border: 1px solid var(--color-line);
+      background: rgba(42,148,214,0.10);
+      color: #1a6fa3;
+      border: 1px solid rgba(42,148,214,0.20);
       border-radius: 9999px;
       padding: 1px 6px;
       vertical-align: middle;
       margin-left: 3px;
     }
-
     .kicker {
       display: inline-block;
       font-size: 0.78rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--color-brand-dk);
-      background: var(--color-soft);
-      border: 1px solid #e8d6c0;
+      color: #1a6fa3;
+      background: rgba(42,148,214,0.08);
+      border: 1px solid rgba(42,148,214,0.18);
       border-radius: 9999px;
-      padding: 7px 12px;
-      font-weight: 700;
+      padding: 6px 12px;
+      font-weight: 600;
     }
-
     .btn-primary {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      border-radius: 12px;
-      padding: 11px 18px;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 10px 18px;
       font-size: 0.94rem;
       color: #fff;
-      background: linear-gradient(130deg, var(--color-brand), var(--color-brand-dk));
-      box-shadow: 0 10px 24px var(--color-ring);
+      background: #2a94d6;
+      box-shadow: 0 4px 14px rgba(42,148,214,0.30);
       text-decoration: none;
     }
     .btn-secondary {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      border-radius: 12px;
-      padding: 11px 18px;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 10px 18px;
       font-size: 0.94rem;
-      color: var(--color-ink);
-      background: var(--color-paper);
-      border: 1px solid var(--color-line);
+      color: #374151;
+      background: #ffffff;
+      border: 1px solid rgba(42,148,214,0.20);
       text-decoration: none;
     }
     .btn-ghost {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      border-radius: 12px;
-      padding: 11px 18px;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 10px 18px;
       font-size: 0.94rem;
-      color: #f9f3eb;
+      color: #fff;
       background: transparent;
-      border: 1px solid #8a7262;
+      border: 1px solid rgba(255,255,255,0.35);
       text-decoration: none;
     }
-
     .card {
-      background: var(--color-paper);
-      border: 1px solid var(--color-line);
-      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(42,148,214,0.12);
+      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 8px 22px rgba(26,24,22,0.05);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
-    .card p { color: var(--color-muted); }
-
+    .card p, .panel p, .step p { color: #6b7280; }
+    .panel {
+      background: #ffffff;
+      border: 1px solid rgba(42,148,214,0.12);
+      border-radius: 12px;
+      padding: 22px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
     .step {
       position: relative;
-      background: var(--color-paper);
-      border: 1px solid var(--color-line);
-      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(42,148,214,0.12);
+      border-radius: 12px;
       padding: 18px 18px 18px 56px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
     }
     .step-num {
       position: absolute;
       left: 14px; top: 16px;
       width: 28px; height: 28px;
       border-radius: 9999px;
-      background: #eee5d7;
-      color: var(--color-brand-dk);
-      font-weight: 800;
+      background: #2a94d6;
+      color: #fff;
+      font-weight: 700;
       font-size: 0.86rem;
       display: grid;
       place-items: center;
     }
-    .step p { color: var(--color-muted); }
-
-    .panel {
-      background: var(--color-paper);
-      border: 1px solid var(--color-line);
-      border-radius: 16px;
-      padding: 22px;
-    }
-    .panel p { color: var(--color-muted); }
-
     .callout {
-      background: var(--color-soft);
-      border: 1px solid #e8d6c0;
-      border-radius: 16px;
+      background: rgba(42,148,214,0.06);
+      border: 1px solid rgba(42,148,214,0.15);
+      border-radius: 12px;
       padding: 22px 24px;
     }
-
     .dark-cta {
-      background: linear-gradient(125deg, #2d2621, #46352b);
-      color: #f9f3eb;
-      border-radius: 18px;
+      background: #1e3a5f;
+      color: #f0f7ff;
+      border-radius: 12px;
       padding: 28px;
-      border: 1px solid #5f4c3f;
     }
-    .dark-cta p { color: #e9ded1; }
+    .dark-cta p { color: #bdd5ea; }
   </style>
 </head>
 <body class="min-h-screen">
 
-  <!-- Nav -->
-  <header class="sticky top-0 z-10 backdrop-blur-sm border-b" style="background:rgba(246,244,239,0.88);border-color:var(--color-line)">
-    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[70px]">
-      <a href="https://citum.org" class="font-bold text-[1.03rem] tracking-wide no-underline" style="color:var(--color-ink)">Citum</a>
+  <header class="glass-nav sticky top-0 z-10">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
+      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
+          <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
+            <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
+          </div>
+          <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
+        </a>
       <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
         <a class="nav-link" href="https://citum.org" aria-current="page">Home</a>
         <a class="nav-link" href="https://docs.citum.org">Docs</a>
@@ -214,10 +165,10 @@
 
     <!-- Hero -->
     <span class="kicker">Citation formatting, done right</span>
-    <h1 class="serif mt-4 mb-0 font-bold leading-[1.02] tracking-tight" style="font-size:clamp(2.2rem,6.5vw,4.2rem);max-width:16ch">
+    <h1 class="mt-4 mb-0 font-bold leading-tight tracking-tight text-gray-900" style="font-size:clamp(2.2rem,6.5vw,4rem);max-width:16ch">
       Accurate styles.<br>Less correction.
     </h1>
-    <p class="mt-4 text-[1.08rem] leading-relaxed max-w-[66ch]" style="color:var(--color-muted)">
+    <p class="mt-4 text-[1.08rem] leading-relaxed max-w-[64ch] text-gray-500">
       Citation styles have a lot of rules. Citum applies them consistently — across hundreds of styles, across source types, across the formatting details that usually require a manual fix after export.
     </p>
     <div class="flex flex-wrap gap-3 mt-6">
@@ -226,24 +177,24 @@
     </div>
 
     <!-- What it does -->
-    <section class="mt-12" aria-label="What Citum does">
-      <h2 class="text-[1.35rem] font-semibold mb-4 tracking-tight" style="color:var(--color-ink)">What it does</h2>
+    <section class="mt-14" aria-label="What Citum does">
+      <h2 class="text-[1.2rem] font-semibold mb-4 text-gray-800">What it does</h2>
       <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
         <article class="card">
-          <h3 class="font-semibold text-[1rem] mb-2">Style-accurate output</h3>
-          <p class="text-[0.95rem] leading-relaxed">
+          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Style-accurate output</h3>
+          <p class="text-[0.93rem] leading-relaxed">
             Hundreds of journal and institutional styles supported, each tested against a shared fixture set so edge cases get caught before your manuscript does.
           </p>
         </article>
         <article class="card">
-          <h3 class="font-semibold text-[1rem] mb-2">Formatting edge cases handled</h3>
-          <p class="text-[0.95rem] leading-relaxed">
-            Name disambiguation, ibid logic, delimiter variation by source type, date ranges — the details that require manual fixes in most tools are covered here by the style definition itself.
+          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Formatting edge cases handled</h3>
+          <p class="text-[0.93rem] leading-relaxed">
+            Name disambiguation, ibid logic, delimiter variation by source type, date ranges — the details that require manual fixes in most tools are covered by the style definition itself.
           </p>
         </article>
         <article class="card">
-          <h3 class="font-semibold text-[1rem] mb-2">Works with sources you already have</h3>
-          <p class="text-[0.95rem] leading-relaxed">
+          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Works with sources you already have</h3>
+          <p class="text-[0.93rem] leading-relaxed">
             Accepts the same reference fields used by common reference managers. No re-entry required; Citum maps existing metadata to style output.
           </p>
         </article>
@@ -251,12 +202,12 @@
     </section>
 
     <!-- See before you commit -->
-    <section class="mt-12" aria-label="Transparency and current state">
-      <h2 class="text-[1.35rem] font-semibold mb-4 tracking-tight" style="color:var(--color-ink)">See before you commit</h2>
+    <section class="mt-14" aria-label="Transparency and current state">
+      <h2 class="text-[1.2rem] font-semibold mb-4 text-gray-800">See before you commit</h2>
       <div class="grid gap-4" style="grid-template-columns:1.3fr 1fr">
         <article class="panel">
-          <h3 class="font-semibold text-[1rem] mb-2">Compatibility report</h3>
-          <p class="text-[0.95rem] leading-relaxed mb-4">
+          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Compatibility report</h3>
+          <p class="text-[0.93rem] leading-relaxed mb-4">
             The compat report shows exactly which styles pass the full citation fixture — and which don't. No "supports X styles" without evidence.
           </p>
           <div class="flex flex-wrap gap-2">
@@ -264,9 +215,9 @@
             <a class="btn-secondary" href="https://docs.citum.org/TIER_STATUS.md">Status tracker</a>
           </div>
         </article>
-        <article class="panel" style="background:linear-gradient(180deg,var(--color-paper),#f6f8fc)">
-          <h3 class="font-semibold text-[1rem] mb-2">Worked examples</h3>
-          <p class="text-[0.95rem] leading-relaxed mb-4">
+        <article class="panel">
+          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Worked examples</h3>
+          <p class="text-[0.93rem] leading-relaxed mb-4">
             Browse concrete output for books, journal articles, reports, and multi-author citations across different styles.
           </p>
           <div class="flex flex-wrap gap-2">
@@ -277,33 +228,33 @@
     </section>
 
     <!-- How it works -->
-    <section class="mt-12" aria-label="How citation processing works">
-      <h2 class="text-[1.35rem] font-semibold mb-4 tracking-tight" style="color:var(--color-ink)">How it works</h2>
-      <div class="grid gap-3" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));counter-reset:step">
+    <section class="mt-14" aria-label="How citation processing works">
+      <h2 class="text-[1.2rem] font-semibold mb-4 text-gray-800">How it works</h2>
+      <div class="grid gap-3" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
         <article class="step">
           <span class="step-num">1</span>
-          <h3 class="font-semibold text-[0.98rem] mb-1">Bring your references</h3>
-          <p class="text-[0.92rem] leading-relaxed">Pass in your references as structured data — the same fields used by common reference managers.</p>
+          <h3 class="font-semibold text-[0.95rem] mb-1 text-gray-800">Bring your references</h3>
+          <p class="text-[0.91rem] leading-relaxed">Pass in your references as structured data — the same fields used by common reference managers.</p>
         </article>
         <article class="step">
           <span class="step-num">2</span>
-          <h3 class="font-semibold text-[0.98rem] mb-1">Pick a style</h3>
-          <p class="text-[0.92rem] leading-relaxed">Choose from the built-in style library or load a custom Citum YAML style. Styles declare behaviour; the engine applies it.</p>
+          <h3 class="font-semibold text-[0.95rem] mb-1 text-gray-800">Pick a style</h3>
+          <p class="text-[0.91rem] leading-relaxed">Choose from the built-in style library or load a custom Citum YAML style. Styles declare behaviour; the engine applies it.</p>
         </article>
         <article class="step">
           <span class="step-num">3</span>
-          <h3 class="font-semibold text-[0.98rem] mb-1">Get formatted output</h3>
-          <p class="text-[0.92rem] leading-relaxed">Citations and bibliography rendered according to style rules — ready to copy into your document or manuscript.</p>
+          <h3 class="font-semibold text-[0.95rem] mb-1 text-gray-800">Get formatted output</h3>
+          <p class="text-[0.91rem] leading-relaxed">Citations and bibliography rendered according to style rules — ready to copy into your document or manuscript.</p>
         </article>
       </div>
     </section>
 
     <!-- Hub / Labs callout -->
-    <section class="mt-12" aria-label="Interactive tooling — coming soon">
+    <section class="mt-14" aria-label="Interactive tooling — coming soon">
       <div class="callout">
-        <h3 class="font-semibold text-[1rem] mb-1" style="color:var(--color-ink)">Interactive tooling in development <span class="soon">coming soon</span></h3>
-        <p class="text-[0.95rem] leading-relaxed max-w-[70ch]" style="color:var(--color-muted)">
-          Hub will provide a browser-based interface for testing styles interactively and previewing output. Labs will offer experimental features before they land in the main engine. Both are in active development — sign up for updates on GitHub.
+        <h3 class="font-semibold text-[0.97rem] mb-1 text-gray-800">Interactive tooling in development <span class="soon">coming soon</span></h3>
+        <p class="text-[0.93rem] leading-relaxed max-w-[70ch] text-gray-500 mt-2">
+          Hub will provide a browser-based interface for testing styles interactively and previewing output. Labs will offer experimental features before they land in the main engine. Both are in active development.
         </p>
         <div class="flex flex-wrap gap-2 mt-4">
           <a class="btn-secondary" href="https://github.com/citum">Follow on GitHub</a>
@@ -312,8 +263,8 @@
     </section>
 
     <!-- Final CTA -->
-    <section class="dark-cta mt-12" aria-label="Call to action">
-      <h2 class="serif font-bold leading-tight" style="font-size:clamp(1.6rem,4vw,2.2rem)">Less time fixing citations.</h2>
+    <section class="dark-cta mt-14" aria-label="Call to action">
+      <h2 class="font-bold leading-tight text-white" style="font-size:clamp(1.5rem,4vw,2rem)">Less time fixing citations.</h2>
       <p class="mt-2 leading-relaxed max-w-[56ch]">Start with the docs and the compatibility report to see where Citum stands for your target styles.</p>
       <div class="flex flex-wrap gap-3 mt-5">
         <a class="btn-primary" href="https://docs.citum.org">Open Docs</a>
@@ -321,11 +272,10 @@
       </div>
     </section>
 
-    <footer class="mt-8 text-[0.82rem]" style="color:#7f776e">
-      Citum — Home &middot; <a href="https://docs.citum.org" style="color:inherit">Docs</a> &middot; Hub (soon) &middot; Labs (soon)
+    <footer class="mt-8 text-[0.82rem] text-gray-400">
+      Citum — Home &middot; <a href="https://docs.citum.org" class="text-gray-400">Docs</a> &middot; Hub (soon) &middot; Labs (soon)
     </footer>
 
   </main>
-
 </body>
 </html>
