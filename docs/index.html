@@ -173,15 +173,28 @@ issued: 1962</pre>
             <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Data & Markup</h3>
             <p class="text-[0.93rem] leading-relaxed">Accept references in YAML or JSON, and citation markers directly in Djot or Markdown documents.</p>
           </div>
-          <div class="hidden md:block workshop-block py-4">
-            <span class="text-blue-500">@kuhn1962</span>
+          <div class="hidden md:block workshop-block delay-1 animate-in">
+            <div class="workshop-label">Citation markers (Djot)</div>
+            <div class="text-[0.78rem] space-y-1.5 leading-relaxed">
+              <div><span class="text-blue-600">[@kuhn1962]</span> <span class="text-gray-400">&nbsp;# parenthetical</span></div>
+              <div><span class="text-blue-600">[+@kuhn1962, p. 10]</span> <span class="text-gray-400">&nbsp;# integral</span></div>
+              <div><span class="text-blue-600">[-@kuhn1962, p. 10]</span> <span class="text-gray-400">&nbsp;# suppress author</span></div>
+              <div><span class="text-blue-600">[@watson1953; @smith2010]</span> <span class="text-gray-400">&nbsp;# multi-cite</span></div>
+            </div>
           </div>
         </article>
         <article class="asymmetric-grid items-center delay-1 animate-in">
-           <div class="hidden md:block workshop-block py-4 text-right">
-            <span class="text-gray-500">YAML Style Logic</span>
+          <div class="hidden md:block workshop-block">
+            <div class="workshop-label">Resolution trace</div>
+            <div class="text-[0.78rem] space-y-1.5 leading-relaxed">
+              <div class="text-gray-400"># Chapter 1</div>
+              <div><span class="text-blue-600">[+@smith2010]</span> &rarr; <span class="text-gray-700">Jane Doe (2010)</span></div>
+              <div><span class="text-blue-600">[@smith2010, p. 12]</span> &rarr; <span class="text-gray-700 italic">(ibid., 12)</span></div>
+              <div class="text-gray-400 pt-1"># Chapter 2 (scope reset)</div>
+              <div><span class="text-blue-600">[+@smith2010, p. 14]</span> &rarr; <span class="text-gray-700">Jane Doe (2010, 14)</span></div>
+            </div>
           </div>
-          <div class="step" style="padding-left: 60px;">
+          <div class="step">
             <span class="step-num">2</span>
             <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Semantic Resolution</h3>
             <p class="text-[0.93rem] leading-relaxed">The engine resolves disambiguation, ibid tracking, and script-aware formatting rules.</p>
@@ -193,8 +206,16 @@ issued: 1962</pre>
             <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Output Rendering</h3>
             <p class="text-[0.93rem] leading-relaxed">Render semantic HTML, Typst, LaTeX, or native PDF documents with zero external dependencies.</p>
           </div>
-          <div class="hidden md:block workshop-block py-4">
-            <span class="text-gray-800 italic">PDF / Typst / HTML</span>
+          <div class="hidden md:block workshop-block">
+            <div class="workshop-label">Semantic HTML · APA</div>
+            <div class="text-[0.78rem] leading-relaxed">
+              <span class="text-gray-500">(</span><span class="text-blue-500">&lt;span</span>
+              <span class="text-gray-400">class=</span><span class="text-teal-600">"csln-citation"</span>
+              <span class="text-gray-400">data-ref=</span><span class="text-teal-600">"smith2010"</span><span class="text-blue-500">&gt;</span><span class="text-gray-700">Doe,</span>
+              <span class="text-blue-500">&lt;span</span>
+              <span class="text-gray-400">class=</span><span class="text-teal-600">"csln-issued"</span><span class="text-blue-500">&gt;</span><span class="text-gray-700">2010</span><span class="text-blue-500">&lt;/span&gt;</span>
+              <span class="text-blue-500">&lt;/span&gt;</span><span class="text-gray-500">)</span>
+            </div>
           </div>
         </article>
       </div>
@@ -202,7 +223,7 @@ issued: 1962</pre>
 
     <!-- Hub / Labs callout -->
     <section class="mt-20" aria-label="Interactive tooling — coming soon">
-      <div class="callout border-l-4 border-blue-500">
+      <div class="callout">
         <h3 class="font-semibold text-[1.1rem] mb-2 text-gray-800">Interactive tooling in development <span class="soon">coming soon</span></h3>
         <p class="text-[0.95rem] leading-relaxed max-w-[70ch] text-gray-600 mt-2">
           Hub will provide a browser-based interface for testing styles interactively. Labs will offer experimental features before they land in the main engine. Both are in active development.
