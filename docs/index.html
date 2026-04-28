@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Citum</title>
+  <meta name="description" content="Citum formats citations accurately across hundreds of academic styles, so you spend less time fixing output and more time writing.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in {
+      animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      opacity: 0;
+    }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <header class="glass-nav sticky top-0 z-10">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
+      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
+          <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
+            <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
+          </div>
+          <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
+        </a>
+      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
+        <a class="nav-link" href="https://citum.org" aria-current="page">Home</a>
+        <a class="nav-link" href="https://docs.citum.org">Docs</a>
+        <a class="nav-link" href="https://hub.citum.org">Hub <span class="soon">soon</span></a>
+        <a class="nav-link" href="https://labs.citum.org">Labs <span class="soon">soon</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[1100px] px-5 py-14 pb-20">
+
+    <!-- Hero -->
+    <div class="asymmetric-grid items-center mb-14 animate-in">
+      <div>
+        <span class="kicker">Next-generation citation processor</span>
+        <h1 class="mt-4 mb-0 font-bold leading-tight tracking-tight text-gray-900" style="font-size:clamp(2.5rem,6.5vw,4.2rem);max-width:14ch">
+          Accurate styles.<br>Less correction.
+        </h1>
+        <p class="mt-4 text-[1.12rem] leading-relaxed max-w-[50ch] text-gray-500">
+          Citum handles the semantic complexities that legacy formats ignore, focusing on native support for EDTF dates, multilingual scripts, and high-quality typeset output.
+        </p>
+        <div class="flex flex-wrap gap-3 mt-8">
+          <a class="btn-primary" href="https://docs.citum.org/compat.html">Compatibility report</a>
+          <a class="btn-secondary" href="https://docs.citum.org">Documentation</a>
+        </div>
+      </div>
+      <div class="hidden md:block delay-1 animate-in">
+        <div class="workshop-block shadow-lg transform rotate-1">
+          <div class="workshop-label">Source Data (YAML)</div>
+          <pre class="text-blue-700">
+id: kuhn1962
+type: book
+author:
+  - family: Kuhn
+    given: Thomas S.
+title: The Structure of Scientific Revolutions
+issued: 1962</pre>
+          <div class="workshop-label mt-4">Narrative Citation</div>
+          <div class="text-gray-800 italic">Kuhn (1962) argues...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What it does -->
+    <section class="mt-14" aria-label="What Citum does">
+      <h2 class="text-[1.4rem] font-semibold mb-6 text-gray-800">Designed for modern scholarship</h2>
+      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <article class="card delay-1 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Style-accurate output</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Support for hundreds of journal and institutional styles, tested against shared fixtures to catch edge cases before your manuscript does.
+          </p>
+        </article>
+        <article class="card delay-1 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Native EDTF dates</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Preserve nuances like date uncertainty, ranges, and seasons without losing information in transition.
+          </p>
+        </article>
+        <article class="card delay-2 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Bilingual script support</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Render transliterations and original scripts (e.g., Kanji or Cyrillic) side-by-side in a single citation.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Technical Showcase -->
+    <section class="mt-14 py-10 border-y border-gray-100" aria-label="Technical Details">
+      <div class="asymmetric-grid items-start animate-in">
+        <div>
+          <h2 class="text-[1.4rem] font-semibold mb-4 text-gray-800">Solving semantic gaps</h2>
+          <p class="text-[1rem] text-gray-600 mb-6 max-w-[50ch]">
+            Styles are more than templates—they are logic engines. Citum provides native paths for archival data and multilingual requirements that standard CSL 1.0 cannot model.
+          </p>
+          <ul class="grid gap-3 list-none p-0">
+            <li class="flex items-center gap-2 text-[0.93rem] text-gray-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+              EDTF date uncertainty and ranges
+            </li>
+            <li class="flex items-center gap-2 text-[0.93rem] text-gray-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+              Paired script & transliteration fields
+            </li>
+            <li class="flex items-center gap-2 text-[0.93rem] text-gray-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+              Gender-aware localization for role labels
+            </li>
+          </ul>
+        </div>
+        <div class="workshop-block bg-white border-blue-100 delay-1 animate-in">
+           <div class="workshop-label">Multilingual Rendering</div>
+           <div class="text-[0.8rem] space-y-1">
+             <div class="text-gray-400"># Input paired scripts</div>
+             <div class="text-gray-700">family: Murakami (村上), given: Haruki (春樹)</div>
+             <div class="text-gray-400 mt-2"># Output: Chicago (transliterated)</div>
+             <div class="text-blue-700">Murakami, Haruki [村上春樹]. 2002.</div>
+           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- See before you commit -->
+    <section class="mt-14" aria-label="Transparency and current state">
+      <h2 class="text-[1.4rem] font-semibold mb-6 text-gray-800">Verifiable transparency</h2>
+      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(350px,1fr))">
+        <article class="panel delay-1 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Compatibility report</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-6">
+            Detailed tracking of how Citum matches citeproc-js output across the full fixture set.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <a class="btn-secondary" href="https://docs.citum.org/compat.html">View report</a>
+            <a class="btn-secondary" href="https://docs.citum.org/TIER_STATUS.md">Status tracker</a>
+          </div>
+        </article>
+        <article class="panel delay-2 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Feature examples</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-6">
+            Concrete output for archival data, reports, and multi-author citations across different scripts and styles.
+          </p>
+          <div class="flex flex-wrap gap-2">
+            <a class="btn-secondary" href="https://docs.citum.org/examples.html">Browse examples</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="mt-20" aria-label="How citation processing works">
+      <div class="max-w-[700px] mb-10 animate-in">
+        <h2 class="text-[1.4rem] font-semibold mb-4 text-gray-800">The citation lifecycle</h2>
+        <p class="text-gray-600">A deterministic pipeline from structured markup to typeset output.</p>
+      </div>
+      <div class="grid gap-6">
+        <article class="asymmetric-grid items-center animate-in">
+          <div class="step">
+            <span class="step-num">1</span>
+            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Data & Markup</h3>
+            <p class="text-[0.93rem] leading-relaxed">Accept references in YAML or JSON, and citation markers directly in Djot or Markdown documents.</p>
+          </div>
+          <div class="hidden md:block workshop-block py-4">
+            <span class="text-blue-500">@kuhn1962</span>
+          </div>
+        </article>
+        <article class="asymmetric-grid items-center delay-1 animate-in">
+           <div class="hidden md:block workshop-block py-4 text-right">
+            <span class="text-gray-500">YAML Style Logic</span>
+          </div>
+          <div class="step" style="padding-left: 60px;">
+            <span class="step-num">2</span>
+            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Semantic Resolution</h3>
+            <p class="text-[0.93rem] leading-relaxed">The engine resolves disambiguation, ibid tracking, and script-aware formatting rules.</p>
+          </div>
+        </article>
+        <article class="asymmetric-grid items-center delay-2 animate-in">
+          <div class="step">
+            <span class="step-num">3</span>
+            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Output Rendering</h3>
+            <p class="text-[0.93rem] leading-relaxed">Render semantic HTML, Typst, LaTeX, or native PDF documents with zero external dependencies.</p>
+          </div>
+          <div class="hidden md:block workshop-block py-4">
+            <span class="text-gray-800 italic">PDF / Typst / HTML</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Hub / Labs callout -->
+    <section class="mt-20" aria-label="Interactive tooling — coming soon">
+      <div class="callout border-l-4 border-blue-500">
+        <h3 class="font-semibold text-[1.1rem] mb-2 text-gray-800">Interactive tooling in development <span class="soon">coming soon</span></h3>
+        <p class="text-[0.95rem] leading-relaxed max-w-[70ch] text-gray-600 mt-2">
+          Hub will provide a browser-based interface for testing styles interactively. Labs will offer experimental features before they land in the main engine. Both are in active development.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-6">
+          <a class="btn-secondary" href="https://github.com/citum">Follow on GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="dark-cta mt-20" aria-label="Call to action">
+      <h2 class="font-bold leading-tight text-white mb-2" style="font-size:clamp(1.8rem,4vw,2.4rem)">Less time fixing citations.</h2>
+      <p class="mt-2 text-[1.1rem] leading-relaxed max-w-[56ch] text-blue-100">
+        Start with the docs and the compatibility report to see where Citum stands for your target styles.
+      </p>
+      <div class="flex flex-wrap gap-4 mt-8">
+        <a class="btn-primary" href="https://docs.citum.org">Open Docs</a>
+        <a class="btn-ghost" href="https://docs.citum.org/compat.html">Compatibility Report</a>
+      </div>
+    </section>
+
+    <footer class="mt-12 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
+      Citum &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; Hub (soon) &middot; Labs (soon)
+    </footer>
+
+  </main>
+</body>
+</html>
