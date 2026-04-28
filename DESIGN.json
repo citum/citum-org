@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-04-28T00:00:00Z",
+  "title": "Design System: Citum",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Citum Blue", "canonical": "#2a94d6" },
+      "neutral-bg": { "role": "neutral", "displayName": "Paper White", "canonical": "#fdfbf7" },
+      "text-primary": { "role": "neutral", "displayName": "Ink Gray", "canonical": "#374151" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headlines." },
+      "body": { "displayName": "Body", "purpose": "Primary reading text." }
+    },
+    "shadows": [
+      { "name": "subtle-lift", "value": "0 2px 12px rgba(0,0,0,0.06)", "purpose": "Soft separation for interactive surfaces." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action button.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Get Started</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; font-weight: 600; border-radius: 8px; padding: 10px 18px; font-size: 0.94rem; color: #fff; background: #2a94d6; box-shadow: 0 4px 14px rgba(42,148,214,0.30); text-decoration: none; transition: transform 0.2s; } .ds-btn-primary:hover { transform: translateY(-1px); }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Standard content container.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Card Title</h3><p class=\"ds-card-text\">Supporting description for the card content.</p></article>",
+      "css": ".ds-card { background: #ffffff; border: 1px solid rgba(42,148,214,0.12); border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); } .ds-card-title { font-weight: 600; font-size: 0.97rem; margin-bottom: 8px; color: #1f2937; } .ds-card-text { font-size: 0.93rem; color: #6b7280; line-height: 1.6; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Scholarly Workshop",
+    "overview": "The Citum design system reflects the precision and transparency required for academic work. It avoids the neon flash of modern tech in favor of a warm, paper-like palette and crisp, legible typography.",
+    "keyCharacteristics": [
+      "Empirical Transparency",
+      "Subtle Precision",
+      "Warm Authority"
+    ],
+    "rules": [
+      { "name": "The Tinted Neutral Rule", "body": "Never use pure white (#fff) for large background areas. Every surface should be tinted toward the primary hue or the warm base to reduce eye strain.", "section": "colors" },
+      { "name": "The Border-First Rule", "body": "Use subtle borders as the primary method of separation. Shadows should only be added to elements that need to appear interactive or floating.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use the compatibility report's 'evidence-first' layout for any feature claims.",
+      "Do maintain the 64ch line length for readability."
+    ],
+    "donts": [
+      "Don't use pure black (#000) for text.",
+      "Don't use 'bento box' grids with varied card sizes for core information."
+    ]
+  }
+}

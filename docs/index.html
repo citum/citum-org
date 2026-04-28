@@ -6,140 +6,19 @@
   <title>Citum</title>
   <meta name="description" content="Citum formats citations accurately across hundreds of academic styles, so you spend less time fixing output and more time writing.">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <style type="text/tailwindcss">
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #fdfbf7;
-      color: #374151;
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .glass-nav {
-      background: rgba(253,251,247,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(42,148,214,0.12);
+    .animate-in {
+      animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      opacity: 0;
     }
-    .nav-link {
-      color: #6b7280;
-      font-weight: 500;
-      font-size: 0.92rem;
-      padding: 6px 11px;
-      border-radius: 9999px;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-    .nav-link:hover, .nav-link[aria-current="page"] {
-      color: #1f2937;
-      background: rgba(42,148,214,0.08);
-    }
-    .soon {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      background: rgba(42,148,214,0.10);
-      color: #1a6fa3;
-      border: 1px solid rgba(42,148,214,0.20);
-      border-radius: 9999px;
-      padding: 1px 6px;
-      vertical-align: middle;
-      margin-left: 3px;
-    }
-    .kicker {
-      display: inline-block;
-      font-size: 0.78rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #1a6fa3;
-      background: rgba(42,148,214,0.08);
-      border: 1px solid rgba(42,148,214,0.18);
-      border-radius: 9999px;
-      padding: 6px 12px;
-      font-weight: 600;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      font-weight: 600;
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 0.94rem;
-      color: #fff;
-      background: #2a94d6;
-      box-shadow: 0 4px 14px rgba(42,148,214,0.30);
-      text-decoration: none;
-    }
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      font-weight: 600;
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 0.94rem;
-      color: #374151;
-      background: #ffffff;
-      border: 1px solid rgba(42,148,214,0.20);
-      text-decoration: none;
-    }
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      font-weight: 600;
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 0.94rem;
-      color: #fff;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.35);
-      text-decoration: none;
-    }
-    .card {
-      background: #ffffff;
-      border: 1px solid rgba(42,148,214,0.12);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .card p, .panel p, .step p { color: #6b7280; }
-    .panel {
-      background: #ffffff;
-      border: 1px solid rgba(42,148,214,0.12);
-      border-radius: 12px;
-      padding: 22px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .step {
-      position: relative;
-      background: #ffffff;
-      border: 1px solid rgba(42,148,214,0.12);
-      border-radius: 12px;
-      padding: 18px 18px 18px 56px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    }
-    .step-num {
-      position: absolute;
-      left: 14px; top: 16px;
-      width: 28px; height: 28px;
-      border-radius: 9999px;
-      background: #2a94d6;
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.86rem;
-      display: grid;
-      place-items: center;
-    }
-    .callout {
-      background: rgba(42,148,214,0.06);
-      border: 1px solid rgba(42,148,214,0.15);
-      border-radius: 12px;
-      padding: 22px 24px;
-    }
-    .dark-cta {
-      background: #1e3a5f;
-      color: #f0f7ff;
-      border-radius: 12px;
-      padding: 28px;
-    }
-    .dark-cta p { color: #bdd5ea; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -164,116 +43,211 @@
   <main class="mx-auto max-w-[1100px] px-5 py-14 pb-20">
 
     <!-- Hero -->
-    <span class="kicker">Citation formatting, done right</span>
-    <h1 class="mt-4 mb-0 font-bold leading-tight tracking-tight text-gray-900" style="font-size:clamp(2.2rem,6.5vw,4rem);max-width:16ch">
-      Accurate styles.<br>Less correction.
-    </h1>
-    <p class="mt-4 text-[1.08rem] leading-relaxed max-w-[64ch] text-gray-500">
-      Citation styles have a lot of rules. Citum applies them consistently — across hundreds of styles, across source types, across the formatting details that usually require a manual fix after export.
-    </p>
-    <div class="flex flex-wrap gap-3 mt-6">
-      <a class="btn-primary" href="https://docs.citum.org/compat.html">See compatibility report</a>
-      <a class="btn-secondary" href="https://docs.citum.org">Read the docs</a>
+    <div class="asymmetric-grid items-center mb-14 animate-in">
+      <div>
+        <span class="kicker">Next-generation citation processor</span>
+        <h1 class="mt-4 mb-0 font-bold leading-tight tracking-tight text-gray-900" style="font-size:clamp(2.5rem,6.5vw,4.2rem);max-width:14ch">
+          Accurate styles.<br>Less correction.
+        </h1>
+        <p class="mt-4 text-[1.12rem] leading-relaxed max-w-[50ch] text-gray-500">
+          Citum handles the semantic complexities that legacy formats ignore, focusing on native support for EDTF dates, multilingual scripts, and high-quality typeset output.
+        </p>
+        <div class="flex flex-wrap gap-3 mt-8">
+          <a class="btn-primary" href="https://docs.citum.org/compat.html">Compatibility report</a>
+          <a class="btn-secondary" href="https://docs.citum.org">Documentation</a>
+        </div>
+      </div>
+      <div class="hidden md:block delay-1 animate-in">
+        <div class="workshop-block shadow-lg transform rotate-1">
+          <div class="workshop-label">Source Data (YAML)</div>
+          <pre class="text-blue-700">
+id: kuhn1962
+type: book
+author:
+  - family: Kuhn
+    given: Thomas S.
+title: The Structure of Scientific Revolutions
+issued: 1962</pre>
+          <div class="workshop-label mt-4">Narrative Citation</div>
+          <div class="text-gray-800 italic">Kuhn (1962) argues...</div>
+        </div>
+      </div>
     </div>
 
     <!-- What it does -->
     <section class="mt-14" aria-label="What Citum does">
-      <h2 class="text-[1.2rem] font-semibold mb-4 text-gray-800">What it does</h2>
-      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">
-        <article class="card">
-          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Style-accurate output</h3>
-          <p class="text-[0.93rem] leading-relaxed">
-            Hundreds of journal and institutional styles supported, each tested against a shared fixture set so edge cases get caught before your manuscript does.
+      <h2 class="text-[1.4rem] font-semibold mb-6 text-gray-800">Designed for modern scholarship</h2>
+      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <article class="card delay-1 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Style-accurate output</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Support for hundreds of journal and institutional styles, tested against shared fixtures to catch edge cases before your manuscript does.
           </p>
         </article>
-        <article class="card">
-          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Formatting edge cases handled</h3>
-          <p class="text-[0.93rem] leading-relaxed">
-            Name disambiguation, ibid logic, delimiter variation by source type, date ranges — the details that require manual fixes in most tools are covered by the style definition itself.
+        <article class="card delay-1 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Native EDTF dates</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Preserve nuances like date uncertainty, ranges, and seasons without losing information in transition.
           </p>
         </article>
-        <article class="card">
-          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Works with sources you already have</h3>
-          <p class="text-[0.93rem] leading-relaxed">
-            Accepts the same reference fields used by common reference managers. No re-entry required; Citum maps existing metadata to style output.
+        <article class="card delay-2 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Bilingual script support</h3>
+          <p class="text-[0.95rem] leading-relaxed">
+            Render transliterations and original scripts (e.g., Kanji or Cyrillic) side-by-side in a single citation.
           </p>
         </article>
       </div>
     </section>
 
+    <!-- Technical Showcase -->
+    <section class="mt-14 py-10 border-y border-gray-100" aria-label="Technical Details">
+      <div class="asymmetric-grid items-start animate-in">
+        <div>
+          <h2 class="text-[1.4rem] font-semibold mb-4 text-gray-800">Solving semantic gaps</h2>
+          <p class="text-[1rem] text-gray-600 mb-6 max-w-[50ch]">
+            Styles are more than templates—they are logic engines. Citum provides native paths for archival data and multilingual requirements that standard CSL 1.0 cannot model.
+          </p>
+          <ul class="grid gap-3 list-none p-0">
+            <li class="flex items-center gap-2 text-[0.93rem] text-gray-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+              EDTF date uncertainty and ranges
+            </li>
+            <li class="flex items-center gap-2 text-[0.93rem] text-gray-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+              Paired script & transliteration fields
+            </li>
+            <li class="flex items-center gap-2 text-[0.93rem] text-gray-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+              Gender-aware localization for role labels
+            </li>
+          </ul>
+        </div>
+        <div class="workshop-block bg-white border-blue-100 delay-1 animate-in">
+           <div class="workshop-label">Multilingual Rendering</div>
+           <div class="text-[0.8rem] space-y-1">
+             <div class="text-gray-400"># Input paired scripts</div>
+             <div class="text-gray-700">family: Murakami (村上), given: Haruki (春樹)</div>
+             <div class="text-gray-400 mt-2"># Output: Chicago (transliterated)</div>
+             <div class="text-blue-700">Murakami, Haruki [村上春樹]. 2002.</div>
+           </div>
+        </div>
+      </div>
+    </section>
+
     <!-- See before you commit -->
     <section class="mt-14" aria-label="Transparency and current state">
-      <h2 class="text-[1.2rem] font-semibold mb-4 text-gray-800">See before you commit</h2>
-      <div class="grid gap-4" style="grid-template-columns:1.3fr 1fr">
-        <article class="panel">
-          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Compatibility report</h3>
-          <p class="text-[0.93rem] leading-relaxed mb-4">
-            The compat report shows exactly which styles pass the full citation fixture — and which don't. No "supports X styles" without evidence.
+      <h2 class="text-[1.4rem] font-semibold mb-6 text-gray-800">Verifiable transparency</h2>
+      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(350px,1fr))">
+        <article class="panel delay-1 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Compatibility report</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-6">
+            Detailed tracking of how Citum matches citeproc-js output across the full fixture set.
           </p>
           <div class="flex flex-wrap gap-2">
-            <a class="btn-secondary" href="https://docs.citum.org/compat.html">Open report</a>
+            <a class="btn-secondary" href="https://docs.citum.org/compat.html">View report</a>
             <a class="btn-secondary" href="https://docs.citum.org/TIER_STATUS.md">Status tracker</a>
           </div>
         </article>
-        <article class="panel">
-          <h3 class="font-semibold text-[0.97rem] mb-2 text-gray-800">Worked examples</h3>
-          <p class="text-[0.93rem] leading-relaxed mb-4">
-            Browse concrete output for books, journal articles, reports, and multi-author citations across different styles.
+        <article class="panel delay-2 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Feature examples</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-6">
+            Concrete output for archival data, reports, and multi-author citations across different scripts and styles.
           </p>
           <div class="flex flex-wrap gap-2">
-            <a class="btn-secondary" href="https://docs.citum.org/examples.html">Examples</a>
+            <a class="btn-secondary" href="https://docs.citum.org/examples.html">Browse examples</a>
           </div>
         </article>
       </div>
     </section>
 
     <!-- How it works -->
-    <section class="mt-14" aria-label="How citation processing works">
-      <h2 class="text-[1.2rem] font-semibold mb-4 text-gray-800">How it works</h2>
-      <div class="grid gap-3" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
-        <article class="step">
-          <span class="step-num">1</span>
-          <h3 class="font-semibold text-[0.95rem] mb-1 text-gray-800">Bring your references</h3>
-          <p class="text-[0.91rem] leading-relaxed">Pass in your references as structured data — the same fields used by common reference managers.</p>
+    <section class="mt-20" aria-label="How citation processing works">
+      <div class="max-w-[700px] mb-10 animate-in">
+        <h2 class="text-[1.4rem] font-semibold mb-4 text-gray-800">The citation lifecycle</h2>
+        <p class="text-gray-600">A deterministic pipeline from structured markup to typeset output.</p>
+      </div>
+      <div class="grid gap-6">
+        <article class="asymmetric-grid items-center animate-in">
+          <div class="step">
+            <span class="step-num">1</span>
+            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Data & Markup</h3>
+            <p class="text-[0.93rem] leading-relaxed">Accept references in YAML or JSON, and citation markers directly in Djot or Markdown documents.</p>
+          </div>
+          <div class="hidden md:block workshop-block delay-1 animate-in">
+            <div class="workshop-label">Citation markers (Djot)</div>
+            <div class="text-[0.78rem] space-y-1.5 leading-relaxed">
+              <div><span class="text-blue-600">[@kuhn1962]</span> <span class="text-gray-400">&nbsp;# parenthetical</span></div>
+              <div><span class="text-blue-600">[+@kuhn1962, p. 10]</span> <span class="text-gray-400">&nbsp;# integral</span></div>
+              <div><span class="text-blue-600">[-@kuhn1962, p. 10]</span> <span class="text-gray-400">&nbsp;# suppress author</span></div>
+              <div><span class="text-blue-600">[@watson1953; @smith2010]</span> <span class="text-gray-400">&nbsp;# multi-cite</span></div>
+            </div>
+          </div>
         </article>
-        <article class="step">
-          <span class="step-num">2</span>
-          <h3 class="font-semibold text-[0.95rem] mb-1 text-gray-800">Pick a style</h3>
-          <p class="text-[0.91rem] leading-relaxed">Choose from the built-in style library or load a custom Citum YAML style. Styles declare behaviour; the engine applies it.</p>
+        <article class="asymmetric-grid items-center delay-1 animate-in">
+          <div class="hidden md:block workshop-block">
+            <div class="workshop-label">Resolution trace</div>
+            <div class="text-[0.78rem] space-y-1.5 leading-relaxed">
+              <div class="text-gray-400"># Chapter 1</div>
+              <div><span class="text-blue-600">[+@smith2010]</span> &rarr; <span class="text-gray-700">Jane Doe (2010)</span></div>
+              <div><span class="text-blue-600">[@smith2010, p. 12]</span> &rarr; <span class="text-gray-700 italic">(ibid., 12)</span></div>
+              <div class="text-gray-400 pt-1"># Chapter 2 (scope reset)</div>
+              <div><span class="text-blue-600">[+@smith2010, p. 14]</span> &rarr; <span class="text-gray-700">Jane Doe (2010, 14)</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">2</span>
+            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Semantic Resolution</h3>
+            <p class="text-[0.93rem] leading-relaxed">The engine resolves disambiguation, ibid tracking, and script-aware formatting rules.</p>
+          </div>
         </article>
-        <article class="step">
-          <span class="step-num">3</span>
-          <h3 class="font-semibold text-[0.95rem] mb-1 text-gray-800">Get formatted output</h3>
-          <p class="text-[0.91rem] leading-relaxed">Citations and bibliography rendered according to style rules — ready to copy into your document or manuscript.</p>
+        <article class="asymmetric-grid items-center delay-2 animate-in">
+          <div class="step">
+            <span class="step-num">3</span>
+            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Output Rendering</h3>
+            <p class="text-[0.93rem] leading-relaxed">Render semantic HTML, Typst, LaTeX, or native PDF documents with zero external dependencies.</p>
+          </div>
+          <div class="hidden md:block workshop-block">
+            <div class="workshop-label">Semantic HTML · APA</div>
+            <div class="text-[0.78rem] leading-relaxed">
+              <span class="text-gray-500">(</span><span class="text-blue-500">&lt;span</span>
+              <span class="text-gray-400">class=</span><span class="text-teal-600">"csln-citation"</span>
+              <span class="text-gray-400">data-ref=</span><span class="text-teal-600">"smith2010"</span><span class="text-blue-500">&gt;</span><span class="text-gray-700">Doe,</span>
+              <span class="text-blue-500">&lt;span</span>
+              <span class="text-gray-400">class=</span><span class="text-teal-600">"csln-issued"</span><span class="text-blue-500">&gt;</span><span class="text-gray-700">2010</span><span class="text-blue-500">&lt;/span&gt;</span>
+              <span class="text-blue-500">&lt;/span&gt;</span><span class="text-gray-500">)</span>
+            </div>
+          </div>
         </article>
       </div>
     </section>
 
     <!-- Hub / Labs callout -->
-    <section class="mt-14" aria-label="Interactive tooling — coming soon">
+    <section class="mt-20" aria-label="Interactive tooling — coming soon">
       <div class="callout">
-        <h3 class="font-semibold text-[0.97rem] mb-1 text-gray-800">Interactive tooling in development <span class="soon">coming soon</span></h3>
-        <p class="text-[0.93rem] leading-relaxed max-w-[70ch] text-gray-500 mt-2">
-          Hub will provide a browser-based interface for testing styles interactively and previewing output. Labs will offer experimental features before they land in the main engine. Both are in active development.
+        <h3 class="font-semibold text-[1.1rem] mb-2 text-gray-800">Interactive tooling in development <span class="soon">coming soon</span></h3>
+        <p class="text-[0.95rem] leading-relaxed max-w-[70ch] text-gray-600 mt-2">
+          Hub will provide a browser-based interface for testing styles interactively. Labs will offer experimental features before they land in the main engine. Both are in active development.
         </p>
-        <div class="flex flex-wrap gap-2 mt-4">
+        <div class="flex flex-wrap gap-2 mt-6">
           <a class="btn-secondary" href="https://github.com/citum">Follow on GitHub</a>
         </div>
       </div>
     </section>
 
     <!-- Final CTA -->
-    <section class="dark-cta mt-14" aria-label="Call to action">
-      <h2 class="font-bold leading-tight text-white" style="font-size:clamp(1.5rem,4vw,2rem)">Less time fixing citations.</h2>
-      <p class="mt-2 leading-relaxed max-w-[56ch]">Start with the docs and the compatibility report to see where Citum stands for your target styles.</p>
-      <div class="flex flex-wrap gap-3 mt-5">
+    <section class="dark-cta mt-20" aria-label="Call to action">
+      <h2 class="font-bold leading-tight text-white mb-2" style="font-size:clamp(1.8rem,4vw,2.4rem)">Less time fixing citations.</h2>
+      <p class="mt-2 text-[1.1rem] leading-relaxed max-w-[56ch] text-blue-100">
+        Start with the docs and the compatibility report to see where Citum stands for your target styles.
+      </p>
+      <div class="flex flex-wrap gap-4 mt-8">
         <a class="btn-primary" href="https://docs.citum.org">Open Docs</a>
         <a class="btn-ghost" href="https://docs.citum.org/compat.html">Compatibility Report</a>
       </div>
     </section>
 
-    <footer class="mt-8 text-[0.82rem] text-gray-400">
-      Citum — Home &middot; <a href="https://docs.citum.org" class="text-gray-400">Docs</a> &middot; Hub (soon) &middot; Labs (soon)
+    <footer class="mt-12 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
+      Citum &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; Hub (soon) &middot; Labs (soon)
     </footer>
 
   </main>
