@@ -1,5 +1,2 @@
 *.DS_Store
 
-# Generated news files
-docs/news/*.html
-!docs/news/*.template.html
