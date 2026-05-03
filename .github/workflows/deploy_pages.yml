@@ -4,7 +4,8 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "site/**"
+      - "docs/**"
+      - "scripts/**"
       - ".github/workflows/deploy_pages.yml"
   workflow_dispatch:
 
@@ -27,13 +28,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install
+        working-directory: ./scripts
+
+      - name: Build News
+        run: bun run build-news.js
+        working-directory: ./scripts
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./site
+          path: ./docs
 
       - name: Deploy to GitHub Pages
         id: deployment
