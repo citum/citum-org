@@ -62,6 +62,9 @@
         <h1 class="mt-4 mb-0 font-bold leading-tight tracking-tight text-gray-900" style="font-size:clamp(2.5rem,6.5vw,4.2rem);max-width:16ch">
           Twenty years of practice.<br>One new foundation.
         </h1>
+        <p class="mt-3 text-[0.98rem] text-gray-700 max-w-[50ch]" style="font-family:'JetBrains Mono',monospace;font-size:0.92rem">
+          A citation engine for scholars, editors, doc tools, and publishers — embeddable via CLI, WASM, C FFI, or a long-running JSON-RPC server.
+        </p>
         <p class="mt-4 text-[1.12rem] leading-relaxed max-w-[50ch] text-gray-500">
           CSL mapped what real scholarship needs. Citum builds the engine that can model it — native EDTF dates, true style inheritance, paired bilingual scripts, and output tested against published examples.
         </p>
@@ -114,6 +117,44 @@
           <p class="text-[0.95rem] leading-relaxed">
             A citation to 村上春樹 should carry both the original script and romanization. CSL's data model has one name field per person. CSL-M added per-language layouts — but only for citeproc-js, leaving Pandoc and other processors without support.
           </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Who is this for? -->
+    <section class="mt-14" aria-label="Audiences and integration paths">
+      <h2 class="text-[1.4rem] font-semibold mb-2 text-gray-800">Who is this for?</h2>
+      <p class="text-[1rem] text-gray-500 mb-7 max-w-[64ch]">
+        Four ways to use Citum today. The pipe-fitting differs; the engine is the same.
+      </p>
+      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <article class="card animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Scholars writing Markdown or Djot</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-3">
+            Process your manuscripts on the command line. <code class="text-blue-700 text-[0.88rem]">citum render doc</code> takes Markdown or Djot with <code class="text-blue-700 text-[0.88rem]">[@key]</code> citations and a bibliography and produces HTML, LaTeX, Typst, or PDF. Pandoc-style citation markers, modern style engine.
+          </p>
+          <a class="text-[0.9rem] text-blue-700 hover:underline" href="https://docs.citum.org/guides/integrations/scholar-cli.html">Read the recipe &rarr;</a>
+        </article>
+        <article class="card delay-1 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Editor, IDE, and plugin authors</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-3">
+            Run Citum as a long-lived JSON-RPC process and send buffer plus bibliography from your editor or plugin; get back formatted citations and a rendered bibliography in one round-trip.
+          </p>
+          <a class="text-[0.9rem] text-blue-700 hover:underline" href="https://docs.citum.org/guides/integrations/editor-plugin.html">Read the recipe &rarr;</a>
+        </article>
+        <article class="card delay-1 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Docs and static-site maintainers</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-3">
+            Drop Citum into your build step to render Markdown or Djot with citations into HTML, LaTeX, or Typst — no CSL plumbing of your own. Works in Makefiles, npm scripts, CI jobs.
+          </p>
+          <a class="text-[0.9rem] text-blue-700 hover:underline" href="https://docs.citum.org/guides/integrations/static-site.html">Read the recipe &rarr;</a>
+        </article>
+        <article class="card delay-2 animate-in">
+          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Publishers and style maintainers</h3>
+          <p class="text-[0.95rem] leading-relaxed mb-3">
+            Express house styles as YAML that extends a pinned parent (APA, Chicago, …) instead of forking and re-maintaining XML. Changes to your overrides don't break when upstream updates.
+          </p>
+          <a class="text-[0.9rem] text-blue-700 hover:underline" href="https://docs.citum.org/guides/style-authoring/start.html">Start authoring &rarr;</a>
         </article>
       </div>
     </section>
@@ -343,8 +384,21 @@ options:
       </div>
     </section>
 
+    <!-- Word processors -->
+    <section class="mt-20" aria-label="Word-processor plugins">
+      <div class="callout">
+        <h3 class="font-semibold text-[1.1rem] mb-2 text-gray-800">Word, LibreOffice, Pages, Google Docs</h3>
+        <p class="text-[0.95rem] leading-relaxed max-w-[70ch] text-gray-600 mt-2">
+          The same JSON-RPC and WASM surfaces that power editor plugins are exactly what a desktop word-processor add-in or a Google Docs add-on would call. Citum doesn't ship those plugins itself, but the integration path is open — and we're happy to support anyone building one.
+        </p>
+        <div class="flex flex-wrap gap-2 mt-6">
+          <a class="btn-secondary" href="https://github.com/citum/citum-core/discussions/734">Coordinate on GitHub Discussions</a>
+        </div>
+      </div>
+    </section>
+
     <!-- Hub / Labs -->
-    <section class="mt-20" aria-label="Interactive tooling">
+    <section class="mt-12" aria-label="Interactive tooling">
       <div class="callout">
         <h3 class="font-semibold text-[1.1rem] mb-2 text-gray-800">Help shape what comes next <span class="soon">coming soon</span></h3>
         <p class="text-[0.95rem] leading-relaxed max-w-[70ch] text-gray-600 mt-2">
@@ -357,15 +411,16 @@ options:
       </div>
     </section>
 
-    <!-- Final CTA — two paths -->
+    <!-- Final CTA — three paths -->
     <section class="dark-cta mt-20" aria-label="Call to action">
       <h2 class="font-bold leading-tight text-white mb-2" style="font-size:clamp(1.8rem,4vw,2.4rem)">Where do you want to start?</h2>
       <p class="mt-2 text-[1.1rem] leading-relaxed max-w-[56ch] text-blue-100">
-        The docs cover both paths. Existing BibTeX libraries and CSL styles can be imported — the migration guide is in the developer docs.
+        Three entry points. Existing BibTeX libraries and CSL styles import — the migration notes are in the developer docs.
       </p>
       <div class="flex flex-wrap gap-4 mt-8">
-        <a class="btn-primary" href="https://docs.citum.org/guides/style-authoring/start.html">Write your first style &rarr;</a>
+        <a class="btn-primary" href="https://docs.citum.org/guides/integrations/scholar-cli.html">Process a document &rarr;</a>
         <a class="btn-ghost" href="https://docs.citum.org/developer.html">Integrate Citum &rarr;</a>
+        <a class="btn-ghost" href="https://docs.citum.org/guides/style-authoring/start.html">Write a style &rarr;</a>
       </div>
     </section>
 
