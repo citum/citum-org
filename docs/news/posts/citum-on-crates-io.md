@@ -40,7 +40,7 @@ The crates and the package ship the same engine the docs and the compatibility r
 
 There are five ways to use Citum today. The interface differs; the engine is the same.
 
-**Scholars writing Markdown.** If you already work with Pandoc-style citations, this should feel familiar: write `[@key]` markers in your manuscript, point at a bibliography (CSL-JSON, BibLaTeX, RIS, or Citum YAML all work), pick a style, and `citum render doc` produces HTML, LaTeX, Typst, or PDF. The [scholar recipe](https://docs.citum.org/guides/integrations/scholar-cli.html) walks the whole thing in five minutes.
+**Scholars writing Djot or Markdown.** If you already work with Pandoc-style citations, this should feel familiar: write `[@key]` markers in your manuscript, point at a bibliography (CSL-JSON, BibLaTeX, RIS, or Citum YAML all work), pick a style, and `citum render doc` produces HTML, LaTeX, Typst, or PDF. Markdown works today as a compatibility mode (`citum render -I markdown doc`). Djot is Citum's native format and supports rich inline markup in reference fields; its citation syntax is a draft implementation — enabled by default, but subject to change as the upstream spec evolves (see below).
 
 **Editor, IDE, and plugin authors.** Spawn `citum-server` once per session and speak newline-delimited JSON-RPC. One `format_document` call returns formatted citations and a rendered bibliography for the entire buffer — interactive latency, no per-keystroke process spawns. The [editor / plugin recipe](https://docs.citum.org/guides/integrations/editor-plugin.html) has a working Node client and a sample request/response pair.
 
