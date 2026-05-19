@@ -67,6 +67,7 @@ The supported forms in this release:
 
 Because Djot’s citation syntax is still being designed upstream, this support should be considered experimental and subject to change; future Citum releases may adjust the exact forms to match whatever the Djot spec eventually settles on. If you're involved in the Djot discussion, I'd welcome feedback on anything here.
 The goal is to be a useful early implementation; not to get ahead of the spec.
+If you want to try it, the [Djot integration recipe](https://docs.citum.org/guides/integrations/djot.html) has a working example and shows how Djot inline markup in reference fields differs from the Markdown mode.
 
 ## Open invitations
 
