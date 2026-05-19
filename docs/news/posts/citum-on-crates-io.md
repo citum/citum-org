@@ -1,6 +1,6 @@
 ---
 title: Citum is on crates.io and jsr.io
-date: 2026-05-17
+date: 2026-05-19
 summary: Install the Rust engine and server with cargo, or drop in the TypeScript WASM package from jsr.io — plus three integration recipes to get you from zero to citations.
 ---
 
