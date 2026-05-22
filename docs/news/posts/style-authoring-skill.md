@@ -27,7 +27,7 @@ The skill addresses this by frontloading a **Structural Model** section that exp
 - **Type-variant diffs**: within `bibliography.type-variants`, each entry is either a full component list or a structural diff — `modify`, `remove`, and `add` operations keyed by component selectors.
 
 A selector like `match: {variable: doi}` targets a specific component in the parent template. 
-Getting it wrong produces a silent errors, which is why the skill also mandates a **Research Parent** phase: read the parent type's actual component list before writing any selector.
+Getting it wrong produces silent errors, which is why the skill also mandates a **Research Parent** phase: read the parent type's actual component list before writing any selector.
 
 ## Validation workflow
 
@@ -72,7 +72,18 @@ Example prompts that trigger it:
 
 - *Create a Citum style for Chemical Communications — numeric, author initials, italic journal titles.*
 - *Extend apa-7th: remove page numbers from chapter entries.*
-- *Migrate ieee.csl to Citum and keep it minimal if it extends a known parent.*
+- *Migrate abc.csl to Citum and keep it minimal if it extends a known parent.*
 - *Validate my style.yaml and explain any errors.*
+
+## Future possibilities
+
+As I suggested above, today, the models in Claude Code and Codex are the most adept at this sort of work. 
+But it should work with other models too, and my hope is that open alternatives evolve enough over the next year or so that they can provide a viable alternative.
+I should also add I haven't myself tested the best of the latest open models.
+
+Regardless, when they are capable enough, I am thinking, this sort of logic could be cheaply integrated into a web app. 
+Here, for example, is a mockup of an idea that Claude Design came up with.
+
+![Mockup of an LLM-powered style editor](../img/llm-style-editor.jpg)
 
 Source and issue tracker: [github.com/citum/skills](https://github.com/citum/skills).
