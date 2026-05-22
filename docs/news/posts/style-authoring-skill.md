@@ -75,4 +75,13 @@ Example prompts that trigger it:
 - *Migrate ieee.csl to Citum and keep it minimal if it extends a known parent.*
 - *Validate my style.yaml and explain any errors.*
 
+## Future possibilities
+
+Today, the models in Claude Code and Codex are the most adept at this sort of work. 
+But it should work with other models too, and my hope is that open models evolve enough over the next year or so that they can provide a viable alternative. 
+If and when they do, I am thinking, this sort of logic could be cheaply integrated into a web app.
+Here, for example, is a mockup of an idea that Claude Design came up with.
+
+![Mockup of an LLM-powered style editor](../img/llm-style-editor.jpg)
+
 Source and issue tracker: [github.com/citum/skills](https://github.com/citum/skills).
