@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>News | Citum</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+</head>
+<body class="min-h-screen">
+
+  <header class="glass-nav sticky top-0 z-10">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
+      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
+          <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
+            <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
+          </div>
+          <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
+        </a>
+      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
+        <a class="nav-link" href="https://citum.org">Home</a>
+        <a class="nav-link active" href="/news/" aria-current="page">News</a>
+        <a class="nav-link" href="https://docs.citum.org">Docs</a>
+        <a class="nav-link" href="https://hub.citum.org">Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[1100px] px-5 py-14 pb-20">
+    <header class="mb-14">
+        <h1 class="font-bold leading-tight tracking-tight text-gray-900 text-4xl md:text-5xl mb-4">News & Updates</h1>
+        <p class="text-xl text-gray-500 max-w-[60ch]">Follow the latest developments and announcements from the Citum project.</p>
+    </header>
+
+    <div class="grid gap-12 max-w-[800px]">
+        <article class="border-b border-gray-100 pb-10 last:border-0"><div class="kicker mb-3">May 25, 2026</div><h2 class="text-3xl font-bold text-gray-900 mb-3"><a href="citum-for-lualatex-an-experimental-binding.html" class="hover:text-blue-600 transition-colors">Citum for LuaLaTeX: an experimental binding</a></h2><p class="text-gray-600 text-lg leading-relaxed mb-6">An experimental LuaLaTeX package that calls the Citum engine directly from inside a LaTeX document — with two transport modes, the second of which avoids loading external binaries.</p><a href="citum-for-lualatex-an-experimental-binding.html" class="font-bold text-blue-600 hover:underline">Read the full post →</a></article>
+<article class="border-b border-gray-100 pb-10 last:border-0"><div class="kicker mb-3">May 22, 2026</div><h2 class="text-3xl font-bold text-gray-900 mb-3"><a href="ai-skill-for-citum-style-authoring.html" class="hover:text-blue-600 transition-colors">AI skill for Citum style authoring</a></h2><p class="text-gray-600 text-lg leading-relaxed mb-6">A new external skill teaches Claude Code and other AI agents how to author, extend, and validate Citum YAML styles without a local citum-core checkout.</p><a href="ai-skill-for-citum-style-authoring.html" class="font-bold text-blue-600 hover:underline">Read the full post →</a></article>
+<article class="border-b border-gray-100 pb-10 last:border-0"><div class="kicker mb-3">May 19, 2026</div><h2 class="text-3xl font-bold text-gray-900 mb-3"><a href="citum-is-on-crates-io-and-jsr-io.html" class="hover:text-blue-600 transition-colors">Citum is on crates.io and jsr.io</a></h2><p class="text-gray-600 text-lg leading-relaxed mb-6">Install the Rust engine and server with cargo, or drop in the TypeScript WASM package from jsr.io — plus three integration recipes to get you from zero to citations.</p><a href="citum-is-on-crates-io-and-jsr-io.html" class="font-bold text-blue-600 hover:underline">Read the full post →</a></article>
+<article class="border-b border-gray-100 pb-10 last:border-0"><div class="kicker mb-3">May 2, 2026</div><h2 class="text-3xl font-bold text-gray-900 mb-3"><a href="welcome-to-citum-news.html" class="hover:text-blue-600 transition-colors">Welcome to Citum News</a></h2><p class="text-gray-600 text-lg leading-relaxed mb-6">A new space to share project updates and feature releases.</p><a href="welcome-to-citum-news.html" class="font-bold text-blue-600 hover:underline">Read the full post →</a></article>
+    </div>
+
+    <footer class="mt-20 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
+      Citum &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; <a href="https://github.com/citum" class="text-gray-500 hover:text-gray-800 no-underline">GitHub</a>
+    </footer>
+  </main>
+</body>
+</html>
