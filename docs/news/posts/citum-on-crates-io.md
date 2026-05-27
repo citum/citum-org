@@ -26,10 +26,10 @@ For editor and plugin authors who want a long-lived JSON-RPC server:
 cargo install citum-server
 ```
 
-For JavaScript and TypeScript projects, the same engine ships as a WASM package on [jsr.io](https://jsr.io/@citum/citum):
+For JavaScript and TypeScript projects, the same engine ships as a WASM package on [jsr.io](https://jsr.io/@citum/engine):
 
 ```sh
-npx jsr add @citum/citum   # Node
+npx jsr add @citum/engine   # Node
 ```
 
 Deno and Bun users: see the package page for the right install command.
