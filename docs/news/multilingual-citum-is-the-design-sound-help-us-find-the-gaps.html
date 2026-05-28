@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multilingual Citum: is the design sound? Help us find the gaps | News | Citum</title>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    /* Lightbox styles */
+    .prose img {
+      cursor: zoom-in;
+      transition: opacity 0.2s ease;
+    }
+    .prose img:hover {
+      opacity: 0.9;
+    }
+    .lightbox-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: zoom-out;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .lightbox-img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.2s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <header class="glass-nav sticky top-0 z-10">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
+      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
+          <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
+            <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
+          </div>
+          <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
+        </a>
+      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
+        <a class="nav-link" href="https://citum.org">Home</a>
+        <a class="nav-link active" href="/news/" aria-current="page">News</a>
+        <a class="nav-link" href="https://docs.citum.org">Docs</a>
+        <a class="nav-link" href="https://hub.citum.org">Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[800px] px-5 py-14 pb-20">
+    <article>
+        <header class="mb-10">
+            <div class="kicker mb-3">May 28, 2026</div>
+            <h1 class="font-bold leading-tight tracking-tight text-gray-900 text-4xl md:text-5xl mb-4">Multilingual Citum: is the design sound? Help us find the gaps</h1>
+            <p class="text-xl text-gray-500 leading-relaxed italic">A call for multilingual scholars to test Citum's parallel-metadata design and help identify what needs to change before the schema reaches 1.0.</p>
+        </header>
+
+        <div class="prose prose-slate prose-blue max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
+            <h1>Multilingual Citum: is the design sound? Help us find the gaps</h1>
+<p>I need help from multilingual scholars — and I want to be honest about why. I&#39;m a monolingual, English-language scholar. I&#39;ve spent years building the core data model, the rendering pipeline, and the migration path from CSL, but multilingual citation practice is my biggest blind spot. Before I declare the schema 1.0, I need people who actually work in Japanese, Arabic, Korean, Russian, Chinese, Vietnamese, and other languages to tell me whether what we&#39;ve built makes sense for their practice — and where it doesn&#39;t.</p>
+<p>This post describes the design, links to the relevant specs, and gives you concrete, runnable scenarios to test. What I&#39;m asking for is either &quot;yes, this looks right&quot; or &quot;here&#39;s specifically where you went wrong.&quot;</p>
+<h2>What we built</h2>
+<p>Citum stores parallel metadata side-by-side in the reference record: an original field, transliterations keyed by BCP 47 tag, and translations keyed by language. A style then requests a <em>view</em> — transliterated, original, combined, or translated — rather than implementing rendering logic. The complexity of multilingual support is opt-in; simple monolingual records stay simple.</p>
+<p><strong>A multilingual title in a Citum reference file:</strong></p>
+<pre><code class="language-yaml">title:
+  original: &quot;源氏物語&quot;
+  lang: &quot;ja&quot;
+  transliterations:
+    ja-Latn-hepburn: &quot;Genji Monogatari&quot;
+  translations:
+    en: &quot;The Tale of Genji&quot;
+</code></pre>
+<p><strong>A multilingual contributor:</strong></p>
+<pre><code class="language-yaml">author:
+  - original:
+      family: &quot;紫式部&quot;
+      given: &quot;&quot;
+    lang: &quot;ja&quot;
+    transliterations:
+      ja-Latn-hepburn:
+        family: &quot;Murasaki&quot;
+        given: &quot;Shikibu&quot;
+</code></pre>
+<p><strong>A style requesting a transliterated view:</strong></p>
+<pre><code class="language-yaml">options:
+  multilingual:
+    title-mode: combined       # original [translation]
+    name-mode: transliterated  # use the romanized form
+    preferred-script: Latn
+</code></pre>
+<p>Beyond title and name views, the design includes:</p>
+<ul>
+<li><strong>Script-aware name ordering and separators</strong> — styles can specify that CJK names render family-first with no inter-part space, or that Katakana names use <code>・</code> between given and family parts, and <code>、</code> when inverted.</li>
+<li><strong>Field-scoped language</strong> — for records where the chapter title is in one language but the containing volume is in another, you can tag individual fields rather than the whole entry.</li>
+<li><strong>Bibliography partitioning</strong> — sort or visually separate entries by script or language, using <code>sort-only</code>, <code>sections</code>, or both.</li>
+</ul>
+<h2>Prior art</h2>
+<p>The design draws on two established systems. <strong>CSL-M</strong> (the Juris-M multilingual extension to CSL) pioneered locale-targeted citation layouts and entry-level language variables. <strong>biblatex</strong> demonstrated flat, scoped options and field-level language metadata. Both informed the Citum design — but neither was copied directly. Where CSL-M encodes multilingual logic in procedural XML and biblatex embeds it in LaTeX macros, Citum&#39;s approach is declarative and schema-driven: you describe what you want, and the engine resolves it from data. The detailed comparison is in <a href="https://github.com/citum/citum-core/blob/main/docs/architecture/PRIOR_ART.md"><code>docs/architecture/PRIOR_ART.md</code></a>.</p>
+<h2>Try it yourself</h2>
+<p>The scenarios below all run against the same example bibliography that ships with citum-core. Clone the repo and run:</p>
+<pre><code class="language-bash">git clone https://github.com/citum/citum-core
+cd citum-core
+cargo build --bin citum
+</code></pre>
+<p>Then try each scenario.</p>
+<hr>
+<h3>Scenario 1: Transliterated view (ISO 690)</h3>
+<pre><code class="language-bash">citum render refs \
+  -b examples/multilingual-refs.yaml \
+  -s styles/iso690-numeric.yaml
+</code></pre>
+<p>This style uses <code>name-mode: transliterated</code> and <code>title-mode: combined</code>. The bibliography for the Japanese and Chinese records renders romanized names and titles, with bracketed translations:</p>
+<pre><code>[1] Murasaki, S. Genji Monogatari [The Tale of Genji].: 古典文学之友. 1010.
+[7] Kǒng, Z. Lùnyǔ [Analects of Confucius].: 人民文学出版社.
+[8] Kim, J. Hanguk Munhak-ui Yeoksa [A History of Korean Literature].: 서울대학교 출판부. 2018.
+</code></pre>
+<p><strong>Confirm or correct:</strong> Is <code>name [translation]</code> the right combined view for your discipline&#39;s conventions? Is the choice of romanization key — Hepburn for Japanese, Pinyin for Chinese, RR for Korean — what you&#39;d expect?</p>
+<p>The Arabic entry has no transliteration in the data (only a translation), so it falls back to original script. But initialization is applied to the Arabic given name, producing <code>أحمبم</code> — clearly wrong. <strong>Open question: should initialization ever be applied to non-Latin script names, or should it be suppressed entirely when no transliteration is available?</strong></p>
+<hr>
+<h3>Scenario 2: Per-group name-order conventions</h3>
+<pre><code class="language-bash">citum render refs \
+  -b examples/multilingual-refs.yaml \
+  -s styles/experimental/multilingual-academic.yaml
+</code></pre>
+<p>This style groups the bibliography by language. Vietnamese sources are sorted given-family (following Vietnamese convention); Western sources are sorted family-given. The rendered bibliography:</p>
+<pre><code># Vietnamese Sources
+
+Văn An Nguyễn (2019). Học thuật số và thực hành trích dẫn
+Thị Bình Trần (2021). Quy trình trích dẫn cho xuất bản hiện đại
+
+# Western Sources
+
+Elizabeth Anderson (2020). Contemporary Approaches to Citation
+Zeynep Çelik (1996). Streets: critical perspectives on public space
+...
+</code></pre>
+<p><strong>Confirm or correct:</strong> Does per-group name-order handle Vietnamese correctly? Note that Korean (<code>준 김</code>) and CJK entries fall into the &quot;Western&quot; group because no language-specific group is defined for them — their names are rendered given-family there, which is likely wrong for Korean (where family-first is conventional). Is that a gap in the example, in the schema, or both?</p>
+<hr>
+<h3>Scenario 3: Script-based partitioning with combined title view</h3>
+<pre><code class="language-bash">citum render refs \
+  -b examples/multilingual-refs.yaml \
+  -s styles/experimental/multilingual-partitioned.yaml
+</code></pre>
+<p>This style extends MLA and partitions the bibliography by script (<code>Latn</code>, <code>Arab</code>, <code>Hani</code>, <code>Hang</code>), with <code>title-mode: combined</code>:</p>
+<pre><code># Western Sources
+
+Anderson, Elizabeth. Contemporary Approaches to Citation. Oxford University Press, 2020.
+Çelik, Zeynep. Streets: critical perspectives on public space. University of California Press, 1996.
+Nguyễn, Văn An. Học thuật số và thực hành trích dẫn. Nhà xuất bản Khoa học Xã hội, 2019.
+...
+
+# Arabic Sources
+
+الغزالي, أبو حامد محمد بن محمد. &quot;منطق الفلاسفة والمنطق الأرسطي [The Logic of Philosophers and Aristotelian Logic].&quot; دراسات إسلامية, 1095.
+
+# Chinese &amp; Japanese Sources
+
+孔, 子. 论语 [Analects of Confucius]. 人民文学出版社.
+紫式部. 源氏物語 [The Tale of Genji]. 古典文学之友, 1010.
+
+# Korean Sources
+
+김, 준. 한국 문학의 역사 [A History of Korean Literature]. 서울대학교 출판부, 2018.
+</code></pre>
+<p><strong>Confirm or correct:</strong> Is partitioning by Unicode script the right primitive for your bibliography, or do you need partitioning by language code? Is collapsing Chinese and Japanese into a single <code>Hani</code> section acceptable, or should they always be separated? Does the heading model (<code>Latn</code>, <code>Arab</code>, <code>Hani</code>, <code>Hang</code>) cover your use cases, or are there common scripts missing?</p>
+<hr>
+<h3>Scenario 4: Native CJK ordering</h3>
+<pre><code class="language-bash">citum render refs \
+  -b examples/multilingual-refs.yaml \
+  -s styles/experimental/jm-turabian-multilingual.yaml
+</code></pre>
+<p>This style uses <code>use-native-ordering: true</code> and <code>delimiter: &quot;&quot;</code> for CJK, rendering family-first with no inter-part space. In the bibliography (which uses <code>name-form: initials</code>):</p>
+<pre><code>子.孔. 论语 [Analects of Confucius]. 人民文学出版社.
+준.김. 한국 문학의 역사 [A History of Korean Literature]. 서울대학교 출판부, 2018.
+紫式部. 源氏物語 [The Tale of Genji]. 古典文学之友, 1010.
+</code></pre>
+<p><strong>Confirm or correct:</strong> Is <code>子.孔</code> the right initialized form, or should CJK names never be initialized at all (since single-character given names can&#39;t be meaningfully abbreviated)? Does <code>use-native-ordering: true</code> interact correctly with name inversion in your style context?</p>
+<hr>
+<h2>Specs</h2>
+<p>The full design documentation is in citum-core:</p>
+<ul>
+<li><a href="https://github.com/citum/citum-core/blob/main/docs/specs/MULTILINGUAL.md"><code>docs/specs/MULTILINGUAL.md</code></a> — overview: data model, style configuration, processor logic, transliteration matching strategy, disambiguation</li>
+<li><a href="https://github.com/citum/citum-core/blob/main/docs/specs/MULTILINGUAL_NAMES.md"><code>docs/specs/MULTILINGUAL_NAMES.md</code></a> — script-aware name ordering and separators; precedence rules</li>
+<li><a href="https://github.com/citum/citum-core/blob/main/docs/specs/MULTILINGUAL_BIBLIOGRAPHY_PARTITIONING.md"><code>docs/specs/MULTILINGUAL_BIBLIOGRAPHY_PARTITIONING.md</code></a> — sort-only, sections, and sort-and-sections modes</li>
+<li><a href="https://github.com/citum/citum-core/blob/main/docs/architecture/PRIOR_ART.md"><code>docs/architecture/PRIOR_ART.md</code></a> — comparison with CSL-M, biblatex, citeproc-rs, and BibTeX</li>
+</ul>
+<hr>
+<h2>How to give feedback</h2>
+<p><strong>Design questions — &quot;did we get this right?&quot;</strong> → post to <a href="https://github.com/citum/citum-core/discussions">citum-core Discussions</a>. There&#39;s already a <a href="https://github.com/citum/citum-core/discussions">Notes on names</a> thread there, and I&#39;ll be watching for new ones. This is the right place for &quot;here&#39;s how my discipline handles this&quot; or &quot;the model is missing this concept.&quot;</p>
+<p><strong>Concrete rendering bugs</strong> → open an <a href="https://github.com/citum/citum-core/issues">Issue</a> with the <code>multilingual</code> label.</p>
+<p>To make your feedback actionable — both for me to evaluate and for the project to implement — please include:</p>
+<ol>
+<li><strong>The exact command</strong> you ran (or the style and reference YAML you used).</li>
+<li><strong>A minimal reference snippet</strong> — the YAML record that triggered the problem.</li>
+<li><strong>Actual output</strong> — what citum produced.</li>
+<li><strong>Expected output</strong> — what it should have produced, with a pointer to the authority: a style manual, national standard, disciplinary convention, or concrete published example.</li>
+<li><strong>Language, script, and romanization scheme</strong> involved.</li>
+<li><strong>Why it matters in practice</strong> — a sentence on who encounters this and how often.</li>
+</ol>
+<p>I&#39;m most interested in whether the fundamental model — parallel metadata fields, style-requested views, script-aware rendering — is the right abstraction, or whether there are citation practices that it cannot express at all. That&#39;s the thing to tell me before 1.0.</p>
+
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-gray-100">
+            <a href="/news/" class="btn-secondary">← Back to News</a>
+        </div>
+    </article>
+
+    <footer class="mt-20 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
+      Citum &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; <a href="https://github.com/citum" class="text-gray-500 hover:text-gray-800 no-underline">GitHub</a>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('.prose img');
+      
+      images.forEach(img => {
+        // Skip images that are already wrapped in links
+        if (img.closest('a')) return;
+
+        img.addEventListener('click', () => {
+          const overlay = document.createElement('div');
+          overlay.className = 'lightbox-overlay';
+          
+          const zoomedImg = document.createElement('img');
+          zoomedImg.src = img.src;
+          zoomedImg.alt = img.alt;
+          zoomedImg.className = 'lightbox-img';
+          
+          overlay.appendChild(zoomedImg);
+          document.body.appendChild(overlay);
+          
+          document.body.style.overflow = 'hidden';
+          
+          const closeLightbox = () => {
+            overlay.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleEsc);
+          };
+          
+          const handleEsc = (e) => {
+            if (e.key === 'Escape') closeLightbox();
+          };
+          
+          overlay.addEventListener('click', closeLightbox);
+          document.addEventListener('keydown', handleEsc);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
