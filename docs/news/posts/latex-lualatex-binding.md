@@ -90,3 +90,7 @@ Features demonstrated: integral and non-integral citations, locators, name memor
 - Feedback welcome, especially from people who work at the intersection of LaTeX and bibliography tooling.
 
 Source is at [citum/citum-labs](https://github.com/citum/citum-labs/tree/main/bindings/latex). Issues and discussion go to [citum-core on GitHub](https://github.com/citum/citum-core).
+
+## Feedback?
+
+If you have questions or feedback, post it on [this discussion thread](https://github.com/citum/citum-labs/discussions/12).
