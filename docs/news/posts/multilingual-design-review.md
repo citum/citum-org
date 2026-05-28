@@ -205,7 +205,7 @@ The full design documentation is in citum-core:
 
 ## How to give feedback
 
-**Design questions — "did we get this right?"** → post to [citum-core Discussions](https://github.com/citum/citum-core/discussions). There's already a [Notes on names](https://github.com/citum/citum-core/discussions/70) thread there, and I'll be watching for new ones. This is the right place for "here's how my discipline handles this" or "the model is missing this concept."
+**Design questions — "did we get this right?"** → post to [citum-core Discussions](https://github.com/citum/citum-core/discussions/828). This is the right place for "here's how my discipline handles this" or "the model is missing this concept."
 
 **Concrete rendering bugs** → open an [Issue](https://github.com/citum/citum-core/issues) with the `multilingual` label.
 
