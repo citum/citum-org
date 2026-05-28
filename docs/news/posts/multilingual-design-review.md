@@ -45,7 +45,7 @@ author:
 ```yaml
 options:
   multilingual:
-    title-mode: combined       # original [translation]
+    title-mode: combined       # primary [translation]; primary is the romanized form under preferred-script
     name-mode: transliterated  # use the romanized form
     preferred-script: Latn
 ```
@@ -77,9 +77,9 @@ cargo install citum
 You then need to clone the citum-core repo, like so:
 
 ```bash
-git clone https://github.com/citum/citum-core.git --depth 1 # last argument is if you don't want the full history
+git clone https://github.com/citum/citum-core.git --depth 1 # --depth 1 is a shallow clone; drop it if you want full history
 cd citum-core
-````
+```
 
 Then try each scenario below.
 
@@ -93,7 +93,7 @@ citum render refs \
   -s styles/iso690-numeric.yaml
 ```
 
-This style uses `name-mode: transliterated` and `title-mode: combined`. The bibliography for the Japanese and Chinese records renders romanized names and titles, with bracketed translations:
+This style uses `name-mode: transliterated` and `title-mode: combined`. The bibliography for the Japanese, Chinese, and Korean records renders romanized names and titles, with bracketed translations:
 
 ```
 [1] Murasaki, S. Genji Monogatari [The Tale of Genji].: 古典文学之友. 1010.
@@ -101,7 +101,7 @@ This style uses `name-mode: transliterated` and `title-mode: combined`. The bibl
 [8] Kim, J. Hanguk Munhak-ui Yeoksa [A History of Korean Literature].: 서울대학교 출판부. 2018.
 ```
 
-**Confirm or correct:** Is `name [translation]` the right combined view for your discipline's conventions? Is the choice of romanization key — Hepburn for Japanese, Pinyin for Chinese, RR for Korean — what you'd expect?
+**Confirm or correct:** Is `title [translation]` the right combined view for your discipline's conventions? Is the choice of romanization key — Hepburn for Japanese, Pinyin for Chinese, RR for Korean — what you'd expect?
 
 The Arabic entry has no transliteration in the data (only a translation), so it falls back to original script. But initialization is applied to the Arabic given name, producing `أحمبم` — clearly wrong. **Open question: should initialization ever be applied to non-Latin script names, or should it be suppressed entirely when no transliteration is available?**
 
@@ -178,15 +178,17 @@ citum render refs \
   -s styles/experimental/jm-turabian-multilingual.yaml
 ```
 
-This style uses `use-native-ordering: true` and `delimiter: ""` for CJK, rendering family-first with no inter-part space. In the bibliography (which uses `name-form: initials`):
+This style sets `use-native-ordering: true` and `delimiter: ""` for CJK, *intending* family-first rendering with no inter-part space. But the output is given-first — the native-ordering option does not override the template's `name-order: given-first`. In the bibliography (which uses `name-form: initials`):
 
 ```
-子.孔. 论语 [Analects of Confucius]. 人民文学出版社.
 준.김. 한국 문학의 역사 [A History of Korean Literature]. 서울대학교 출판부, 2018.
+子.孔. 论语 [Analects of Confucius]. 人民文学出版社, 
 紫式部. 源氏物語 [The Tale of Genji]. 古典文学之友, 1010.
 ```
 
-**Confirm or correct:** Is `子.孔` the right initialized form, or should CJK names never be initialized at all (since single-character given names can't be meaningfully abbreviated)? Does `use-native-ordering: true` interact correctly with name inversion in your style context?
+Confucius is `family: 孔 / given: 子`, so `子.孔` is given-first, not the family-first form native East Asian convention expects. (Note too the dangling `人民文学出版社,` — `issued: "500 BCE"` renders no year.)
+
+**Open question:** when a style sets `use-native-ordering: true`, should that override an explicit `name-order` in the template, or is given-first the correct default until family-first is configured per group? And should CJK names be initialized at all, given that single-character given names can't be meaningfully abbreviated?
 
 ---
 
@@ -203,7 +205,7 @@ The full design documentation is in citum-core:
 
 ## How to give feedback
 
-**Design questions — "did we get this right?"** → post to [citum-core Discussions](https://github.com/citum/citum-core/discussions). There's already a [Notes on names](https://github.com/citum/citum-core/discussions) thread there, and I'll be watching for new ones. This is the right place for "here's how my discipline handles this" or "the model is missing this concept."
+**Design questions — "did we get this right?"** → post to [citum-core Discussions](https://github.com/citum/citum-core/discussions). There's already a [Notes on names](https://github.com/citum/citum-core/discussions/70) thread there, and I'll be watching for new ones. This is the right place for "here's how my discipline handles this" or "the model is missing this concept."
 
 **Concrete rendering bugs** → open an [Issue](https://github.com/citum/citum-core/issues) with the `multilingual` label.
 
