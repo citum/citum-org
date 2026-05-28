@@ -62,12 +62,16 @@ The design draws on two established systems. **CSL-M** (the Juris-M multilingual
 
 ## Try it yourself
 
-The scenarios below all run against the same example bibliography that ships with citum-core. Clone the repo and run:
+The scenarios below all run against the same example bibliography that ships with citum-core. You can install the `citum` binary like so:
 
 ```bash
-git clone https://github.com/citum/citum-core
-cd citum-core
-cargo build --bin citum
+curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | sh
+```
+
+Or, if you have a Rust toolchain installed:
+
+```bash
+cargo install citum
 ```
 
 Then try each scenario.
