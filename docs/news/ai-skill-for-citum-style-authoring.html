@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI skill for Citum style authoring | News | Citum</title>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    /* Lightbox styles */
+    .prose img {
+      cursor: zoom-in;
+      transition: opacity 0.2s ease;
+    }
+    .prose img:hover {
+      opacity: 0.9;
+    }
+    .lightbox-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: zoom-out;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .lightbox-img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.2s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <header class="glass-nav sticky top-0 z-10">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
+      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
+          <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
+            <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
+          </div>
+          <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
+        </a>
+      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
+        <a class="nav-link" href="https://citum.org">Home</a>
+        <a class="nav-link active" href="/news/" aria-current="page">News</a>
+        <a class="nav-link" href="https://docs.citum.org">Docs</a>
+        <a class="nav-link" href="https://hub.citum.org">Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[800px] px-5 py-14 pb-20">
+    <article>
+        <header class="mb-10">
+            <div class="kicker mb-3">May 22, 2026</div>
+            <h1 class="font-bold leading-tight tracking-tight text-gray-900 text-4xl md:text-5xl mb-4">AI skill for Citum style authoring</h1>
+            <p class="text-xl text-gray-500 leading-relaxed italic">A new external skill teaches Claude Code and other AI agents how to author, extend, and validate Citum YAML styles without a local citum-core checkout.</p>
+        </header>
+
+        <div class="prose prose-slate prose-blue max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
+            <h1>AI skill for Citum style authoring</h1>
+<p>We&#39;ve published a new AI skill for Citum style authors: <a href="https://github.com/citum/skills"><code>citum/skills</code></a>.
+Install it in Claude Code or any <code>skills</code>-compatible agent with one command:</p>
+<pre><code class="language-bash">npx skills add citum/skills
+</code></pre>
+<p>Note: as I write this in mid-2026, I&#39;ve confirmed this skill works well with both Claude Code and Codex.</p>
+<h2>What it does</h2>
+<p>Style authoring is a domain LLMs get wrong in a predictable way. 
+Ask an agent to &quot;create a Citum citation style&quot; without guidance, and it reaches for what it knows: CSL&#39;s macro system — <code>&lt;macro&gt;</code> elements, name lists, template references. 
+None of that exists in Citum.</p>
+<p>The skill addresses this by frontloading a <strong>Structural Model</strong> section that explains how Citum actually works:</p>
+<ul>
+<li><strong>Style-level inheritance</strong> (<code>extends: apa-7th</code>): inherit an entire compiled-in base style and override only what differs.</li>
+<li><strong>Type-variant diffs</strong>: within <code>bibliography.type-variants</code>, each entry is either a full component list or a structural diff — <code>modify</code>, <code>remove</code>, and <code>add</code> operations keyed by component selectors.</li>
+</ul>
+<p>A selector like <code>match: {variable: doi}</code> targets a specific component in the parent template. 
+Getting it wrong produces silent errors, which is why the skill also mandates a <strong>Research Parent</strong> phase: read the parent type&#39;s actual component list before writing any selector.</p>
+<h2>Validation workflow</h2>
+<p>Full CLI validation is available as long as <code>citum</code> is on your PATH.</p>
+<p>The skill treats <code>citum check --strict</code> as the first gate — fast schema validation that catches unknown fields before you spend time on rendering. 
+Then <code>citum render refs</code> confirms the output is correct.</p>
+<p>The skill works without a local citum-core checkout; it fetches the published JSON Schema and reads example styles from GitHub. </p>
+<p>If you do have a local citum-core repository checkout, the skill can take full advantage of it: rather than consulting the published schema, it reads the style engine&#39;s source directly, which gives more precise field guidance. 
+This is mainly useful for contributors working on the engine itself — the skill works well either way.</p>
+<h2>Porting from CSL</h2>
+<p>If you have an existing <code>.csl</code> style file and want to convert it to Citum, just ask — the skill handles the process for you.</p>
+<p>When <code>citum-migrate</code> is available, the skill uses it to do the heavy lifting: it translates the CSL XML automatically, then validates the result and cleans up anything that needs attention. If the migrator isn&#39;t installed, the skill falls back to translating the style manually, using the Citum schema and existing styles as reference.</p>
+<p>One of the more useful outcomes of migration is a <em>minimal</em> result. If your CSL style is already based on a format Citum knows — APA, Chicago, IEEE, and so on — the skill can often produce just a short list of overrides rather than a full style definition. That&#39;s easier to read, easier to maintain, and usually a much better starting point for further customization:</p>
+<pre><code class="language-bash">citum-migrate style.csl &gt; style.yaml
+citum check -s style.yaml --strict
+</code></pre>
+<h2>Getting started</h2>
+<p>Install <code>citum</code> and <code>citum-migrate</code>:</p>
+<pre><code class="language-bash">curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | CITUM_COMPONENTS=citum,citum-migrate sh
+</code></pre>
+<p>Then add the skill:</p>
+<pre><code class="language-bash">npx skills add citum/skills
+</code></pre>
+<p>Example prompts that trigger it:</p>
+<ul>
+<li><em>Create a Citum style for Chemical Communications — numeric, author initials, italic journal titles.</em></li>
+<li><em>Extend apa-7th: remove page numbers from chapter entries.</em></li>
+<li><em>Migrate abc.csl to Citum and keep it minimal if it extends a known parent.</em></li>
+<li><em>Validate my style.yaml and explain any errors.</em></li>
+</ul>
+<h2>Future possibilities</h2>
+<p>As I suggested above, today, the models in Claude Code and Codex are the most adept at this sort of work. 
+But it should work with other models too, and my hope is that open alternatives evolve enough over the next year or so that they can provide a viable alternative.
+I should also add I haven&#39;t myself tested the best of the latest open models.</p>
+<p>Regardless, when they are capable enough, I am thinking, this sort of logic could be cheaply integrated into a web app. 
+Here, for example, is a mockup of an idea that Claude Design came up with.</p>
+<p><img src="../img/llm-style-editor.jpg" alt="Mockup of an LLM-powered style editor"></p>
+<p>Source and issue tracker: <a href="https://github.com/citum/skills">github.com/citum/skills</a>.</p>
+
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-gray-100">
+            <a href="/news/" class="btn-secondary">← Back to News</a>
+        </div>
+    </article>
+
+    <footer class="mt-20 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
+      Citum &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; <a href="https://github.com/citum" class="text-gray-500 hover:text-gray-800 no-underline">GitHub</a>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('.prose img');
+      
+      images.forEach(img => {
+        // Skip images that are already wrapped in links
+        if (img.closest('a')) return;
+
+        img.addEventListener('click', () => {
+          const overlay = document.createElement('div');
+          overlay.className = 'lightbox-overlay';
+          
+          const zoomedImg = document.createElement('img');
+          zoomedImg.src = img.src;
+          zoomedImg.alt = img.alt;
+          zoomedImg.className = 'lightbox-img';
+          
+          overlay.appendChild(zoomedImg);
+          document.body.appendChild(overlay);
+          
+          document.body.style.overflow = 'hidden';
+          
+          const closeLightbox = () => {
+            overlay.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleEsc);
+          };
+          
+          const handleEsc = (e) => {
+            if (e.key === 'Escape') closeLightbox();
+          };
+          
+          overlay.addEventListener('click', closeLightbox);
+          document.addEventListener('keydown', handleEsc);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

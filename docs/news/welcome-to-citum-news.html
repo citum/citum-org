@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome to Citum News | News | Citum</title>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    /* Lightbox styles */
+    .prose img {
+      cursor: zoom-in;
+      transition: opacity 0.2s ease;
+    }
+    .prose img:hover {
+      opacity: 0.9;
+    }
+    .lightbox-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: zoom-out;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .lightbox-img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.2s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <header class="glass-nav sticky top-0 z-10">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
+      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
+          <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
+            <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
+          </div>
+          <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
+        </a>
+      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
+        <a class="nav-link" href="https://citum.org">Home</a>
+        <a class="nav-link active" href="/news/" aria-current="page">News</a>
+        <a class="nav-link" href="https://docs.citum.org">Docs</a>
+        <a class="nav-link" href="https://hub.citum.org">Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[800px] px-5 py-14 pb-20">
+    <article>
+        <header class="mb-10">
+            <div class="kicker mb-3">May 2, 2026</div>
+            <h1 class="font-bold leading-tight tracking-tight text-gray-900 text-4xl md:text-5xl mb-4">Welcome to Citum News</h1>
+            <p class="text-xl text-gray-500 leading-relaxed italic">A new space to share project updates and feature releases.</p>
+        </header>
+
+        <div class="prose prose-slate prose-blue max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
+            <h1>Introducing Citum: The Next Generation of Citation Styling</h1>
+<p>Welcome to the official Citum blog!</p>
+<p>Citum is a modern, declarative citation styling system designed to be the successor-focused evolution of CSL 1.0 (Citation Style Language). For years, citation styling has relied on
+complex XML definitions and legacy processing. With Citum, we are reimagining this ecosystem from the ground up to be faster, more maintainable, and deeply integrated with modern
+tooling.</p>
+<p>Instead of dealing with intricate XML logic, Citum styles are expressed as clean, declarative YAML or JSON templates. These templates are then rendered by a highly performant, type-safe
+Rust processor.</p>
+<h2>The Broader Project Ecosystem</h2>
+<p>Citum isn’t just an engine; it’s a complete platform for authors, developers, and style maintainers. The project is currently divided into two main pillars:</p>
+<ol>
+<li>Citum Core</li>
+</ol>
+<p>At the heart of the project is citum-core, our Rust-based engine. It provides:</p>
+<ul>
+<li>Type-Safe Processing: A robust schema and shared models for predictable, error-free rendering.</li>
+<li>The Citum CLI: Tools to render references, convert formats (including robust support for CSL-JSON, BibLaTeX, and RIS), and validate styles directly from your terminal.</li>
+<li>Migration Pipeline: A hybrid migration tool designed to seamlessly convert legacy CSL 1.0 XML styles into the modern Citum YAML format while maintaining high fidelity.</li>
+</ul>
+<ol start="2">
+<li>Citum Hub</li>
+</ol>
+<p>To make styling accessible to everyone, we are building Citum Hub—a modern web platform powered by Svelte 5, Bun, and the Citum Rust engine running via WebAssembly (WASM).</p>
+<ul>
+<li>Discover &amp; Manage: A centralized repository to browse, find, and save citation styles.</li>
+<li>Intent-Based Wizard: Create new styles simply by answering questions about how you want your citations to look, with real-time WASM-powered previews.</li>
+<li>Export Anywhere: Download your custom styles as valid Citum JSON/YAML to use in your local workflow.</li>
+</ul>
+<h2>Future Plans</h2>
+<p>We are in active development, and our immediate roadmap is focused on stabilization and adoption:</p>
+<ol>
+<li>Perfecting Legacy Migration: We are continuously refining our CSL 1.0 to Citum migration pipeline, using our compatibility dashboard and oracle verification against citeproc-js to
+ensure styles behave exactly as expected.</li>
+<li>Schema Stabilization: Locking down the core citum_schema to ensure long-term stability for style authors.</li>
+<li>Citum Hub Expansion: Expanding the intent-based creation wizard and building out the public library of community-managed styles.</li>
+<li>Tooling Integrations: Paving the way for Citum to be integrated into modern writing tools, markdown processors, and text editors.</li>
+</ol>
+<h2>We Need Your Feedback</h2>
+<p>Citum is being built for the community, and we want your input to ensure we&#39;re building the right tools for your workflow.</p>
+<ul>
+<li>Test the Engine: Clone citum-core, run the CLI, and try rendering your references or converting your existing legacy styles.</li>
+<li>Try the Hub: Test out the visual style editor and WASM integration.</li>
+<li>Share Your Thoughts: Are there specific citation edge-cases you struggle with? Is the YAML schema intuitive? We&#39;d love to hear from you in our GitHub Discussions or via issues.</li>
+</ul>
+<p>Stay tuned for more deep dives into the architecture, migration strategies, and tutorial guides. Welcome to the future of citation styling!</p>
+
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-gray-100">
+            <a href="/news/" class="btn-secondary">← Back to News</a>
+        </div>
+    </article>
+
+    <footer class="mt-20 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
+      Citum &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; <a href="https://github.com/citum" class="text-gray-500 hover:text-gray-800 no-underline">GitHub</a>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('.prose img');
+      
+      images.forEach(img => {
+        // Skip images that are already wrapped in links
+        if (img.closest('a')) return;
+
+        img.addEventListener('click', () => {
+          const overlay = document.createElement('div');
+          overlay.className = 'lightbox-overlay';
+          
+          const zoomedImg = document.createElement('img');
+          zoomedImg.src = img.src;
+          zoomedImg.alt = img.alt;
+          zoomedImg.className = 'lightbox-img';
+          
+          overlay.appendChild(zoomedImg);
+          document.body.appendChild(overlay);
+          
+          document.body.style.overflow = 'hidden';
+          
+          const closeLightbox = () => {
+            overlay.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleEsc);
+          };
+          
+          const handleEsc = (e) => {
+            if (e.key === 'Escape') closeLightbox();
+          };
+          
+          overlay.addEventListener('click', closeLightbox);
+          document.addEventListener('keydown', handleEsc);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

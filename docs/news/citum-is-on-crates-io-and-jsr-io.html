@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Citum is on crates.io and jsr.io | News | Citum</title>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    /* Lightbox styles */
+    .prose img {
+      cursor: zoom-in;
+      transition: opacity 0.2s ease;
+    }
+    .prose img:hover {
+      opacity: 0.9;
+    }
+    .lightbox-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: zoom-out;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .lightbox-img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.2s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <header class="glass-nav sticky top-0 z-10">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
+      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
+          <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
+            <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
+          </div>
+          <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
+        </a>
+      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
+        <a class="nav-link" href="https://citum.org">Home</a>
+        <a class="nav-link active" href="/news/" aria-current="page">News</a>
+        <a class="nav-link" href="https://docs.citum.org">Docs</a>
+        <a class="nav-link" href="https://hub.citum.org">Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[800px] px-5 py-14 pb-20">
+    <article>
+        <header class="mb-10">
+            <div class="kicker mb-3">May 19, 2026</div>
+            <h1 class="font-bold leading-tight tracking-tight text-gray-900 text-4xl md:text-5xl mb-4">Citum is on crates.io and jsr.io</h1>
+            <p class="text-xl text-gray-500 leading-relaxed italic">Install the Rust engine and server with cargo, or drop in the TypeScript WASM package from jsr.io — plus three integration recipes to get you from zero to citations.</p>
+        </header>
+
+        <div class="prose prose-slate prose-blue max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
+            <h1>Citum, a modern citation engine, is on crates.io and jsr.io</h1>
+<p>The first public release of Citum is now on <a href="https://crates.io">crates.io</a>. If you have a Rust toolchain, one command gets you a working citation processor:</p>
+<pre><code>cargo install citum
+</code></pre>
+<p>No Rust toolchain? A pre-built binary installer works on Linux, macOS, and Windows:</p>
+<pre><code>curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | sh
+</code></pre>
+<p>Installs to <code>$HOME/.local/bin</code> by default.</p>
+<p>For editor and plugin authors who want a long-lived JSON-RPC server:</p>
+<pre><code>cargo install citum-server
+</code></pre>
+<p>For JavaScript and TypeScript projects, the same engine ships as a WASM package on <a href="https://jsr.io/@citum/engine">jsr.io</a>:</p>
+<pre><code class="language-sh">npx jsr add @citum/engine   # Node
+</code></pre>
+<p>Deno and Bun users: see the package page for the right install command.</p>
+<p>The crates and the package ship the same engine the docs and the compatibility reports already describe — declarative YAML styles, native EDTF dates, paired bilingual scripts, style inheritance, and renderers for HTML, LaTeX, Typst, and PDF.</p>
+<h2>Who this is for</h2>
+<p>There are five ways to use Citum today. The interface differs; the engine is the same.</p>
+<p><strong>Scholars writing Djot or Markdown.</strong> If you already work with Pandoc-style citations, this should feel familiar: write <code>[@key]</code> markers in your manuscript, point at a bibliography (CSL-JSON, BibLaTeX, RIS, or Citum YAML all work), pick a style, and <code>citum render doc</code> produces HTML, LaTeX, Typst, or PDF. Markdown works today as a compatibility mode (<code>citum render -I markdown doc</code>). Djot is Citum&#39;s native format and supports rich inline markup in reference fields; its citation syntax is a draft implementation — enabled by default, but subject to change as the upstream spec evolves (see below).</p>
+<p><strong>Editor, IDE, and plugin authors.</strong> Spawn <code>citum-server</code> once per session and speak newline-delimited JSON-RPC. One <code>format_document</code> call returns formatted citations and a rendered bibliography for the entire buffer — interactive latency, no per-keystroke process spawns. The <a href="https://docs.citum.org/guides/integrations/editor-plugin.html">editor / plugin recipe</a> has a working Node client and a sample request/response pair.</p>
+<p><strong>Docs and static-site maintainers.</strong> Drop <code>citum</code> into your existing build step. The <a href="https://docs.citum.org/guides/integrations/static-site.html">static-site recipe</a> shows a Makefile pattern rule — the same shape works for npm scripts, justfiles, and CI jobs.</p>
+<p><strong>Publishers and style maintainers.</strong> House styles extend a pinned parent (APA, Chicago, …) in YAML rather than forking the whole thing. Updates to your overrides don&#39;t break when upstream changes. The <a href="https://docs.citum.org/guides/style-authoring/start.html">style authoring guide</a> is the way in.</p>
+<p><strong>JavaScript and TypeScript developers.</strong> Import <code>@citum/citum</code> directly — no Rust toolchain required. The WASM module exposes the same rendering engine: pass a bibliography and style, get back formatted citations and a bibliography string. Useful for browser apps, Deno scripts, and Node tools.</p>
+<h2>Experimental: Djot citations</h2>
+<p>Djot doesn&#39;t have an official citation syntax yet — <a href="https://github.com/jgm/djot/issues/32">issue #32</a> and <a href="https://github.com/jgm/djot/issues/343">issue #343</a> are still open.
+What Citum ships today is a draft implementation that is <strong>enabled by default</strong>: it follows the direction of the discussion (Pandoc-style bracket syntax, <code>[+@key]</code> for integral/author-in-text citations as jgm proposed) and adds a few ideas of my own where the spec is silent.</p>
+<p>The supported forms in this release:</p>
+<pre><code class="language-text">[@key]          standard parenthetical
+[+@key]         integral / author-in-text (jgm&#39;s proposed form)
+[-@key]         suppress author
+[@a; @b]        multi-cite
+[@key, p. 10]   with locator
+</code></pre>
+<p>Because Djot’s citation syntax is still being designed upstream, this support should be considered experimental and subject to change; future Citum releases may adjust the exact forms to match whatever the Djot spec eventually settles on. If you&#39;re involved in the Djot discussion, I&#39;d welcome feedback on anything here.
+The goal is to be a useful early implementation; not to get ahead of the spec.
+If you want to try it, the <a href="https://docs.citum.org/guides/integrations/djot.html">Djot integration recipe</a> has a working example and shows how Djot inline markup in reference fields differs from the Markdown mode.</p>
+<h2>Open invitations</h2>
+<ul>
+<li><strong>Try a recipe.</strong> Each of the integration pages has a fixture you can copy. Report what doesn&#39;t work.</li>
+<li><strong>File issues.</strong> <a href="https://github.com/citum/citum-core"><code>citum-core</code> on GitHub</a> is the right place. Migration cases, missing style edge cases, and integration friction are all welcome.</li>
+<li><strong>Build a browser tool or framework integration.</strong> <code>@citum/citum</code> exposes a small functional API (<code>formatDocument</code>, <code>renderCitation</code>, <code>renderBibliography</code>, …); React/Svelte/Vue wrappers and browser-bundle tooling would be welcome.</li>
+<li><strong>Word, LibreOffice, Pages, Google Docs.</strong> Citum doesn&#39;t ship plugins for these yet, but the JSON-RPC and WASM surfaces are well-suited to them. If you&#39;re interested in building one, <a href="https://github.com/citum/citum-core/discussions/734">open a thread on Discussions</a>.</li>
+</ul>
+<p>The <a href="https://docs.citum.org/compat.html">compatibility report</a> tracks where Citum stands against citeproc-js on the full CSL fixture set; biblatex-derived styles are first-class in the engine but don&#39;t have an equivalent upstream oracle. Pre-1.0 means gaps are visible and documented rather than hidden.</p>
+
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-gray-100">
+            <a href="/news/" class="btn-secondary">← Back to News</a>
+        </div>
+    </article>
+
+    <footer class="mt-20 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
+      Citum &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; <a href="https://github.com/citum" class="text-gray-500 hover:text-gray-800 no-underline">GitHub</a>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('.prose img');
+      
+      images.forEach(img => {
+        // Skip images that are already wrapped in links
+        if (img.closest('a')) return;
+
+        img.addEventListener('click', () => {
+          const overlay = document.createElement('div');
+          overlay.className = 'lightbox-overlay';
+          
+          const zoomedImg = document.createElement('img');
+          zoomedImg.src = img.src;
+          zoomedImg.alt = img.alt;
+          zoomedImg.className = 'lightbox-img';
+          
+          overlay.appendChild(zoomedImg);
+          document.body.appendChild(overlay);
+          
+          document.body.style.overflow = 'hidden';
+          
+          const closeLightbox = () => {
+            overlay.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleEsc);
+          };
+          
+          const handleEsc = (e) => {
+            if (e.key === 'Escape') closeLightbox();
+          };
+          
+          overlay.addEventListener('click', closeLightbox);
+          document.addEventListener('keydown', handleEsc);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
