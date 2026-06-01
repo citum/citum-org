@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Citing with Citum in Emacs org-mode | News | Citum</title>
+  <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../theme.css">
+  <style>
+    /* Lightbox styles */
+    .prose img {
+      cursor: zoom-in;
+      transition: opacity 0.2s ease;
+    }
+    .prose img:hover {
+      opacity: 0.9;
+    }
+    .lightbox-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: zoom-out;
+      animation: fadeIn 0.2s ease-out;
+    }
+    .lightbox-img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.2s ease-out;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <header class="glass-nav sticky top-0 z-10">
+    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
+      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
+          <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
+            <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
+          </div>
+          <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
+        </a>
+      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
+        <a class="nav-link" href="https://citum.org">Home</a>
+        <a class="nav-link active" href="/news/" aria-current="page">News</a>
+        <a class="nav-link" href="https://docs.citum.org">Docs</a>
+        <a class="nav-link" href="https://hub.citum.org">Hub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-[800px] px-5 py-14 pb-20">
+    <article>
+        <header class="mb-10">
+            <div class="kicker mb-3">June 1, 2026</div>
+            <h1 class="font-bold leading-tight tracking-tight text-gray-900 text-4xl md:text-5xl mb-4">Citing with Citum in Emacs org-mode</h1>
+            <p class="text-xl text-gray-500 leading-relaxed italic">A new org-cite export processor connects Emacs org-mode citations directly to the Citum engine over a JSON-RPC pipe — no FFI, no LaTeX intermediary, and compatible with the citar reference manager out of the box.</p>
+        </header>
+
+        <div class="prose prose-slate prose-blue max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline">
+            <h1>Citing with Citum in Emacs org-mode</h1>
+<p>A new binding in <a href="https://github.com/citum/citum-labs/tree/main/bindings/emacs">citum-labs</a> brings the Citum citation engine to Emacs <a href="https://orgmode.org">org-mode</a> through the <a href="https://orgmode.org/manual/Citations.html"><code>org-cite</code></a> framework. Like the <a href="citum-for-lualatex-an-experimental-binding.html">LuaLaTeX binding</a> before it, it speaks to <code>citum-server</code> over a newline-delimited JSON-RPC pipe. Unlike the LaTeX binding, there is no FFI option at all — and no need for one.</p>
+<h2>What org-cite is</h2>
+<p>Emacs&#39;s built-in org-cite framework (shipped since Org 9.5) separates citation <em>management</em> from citation <em>export</em>. Separate processors handle each role:</p>
+<ul>
+<li><strong>Activate / follow / insert</strong> — what happens when you type or click a citation in the editor. <a href="https://github.com/emacs-citar/citar">citar</a> is the most widely used processor for this role.</li>
+<li><strong>Export</strong> — what happens when you export an Org document to HTML, LaTeX, Markdown, or plain text. This is where <code>oc-citum</code> fits in.</li>
+</ul>
+<p>The two roles are independent. You can keep using citar for insertion and completion and add <code>oc-citum</code> solely for the export step, sharing the same <code>.bib</code> file.</p>
+<h2>The design</h2>
+<pre><code>Org document  →  oc-citum  →  citum-server (stdin/stdout)
+                                    ↓
+                            Citum engine
+                            (style + biblatex refs)
+                                    ↓
+                            rendered citations
+                            + bibliography
+</code></pre>
+<p><code>oc-citum</code> collects all citations in the document, builds a single <code>format_document</code> JSON-RPC request, and writes it to <code>citum-server</code>&#39;s stdin. One line of JSON comes back. Results are cached in the Org export channel so subsequent callbacks are pure table lookups — there is no repeated process spawning.</p>
+<p>The bibliography is read from standard <code>.bib</code> (biblatex) files, the same files citar uses. A companion change to <code>citum-server</code> (in <a href="https://github.com/citum/citum-core/pull/860">citum-core #860</a>) adds native biblatex parsing on the server side, so no client-side conversion is needed.</p>
+<h2>Setting it up</h2>
+<pre><code class="language-elisp">(add-to-list &#39;load-path &quot;/path/to/citum-labs/bindings/emacs&quot;)
+(require &#39;oc-citum)
+
+(setq org-cite-export-processors &#39;((t . (citum))))
+(setq org-cite-global-bibliography &#39;(&quot;/path/to/refs.bib&quot;))
+</code></pre>
+<p>With citar for insertion:</p>
+<pre><code class="language-elisp">(setq citar-bibliography org-cite-global-bibliography)
+(setq org-cite-insert-processor &#39;citar
+      org-cite-follow-processor &#39;citar
+      org-cite-activate-processor &#39;citar)
+</code></pre>
+<p>In a document, set the export processor and bibliography:</p>
+<pre><code class="language-org">#+cite_export: citum
+#+bibliography: refs.bib
+</code></pre>
+<p>Then export as usual: <code>C-c C-e h h</code> for HTML, <code>C-c C-e l p</code> for LaTeX PDF, and so on.</p>
+<h2>Citation styles</h2>
+<p><code>oc-citum</code> declares the full standard org-cite style set and maps each to the Citum engine&#39;s citation model:</p>
+<table>
+<thead>
+<tr>
+<th>Style</th>
+<th>In-document syntax</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Default (parenthetical)</td>
+<td><code>[cite:@key]</code></td>
+<td><code>(Author, 2024)</code></td>
+</tr>
+<tr>
+<td>Integral (narrative)</td>
+<td><code>[cite/t:@key]</code></td>
+<td><code>Author (2024)</code></td>
+</tr>
+<tr>
+<td>Author-suppressed</td>
+<td><code>[cite/na:@key]</code></td>
+<td><code>(2024)</code></td>
+</tr>
+<tr>
+<td>Capitalized</td>
+<td><code>[cite//c:@key]</code></td>
+<td><code>(Author, 2024)</code></td>
+</tr>
+<tr>
+<td>Page locator</td>
+<td><code>[cite:@key p. 42]</code></td>
+<td><code>(Author, 2024, p. 42)</code></td>
+</tr>
+<tr>
+<td>Multiple</td>
+<td><code>[cite:@a; @b]</code></td>
+<td><code>(A, 2024; B, 2019)</code></td>
+</tr>
+</tbody></table>
+<p>The style shorthand works too: <code>[cite/t:...]</code> is equivalent to <code>[cite/text:...]</code>, and <code>[cite/na:...]</code> to <code>[cite/noauthor:...]</code>.</p>
+<h2>Why this fits the citum-labs pattern</h2>
+<p>The LaTeX binding&#39;s raison d&#39;être — as described in the <a href="citum-for-lualatex-an-experimental-binding.html">earlier post</a> — was to stress-test the <code>citum-server</code> JSON-RPC protocol under a realistic integration. The Emacs binding does the same thing from a completely different runtime environment: pure interpreted Elisp, a different process model, and a different bibliography format (biblatex <code>.bib</code> instead of Citum&#39;s own YAML).</p>
+<p>The biblatex support is the substantive engine contribution here. Adding <code>RefsInput::Biblatex</code> to the server means any client — not just the Emacs binding — can now send inline <code>.bib</code> content directly, without an intermediate conversion step.</p>
+<h2>Current status and limitations</h2>
+<ul>
+<li>Works with Emacs 29.1+ and Org 9.6+.</li>
+<li>Requires <code>citum-server</code> built from the <code>feat/biblatex-refs-input</code> branch of citum-core, or any release ≥ 0.62 once that PR merges.</li>
+<li><code>nocite</code>/<code>n</code> style currently renders an inline parenthetical citation in addition to adding the entry to the bibliography — full inline suppression requires a server-side flag not yet implemented.</li>
+<li>Non-en-US locales are forwarded to the server but Citum currently falls back to en-US for most locale tags.</li>
+<li>This is an experiment in the <code>citum-labs</code> tradition: not a production package, but a working integration that can evolve.</li>
+</ul>
+<p>Source is at <a href="https://github.com/citum/citum-labs/tree/main/bindings/emacs">citum/citum-labs</a>.</p>
+<h2>Feedback?</h2>
+<p>Questions and discussion are welcome on the <a href="https://github.com/citum/citum-labs">citum-labs repository</a> or <a href="https://github.com/citum/citum-core">citum-core</a>.</p>
+
+        </div>
+        
+        <div class="mt-16 pt-8 border-t border-gray-100">
+            <a href="/news/" class="btn-secondary">← Back to News</a>
+        </div>
+    </article>
+
+    <footer class="mt-20 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
+      Citum &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; <a href="https://github.com/citum" class="text-gray-500 hover:text-gray-800 no-underline">GitHub</a>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const images = document.querySelectorAll('.prose img');
+      
+      images.forEach(img => {
+        // Skip images that are already wrapped in links
+        if (img.closest('a')) return;
+
+        img.addEventListener('click', () => {
+          const overlay = document.createElement('div');
+          overlay.className = 'lightbox-overlay';
+          
+          const zoomedImg = document.createElement('img');
+          zoomedImg.src = img.src;
+          zoomedImg.alt = img.alt;
+          zoomedImg.className = 'lightbox-img';
+          
+          overlay.appendChild(zoomedImg);
+          document.body.appendChild(overlay);
+          
+          document.body.style.overflow = 'hidden';
+          
+          const closeLightbox = () => {
+            overlay.remove();
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleEsc);
+          };
+          
+          const handleEsc = (e) => {
+            if (e.key === 'Escape') closeLightbox();
+          };
+          
+          overlay.addEventListener('click', closeLightbox);
+          document.addEventListener('keydown', handleEsc);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
