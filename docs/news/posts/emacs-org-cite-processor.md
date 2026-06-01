@@ -6,7 +6,7 @@ summary: A new org-cite export processor connects Emacs org-mode citations direc
 
 # Citing with Citum in Emacs org-mode
 
-A new binding in [citum-labs](https://github.com/citum/citum-labs/tree/main/bindings/emacs) brings the Citum citation engine to Emacs [org-mode](https://orgmode.org) through the [`org-cite`](https://orgmode.org/manual/Citations.html) framework. Like the LuaLaTeX binding before it, it speaks to `citum-server` over a newline-delimited JSON-RPC pipe. Unlike the LaTeX binding, there is no FFI option at all — and no need for one.
+A new binding in [citum-labs](https://github.com/citum/citum-labs/tree/main/bindings/emacs) brings the Citum citation engine to Emacs [org-mode](https://orgmode.org) through the [`org-cite`](https://orgmode.org/manual/Citations.html) framework. Like the [LuaLaTeX binding](citum-for-lualatex-an-experimental-binding.html) before it, it speaks to `citum-server` over a newline-delimited JSON-RPC pipe. Unlike the LaTeX binding, there is no FFI option at all — and no need for one.
 
 ## What org-cite is
 
