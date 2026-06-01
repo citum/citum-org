@@ -90,8 +90,8 @@ The biblatex support is the substantive engine contribution here. Adding `RefsIn
 - Non-en-US locales are forwarded to the server but Citum currently falls back to en-US for most locale tags.
 - This is an experiment in the `citum-labs` tradition: not a production package, but a working integration that can evolve.
 
-Source is at [citum/citum-labs](https://github.com/citum/citum-labs/tree/main/bindings/emacs). The companion engine PR is [citum-core #860](https://github.com/citum/citum-core/pull/860).
+Source is at [citum/citum-labs](https://github.com/citum/citum-labs/tree/main/bindings/emacs).
 
 ## Feedback?
 
-Questions and discussion are welcome on [the citum-labs PR](https://github.com/citum/citum-labs/pull/13) or the [citum-core repository](https://github.com/citum/citum-core).
+Questions and discussion are welcome on the [citum-labs repository](https://github.com/citum/citum-labs) or [citum-core](https://github.com/citum/citum-core).
