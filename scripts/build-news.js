@@ -35,7 +35,7 @@ function build() {
 
         const frontmatter = yaml.load(match[1]);
         const htmlContent = marked.parse(match[2]);
-        const slug = slugify(frontmatter.title);
+        const slug = frontmatter.slug || slugify(frontmatter.title);
         const dateObj = new Date(frontmatter.date);
         const date = new Date(dateObj.getTime() + dateObj.getTimezoneOffset() * 60000).toLocaleDateString('en-US', {
             year: 'numeric', month: 'long', day: 'numeric'
