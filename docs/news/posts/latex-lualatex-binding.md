@@ -1,21 +1,27 @@
 ---
-title: "Citum for LuaLaTeX: an experimental binding"
-date: 2026-05-25
-summary: An experimental LuaLaTeX package that calls the Citum engine directly from inside a LaTeX document — with two transport modes, the second of which avoids loading external binaries.
+title: "Citum for LuaLaTeX: a pipe-based citation package"
+date: 2026-06-08
+slug: citum-for-lualatex-an-experimental-binding
+summary: A LuaLaTeX package that formats citations through citum-server over JSON-RPC, with split bibliographies and no runtime shared-library loading.
 ---
 
-# Citum for LuaLaTeX: an experimental binding
+# Citum for LuaLaTeX: a pipe-based citation package
 
-The `citum` LaTeX package is a LuaLaTeX binding that calls the Citum engine directly during the LaTeX pass — no Biber, no BibTeX, no external build step. It lives in [citum-labs](https://github.com/citum/citum-labs/tree/main/bindings/latex).
+The `citum` LaTeX package brings the Citum citation engine into LuaLaTeX without
+BibTeX, Biber, or runtime shared-library loading. LuaLaTeX records the document's
+citations, sends one `format_document` request to `citum-server` over
+stdin/stdout JSON-RPC, and reads rendered citations and bibliography blocks back
+from a cache on the next LaTeX pass.
 
-## What it does
+The package now lives in the standalone
+[citum-latex](https://github.com/citum/citum-latex) repository.
 
-You load it like any other package:
+## What it looks like
 
 ```latex
 \usepackage[
     style   = apa-7th,
-    bibfile = my-references,
+    bibfile = refs.bib,
 ]{citum}
 ```
 
@@ -23,74 +29,98 @@ Then cite in the document:
 
 ```latex
 As \textcite{harrington1891} observed, bibliographic method has long been
-contested \cite[p.~42]{chen2017}. More recently, \textcite{okafor2024}
-provided computational evidence at scale.
+contested \cite[p.~42]{chen2017}.
 ```
 
-The engine renders citations and bibliography during the LuaLaTeX pass itself, using the same style files and rendering logic as the CLI and the server.
+The same engine renders citations and bibliographies for the CLI, server, WASM
+surface, Emacs org-cite processor, and LuaLaTeX package. The LaTeX package is a
+client, not a second implementation.
 
-## Why this project exists
+## Why the architecture matters
 
-Projects in `citum-labs` are experiments. Their purpose is to test and refine the citum-core code — in this case the C FFI surface, the citation API, and the `citum-server` JSON-RPC protocol — in a realistic integration context. They are not production tools, and may change without notice.
+TeX distribution policy is hostile to packages that load arbitrary external
+shared libraries at runtime. The current package avoids that problem by keeping
+`citum-server` entirely outside the LuaLaTeX process. The `scripts/citum-lualatex`
+compile driver orchestrates the passes: LuaLaTeX writes a JSON-RPC request file,
+the driver runs `citum-server` on it between passes, and the next LuaLaTeX pass
+reads the cached result. No `--shell-escape` is required. An opt-in `pipe` backend
+lets LuaLaTeX spawn the server directly when shell-escape is available.
 
-That said: [Zeping Lee](https://github.com/zepinglee), who maintains a Lua-based citation processor for LaTeX and is well-known in the CSL community, posted to the TeX Live mailing list in March 2026 asking whether this kind of binding could be added to TeX Live:
+The document flow is deliberately close to BibTeX/Biber:
 
-> [tex-live] [Proposal] Adding a new Lua citation processor to TeX Live — March 2026
-
-[Karl Berry's reply](https://tug.org/pipermail/tex-live/2026-March/052256.html) made clear that TeX Live policy prohibits loading external shared libraries at run time, for security and sandboxing reasons. That makes the FFI transport — which loads `libcitum_engine` via LuaJIT — a dead end for broad distribution.
-
-## Two transport modes
-
-The package tries FFI first, then falls back to pipe/RPC:
-
-**FFI** — loads `libcitum_engine` directly via LuaJIT. Fast for local development. Requires building the shared library from `citum-core`:
-
-```
-cargo build -p citum-engine --release --features ffi
-```
-
-**Pipe/RPC** — spawns `citum-server` as a subprocess and speaks JSON-RPC 2.0 over stdin/stdout. No shared library loading. This is the path compatible with TeX Live policy:
-
-```
-cargo install citum-server
+```text
+scripts/citum-lualatex  ->  LuaLaTeX pass 1  (writes JOB.citum_request.json)
+scripts/citum-lualatex  ->  citum-server      (formats document, writes cache)
+scripts/citum-lualatex  ->  LuaLaTeX pass 2  (reads cache, prints output)
 ```
 
-If `citum-server` is on your PATH (or set via the `server` package option), the pipe transport is selected automatically.
+That whole-document request is the important part. Citation processors need
+document context for disambiguation, name memory, note behavior, and bibliography
+selection. Formatting one citation at a time is the wrong abstraction.
 
-## What Citum styles are, briefly
+## Split bibliographies
 
-Citum is not a CSL processor — it is a successor project with its own style format. Where CSL is XML-based and procedural, Citum styles are YAML-based and declarative, with a richer data model (native EDTF dates, structured archive info, multilingual fields, and more). Existing CSL styles can be translated; Citum-native styles are authored directly in the YAML format documented at [docs.citum.org](https://docs.citum.org/guides/style-authoring/start.html).
-
-## A taste of the feature set
-
-The demo document (`bindings/latex/demo/citum-example.tex`) uses an artificial set of references designed to exercise the engine across several feature dimensions:
+The package can request bibliography blocks from the server:
 
 ```latex
-% Integral citation with locator
-\textcite[ch.~3]{chen2020} extends this analysis to the digital transition.
+\subsection*{Primary Sources}
+\printcitumbibliography[type=manuscript]
 
-% Non-integral with EDTF approximate date (2022~ → "ca. 2022")
-Citation practices differ across contexts \cite{garcia2022}.
-
-% Archival reference — EDTF uncertain date (1891? → "1891?") + archive-info
-\textcite{harrington1891} noted these tensions in an 1891 manuscript
-held at the British Library \cite[ff.~12--15]{harrington1891}.
-
-% Preprint with arXiv eprint identifier
-\textcite{okafor2024} provide computational evidence at scale.
+\subsection*{Secondary Sources}
+\printcitumbibliography[not-type=manuscript]
 ```
 
-Features demonstrated: integral and non-integral citations, locators, name memory across two works by the same author, EDTF uncertain and approximate dates, archival references with structured `archive-info`, and preprints with `eprint` identifiers. The companion reference data and a richer interactive HTML version are at [docs.citum.org/demo.html](https://docs.citum.org/demo.html).
+This is not Lua-side filtering. The package sends `bibliography_blocks` to
+`citum-server`, each block carries a real Citum `BibliographyGroup` selector, and
+the server applies first-match assignment so entries emitted in the primary block
+do not repeat in the secondary block.
+
+For historians, legal scholars, editors, and humanities writers, this matters:
+primary/secondary splits and source-class bibliographies are not decorative
+features. They are part of the scholarly apparatus.
+
+## Bibliography input
+
+LuaLaTeX users can point `bibfile` at either Citum YAML references or ordinary
+BibLaTeX `.bib` files:
+
+```latex
+\usepackage[style=apa-7th, bibfile=refs.bib]{citum}
+\usepackage[style=apa-7th, bibfile=refs.yaml]{citum}
+```
+
+The BibLaTeX parsing happens server-side through Citum's `RefsInput::Biblatex`
+path, so there is no client-side conversion step in the LaTeX package.
+
+## What this demonstrates
+
+The demo document exercises more than a parenthetical citation:
+
+- integral and non-integral citations
+- locators
+- grouped citations with item prefixes
+- EDTF uncertain and approximate dates
+- archival manuscript metadata
+- multilingual titles
+- primary/secondary split bibliographies
+
+Those features are meant to show the broader point: Citum is not just a CSL
+renderer with a different file extension. It is a citation engine with a richer
+data model, declarative YAML styles, structured archival fields, EDTF dates, and
+a server protocol that lets real host environments integrate without duplicating
+processor logic.
 
 ## Current status
 
-- Compiles with LuaLaTeX on macOS and Linux in both transport modes.
-- Not suitable for TeX Live distribution in its current form (FFI mode) or in general as a production-ready package.
-- The pipe/RPC mode is the right direction for any future distribution story.
-- Feedback welcome, especially from people who work at the intersection of LaTeX and bibliography tooling.
+This is a pre-CTAN package candidate. It compiles under LuaLaTeX with no
+`--shell-escape` required (the default external backend), requires `citum-server`,
+and is designed around the distribution constraint that TeX packages should not
+load runtime shared libraries.
 
-Source is at [citum/citum-labs](https://github.com/citum/citum-labs/tree/main/bindings/latex). Issues and discussion go to [citum-core on GitHub](https://github.com/citum/citum-core).
+The next useful feedback is practical: LaTeX users who maintain complex
+bibliographies, split source lists, or citation-heavy scholarly documents should
+try the package and report where the command surface, build workflow, or rendered
+output still fails their real documents.
 
-## Feedback?
-
-If you have questions or feedback, post it on [this discussion thread](https://github.com/citum/citum-labs/discussions/12).
+Source is at [citum/citum-latex](https://github.com/citum/citum-latex). The
+engine and server live in [citum/citum-core](https://github.com/citum/citum-core).
