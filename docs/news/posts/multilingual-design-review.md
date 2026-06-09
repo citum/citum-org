@@ -18,12 +18,12 @@ Citum stores parallel metadata side-by-side in the reference record: an original
 
 ```yaml
 title:
-  original: "源氏物語"
+  original: "ノルウェイの森"
   lang: "ja"
   transliterations:
-    ja-Latn-hepburn: "Genji Monogatari"
+    ja-Latn-hepburn: "Noruwei no Mori"
   translations:
-    en: "The Tale of Genji"
+    en: "Norwegian Wood"
 ```
 
 **A multilingual contributor:**
@@ -31,13 +31,13 @@ title:
 ```yaml
 author:
   - original:
-      family: "紫式部"
-      given: ""
+      family: "村上"
+      given: "春樹"
     lang: "ja"
     transliterations:
       ja-Latn-hepburn:
-        family: "Murasaki"
-        given: "Shikibu"
+        family: "Murakami"
+        given: "Haruki"
 ```
 
 **A style requesting a transliterated view:**
@@ -96,7 +96,7 @@ citum render refs \
 This style uses `name-mode: transliterated` and `title-mode: combined`. The bibliography for the Japanese, Chinese, and Korean records renders romanized names and titles, with bracketed translations:
 
 ```
-[1] Murasaki, S. Genji Monogatari [The Tale of Genji].: 古典文学之友. 1010.
+[1] Murakami, H. Noruwei no Mori [Norwegian Wood].: 講談社. 1987.
 [7] Kǒng, Z. Lùnyǔ [Analects of Confucius].: 人民文学出版社.
 [8] Kim, J. Hanguk Munhak-ui Yeoksa [A History of Korean Literature].: 서울대학교 출판부. 2018.
 ```
@@ -159,7 +159,7 @@ Nguyễn, Văn An. Học thuật số và thực hành trích dẫn. Nhà xuất
 # Chinese & Japanese Sources
 
 孔, 子. 论语 [Analects of Confucius]. 人民文学出版社.
-紫式部. 源氏物語 [The Tale of Genji]. 古典文学之友, 1010.
+村上, 春樹. ノルウェイの森 [Norwegian Wood]. 講談社, 1987.
 
 # Korean Sources
 
@@ -183,7 +183,7 @@ This style sets `use-native-ordering: true` and `delimiter: ""` for CJK, *intend
 ```
 준.김. 한국 문학의 역사 [A History of Korean Literature]. 서울대학교 출판부, 2018.
 子.孔. 论语 [Analects of Confucius]. 人民文学出版社, 
-紫式部. 源氏物語 [The Tale of Genji]. 古典文学之友, 1010.
+村上.春樹. ノルウェイの森 [Norwegian Wood]. 講談社, 1987.
 ```
 
 Confucius is `family: 孔 / given: 子`, so `子.孔` is given-first, not the family-first form native East Asian convention expects. (Note too the dangling `人民文学出版社,` — `issued: "500 BCE"` renders no year.)
