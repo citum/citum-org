@@ -115,7 +115,7 @@ citum render refs \
   -s styles/experimental/multilingual-academic.yaml
 ```
 
-This style groups the bibliography by language. Vietnamese sources are sorted given-family (following Vietnamese convention); Western sources are sorted family-given. The rendered bibliography:
+This style groups the bibliography by language. Vietnamese convention is family-first — the family name Nguyễn comes before the given name Văn An — but the current output renders Vietnamese names given-family, which is a bug. Western sources use family-given. The rendered bibliography:
 
 ```
 # Vietnamese Sources
@@ -178,7 +178,7 @@ citum render refs \
   -s styles/experimental/jm-turabian-multilingual.yaml
 ```
 
-This style sets `use-native-ordering: true` and `delimiter: ""` for CJK, *intending* family-first rendering with no inter-part space. But the output is given-first — the native-ordering option does not override the template's `name-order: given-first`. In the bibliography (which uses `name-form: initials`):
+This style sets `use-native-ordering: true` and `delimiter: ""` for CJK, intending family-first rendering with no inter-part space. For fully CJK-script names (original Han/Hangul characters), the output is still given-first — `use-native-ordering` does not yet override an explicit `name-order: given-first` in the template. In the bibliography (which uses `name-form: initials`):
 
 ```
 준.김. 한국 문학의 역사 [A History of Korean Literature]. 서울대학교 출판부, 2018.
@@ -189,6 +189,46 @@ This style sets `use-native-ordering: true` and `delimiter: ""` for CJK, *intend
 Confucius is `family: 孔 / given: 子`, so `子.孔` is given-first, not the family-first form native East Asian convention expects. (Note too the dangling `人民文学出版社,` — `issued: "500 BCE"` renders no year.)
 
 **Open question:** when a style sets `use-native-ordering: true`, should that override an explicit `name-order` in the template, or is given-first the correct default until family-first is configured per group? And should CJK names be initialized at all, given that single-character given names can't be meaningfully abbreviated?
+
+*Note: `use-native-ordering: true` now works correctly for transliterated CJK names rendered with `name-mode: pattern` — see Scenario 5 below. The open question here concerns original-script names where the template sets `name-order` explicitly.*
+
+---
+
+### Scenario 5: Romanized name with original-script append (CNE Chicago)
+
+The Cite Non-English (CNE) convention — used in East Asian studies and related fields — renders names and titles in romanized form followed immediately by the original script. Citum supports this via `name-mode: pattern`, which lets a style specify the sequence and wrapping of views (transliterated, original, translated) explicitly:
+
+```yaml
+options:
+  multilingual:
+    name-mode:
+      pattern:
+        - view: transliterated
+        - view: original
+    title-mode:
+      pattern:
+        - view: transliterated
+        - view: original
+          wrap: none
+        - view: translated
+          wrap: brackets
+```
+
+```bash
+citum render refs \
+  -b tests/fixtures/multilingual/multilingual-cne-chicago.yaml \
+  -s styles/embedded/chicago-notes-18th-cne.yaml
+```
+
+```
+Hua Linfu 华林甫, "Qingdai yilai…清代以来…[A preliminary study of floods and droughts…]", _Zhongguo shehui kexue 中国社会科学_ 1 (1999): 168–79.
+Kang U-bang 姜友邦, _Wŏnyung kwa chohwa…圓融과調和…[Synthesis and harmony…]_ (Yŏrhwadang, 1990).
+Abe Yoshio 阿部善雄 and Kaneko Hideo 金子英生, _Saigo no…最後の「日本人」…[The last "Japanese"…]_ (Iwanami Shoten, 1983).
+```
+
+The romanized names are family-first (Hua Linfu, Kang U-bang, Abe Yoshio), matching East Asian convention. The original script appends directly after the romanized form with no intervening punctuation. Multi-author entries separate names with "and" in the prose.
+
+**Confirm or correct:** Is the CNE pattern (`romanized original-script [translation]`) what practitioners in East Asian studies, Middle Eastern studies, or Slavic studies actually use? Are there variants — e.g. original script in parentheses rather than inline, or translation omitted in footnotes but present in bibliography — that the pattern model needs to accommodate?
 
 ---
 
