@@ -216,7 +216,7 @@ options:
 
 ```bash
 citum render refs \
-  -b tests/fixtures/multilingual/multilingual-cne-chicago.yaml \
+  -b examples/multilingual-cne-refs.yaml \
   -s styles/embedded/chicago-notes-18th-cne.yaml
 ```
 
