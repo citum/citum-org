@@ -194,9 +194,11 @@ Confucius is `family: 孔 / given: 子`, so `子.孔` is given-first, not the fa
 
 ---
 
-### Scenario 5: Romanized name with original-script append (CNE Chicago)
+### Scenario 5: Romanized + original-script rendering
 
-The Cite Non-English (CNE) convention — used in East Asian studies and related fields — renders names and titles in romanized form followed immediately by the original script. Citum supports this via `name-mode: pattern`, which lets a style specify the sequence and wrapping of views (transliterated, original, translated) explicitly:
+Some area-studies and East Asian studies house styles (CJKR, JAAS, and others) render names and titles in romanized form followed immediately by the original script — a three-part sequence: romanized, original script, bracketed translation.
+
+Citum supports this via `name-mode: pattern` and `title-mode: pattern`, which let a style specify the sequence and wrapping of views (transliterated, original-script, translated) explicitly:
 
 ```yaml
 options:
@@ -204,20 +206,27 @@ options:
     name-mode:
       pattern:
         - view: transliterated
-        - view: original
+        - view: original-script
     title-mode:
       pattern:
         - view: transliterated
-        - view: original
-          wrap: none
+        - view: original-script
         - view: translated
           wrap: brackets
+    preferred-script: Latn
+    scripts:
+      Han:
+        use-native-ordering: true
+      Hangul:
+        use-native-ordering: true
 ```
+
+This can also be expressed as the one-line preset `multilingual: romanized-script-translated`, which encodes the same configuration.
 
 ```bash
 citum render refs \
-  -b examples/multilingual-cne-refs.yaml \
-  -s styles/embedded/chicago-notes-18th-cne.yaml
+  -b examples/multilingual-east-asian-refs.yaml \
+  -s styles/embedded/chicago-notes-18th-script.yaml
 ```
 
 ```
@@ -228,7 +237,7 @@ Abe Yoshio 阿部善雄 and Kaneko Hideo 金子英生, _Saigo no…最後の「�
 
 The romanized names are family-first (Hua Linfu, Kang U-bang, Abe Yoshio), matching East Asian convention. The original script appends directly after the romanized form with no intervening punctuation. Multi-author entries separate names with "and" in the prose.
 
-**Confirm or correct:** Is the CNE pattern (`romanized original-script [translation]`) what practitioners in East Asian studies, Middle Eastern studies, or Slavic studies actually use? Are there variants — e.g. original script in parentheses rather than inline, or translation omitted in footnotes but present in bibliography — that the pattern model needs to accommodate?
+**Confirm or correct:** Is the `romanized original-script [translation]` pattern what practitioners in East Asian studies, Middle Eastern studies, or Slavic studies actually use? Are there variants — e.g. original script in parentheses rather than inline, or translation omitted in footnotes but present in bibliography — that the pattern model needs to accommodate? Is this pattern used outside East Asian studies, and if so, does it take a different form?
 
 ---
 
