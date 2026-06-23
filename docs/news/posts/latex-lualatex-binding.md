@@ -5,8 +5,6 @@ slug: citum-for-lualatex-an-experimental-binding
 summary: A LuaLaTeX package that formats citations through citum-server over JSON-RPC, with split bibliographies and no runtime shared-library loading.
 ---
 
-# Citum for LuaLaTeX: a pipe-based citation package
-
 The `citum` LaTeX package brings the Citum citation engine into LuaLaTeX without
 BibTeX, Biber, or runtime shared-library loading. LuaLaTeX records the document's
 citations, sends one `format_document` request to `citum-server` over

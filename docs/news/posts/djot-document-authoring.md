@@ -4,8 +4,6 @@ date: 2026-06-22
 summary: "Citum's native document format supports citations, bibliography grouping, name memory, rich text in reference fields, EDTF dates, and multilingual sources — all rendered to HTML, LaTeX, or Typst from one command."
 ---
 
-# Writing scholarly documents with Djot: what Citum supports now
-
 The [demo page](https://docs.citum.org/demo.html) has always been the most complete illustration of what Citum can do with a real document. But the features it demonstrates were never documented in a single place — they were scattered across an integration recipe, a spec file, and the demo source itself. This post collects everything in one place and points to the new [Djot document authoring guide](https://docs.citum.org/guides/djot-documents.html).
 
 ## The pipeline
