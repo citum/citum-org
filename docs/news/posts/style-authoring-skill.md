@@ -4,8 +4,6 @@ date: 2026-05-22
 summary: A new external skill teaches Claude Code and other AI agents how to author, extend, and validate Citum YAML styles without a local citum-core checkout.
 ---
 
-# AI skill for Citum style authoring
-
 We've published a new AI skill for Citum style authors: [`citum/skills`](https://github.com/citum/skills).
 Install it in Claude Code or any `skills`-compatible agent with one command:
 

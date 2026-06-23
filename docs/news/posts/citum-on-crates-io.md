@@ -4,7 +4,6 @@ date: 2026-05-19
 summary: Install the Rust engine and server with cargo, or drop in the TypeScript WASM package from jsr.io — plus three integration recipes to get you from zero to citations.
 ---
 
-# Citum, a modern citation engine, is on crates.io and jsr.io
 
 The first public release of Citum is now on [crates.io](https://crates.io). If you have a Rust toolchain, one command gets you a working citation processor:
 

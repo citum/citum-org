@@ -4,9 +4,6 @@ date: 2026-05-02
 summary: A new space to share project updates and feature releases.
 ---
 
-
-# Introducing Citum: The Next Generation of Citation Styling
-
 Welcome to the official Citum blog!
 
 Citum is a modern, declarative citation styling system designed to be the successor-focused evolution of CSL 1.0 (Citation Style Language). For years, citation styling has relied on

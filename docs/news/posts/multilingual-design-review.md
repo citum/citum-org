@@ -4,8 +4,6 @@ date: 2026-05-28
 summary: A call for multilingual scholars to test Citum's parallel-metadata design and help identify what needs to change before the schema reaches 1.0.
 ---
 
-# Multilingual Citum: is the design sound? Help us find the gaps
-
 I need help from multilingual scholars — and I want to be honest about why. I'm a monolingual, English-language scholar. I've spent years building the core data model, the rendering pipeline, and the migration path from CSL, but multilingual citation practice is my biggest blind spot. Before I declare the schema 1.0, I need people who actually work in Japanese, Arabic, Korean, Russian, Chinese, Vietnamese, and other languages to tell me whether what we've built makes sense for their practice — and where it doesn't.
 
 This post describes the design, links to the relevant specs, and gives you concrete, runnable scenarios to test. What I'm asking for is either "yes, this looks right" or "here's specifically where you went wrong."
