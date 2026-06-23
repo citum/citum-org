@@ -4,8 +4,6 @@ date: 2026-06-12
 summary: Citum's CSL migration path is improving, but automatic conversion is not solved. This update explains why CSL XML is hard to translate, how the migrator has shifted toward measured output, and why citum/skills is part of the bridge between automated migration and usable styles.
 ---
 
-# CSL migration update: why style conversion is still hard
-
 Citum's long-term goal is straightforward to state: take the large existing CSL
 style ecosystem and make it usable in Citum's declarative style model.
 
