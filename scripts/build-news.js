@@ -54,13 +54,12 @@ function build() {
     posts.sort((a, b) => b.dateObj - a.dateObj);
     const indexTemplate = fs.readFileSync(INDEX_TEMPLATE_PATH, 'utf8');
     const listHtml = posts.map(post => {
-        return '<article class="border-b border-gray-100 pb-10 last:border-0">' +
-               '<div class="kicker mb-3">' + post.formattedDate + '</div>' +
-               '<h2 class="text-3xl font-bold text-gray-900 mb-3">' +
-               '<a href="' + post.slug + '.html" class="hover:text-blue-600 transition-colors">' + post.title + '</a></h2>' +
-               '<p class="text-gray-600 text-lg leading-relaxed mb-6">' + post.summary + '</p>' +
-               '<a href="' + post.slug + '.html" class="font-bold text-blue-600 hover:underline">Read the full post →</a>' +
-               '</article>';
+        return '<li class="news-row">' +
+               '<p class="news-row-date">' + post.formattedDate + '</p>' +
+               '<h2><a href="' + post.slug + '.html">' + post.title + '</a></h2>' +
+               '<p class="summary">' + post.summary + '</p>' +
+               '<a class="read-more" href="' + post.slug + '.html">Read the full post →</a>' +
+               '</li>';
     }).join('\n');
 
     fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), indexTemplate.replace('{{CONTENT}}', listHtml));

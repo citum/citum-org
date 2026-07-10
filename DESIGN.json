@@ -1,24 +1,32 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-04-28T00:00:00Z",
+  "generatedAt": "2026-07-10T00:00:00Z",
   "title": "Design System: Citum",
   "extensions": {
     "colorMeta": {
-      "primary": { "role": "primary", "displayName": "Citum Blue", "canonical": "#2a94d6" },
-      "neutral-bg": { "role": "neutral", "displayName": "Paper White", "canonical": "#fdfbf7" },
-      "text-primary": { "role": "neutral", "displayName": "Ink Gray", "canonical": "#374151" }
+      "navy": { "role": "primary", "displayName": "Navy", "canonical": "#23407F" },
+      "wall": { "role": "neutral", "displayName": "Gallery Wall", "canonical": "#FBFBF9" },
+      "plaster": { "role": "neutral", "displayName": "Plaster", "canonical": "#F0F0EC" },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#E3E3DE" },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#FFFFFF" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#131312" },
+      "graphite": { "role": "neutral", "displayName": "Graphite", "canonical": "#5F5F5A" },
+      "oxide": { "role": "accent", "displayName": "Oxide", "canonical": "#7A2B26" }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Hero headlines." },
-      "body": { "displayName": "Body", "purpose": "Primary reading text." }
+      "display": { "displayName": "Display", "purpose": "Hero headlines and pull quotes, set in Newsreader — the voice of scholarship." },
+      "body": { "displayName": "Body", "purpose": "Primary reading text, set in Newsreader at a ~62ch measure." },
+      "label": { "displayName": "Label", "purpose": "Uppercase eyebrow labels and UI text, set in Archivo — the institutional voice." },
+      "mono": { "displayName": "Mono", "purpose": "Code and structured citation output, set in the system monospace stack." }
     },
     "shadows": [
-      { "name": "subtle-lift", "value": "0 2px 12px rgba(0,0,0,0.06)", "purpose": "Soft separation for interactive surfaces." }
+      { "name": "plate-shadow", "value": "0 2px 3px rgba(19,19,18,.035), 0 34px 68px -42px rgba(19,19,18,.38)", "purpose": "Layered lift for framed plates presenting featured output." }
     ],
     "breakpoints": [
       { "name": "sm", "value": "640px" },
       { "name": "md", "value": "768px" },
-      { "name": "lg", "value": "1024px" }
+      { "name": "lg", "value": "1024px" },
+      { "name": "margin-note-collapse", "value": "860px" }
     ]
   },
   "components": [
@@ -28,7 +36,7 @@
       "refersTo": "button-primary",
       "description": "Primary action button.",
       "html": "<a class=\"ds-btn-primary\" href=\"#\">Get Started</a>",
-      "css": ".ds-btn-primary { display: inline-flex; align-items: center; font-weight: 600; border-radius: 8px; padding: 10px 18px; font-size: 0.94rem; color: #fff; background: #2a94d6; box-shadow: 0 4px 14px rgba(42,148,214,0.30); text-decoration: none; transition: transform 0.2s; } .ds-btn-primary:hover { transform: translateY(-1px); }"
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; font-family: Archivo, sans-serif; font-weight: 600; border-radius: 0; padding: 12px 22px; font-size: 0.85rem; letter-spacing: 0.02em; color: #FBFBF9; background: #131312; text-decoration: none; transition: background-color 0.2s; } .ds-btn-primary:hover { background: #23407F; }"
     },
     {
       "name": "Card",
@@ -36,28 +44,36 @@
       "refersTo": "card",
       "description": "Standard content container.",
       "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">Card Title</h3><p class=\"ds-card-text\">Supporting description for the card content.</p></article>",
-      "css": ".ds-card { background: #ffffff; border: 1px solid rgba(42,148,214,0.12); border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); } .ds-card-title { font-weight: 600; font-size: 0.97rem; margin-bottom: 8px; color: #1f2937; } .ds-card-text { font-size: 0.93rem; color: #6b7280; line-height: 1.6; }"
+      "css": ".ds-card { background: #FFFFFF; border: 1px solid #E3E3DE; border-radius: 0; padding: 24px; } .ds-card-title { font-family: Archivo, sans-serif; font-weight: 600; font-size: 0.97rem; margin-bottom: 8px; color: #131312; } .ds-card-text { font-family: Newsreader, serif; font-size: 0.97rem; color: #5F5F5A; line-height: 1.6; }"
     }
   ],
   "narrative": {
-    "northStar": "The Scholarly Workshop",
-    "overview": "The Citum design system reflects the precision and transparency required for academic work. It avoids the neon flash of modern tech in favor of a warm, paper-like palette and crisp, legible typography.",
+    "northStar": "The Reading Room",
+    "overview": "The Citum design system reflects the quiet authority of a museum reading room: restrained, editorial, and built for sustained attention. It replaces the prior 'Scholarly Workshop' system with a paper-and-hairline palette, square corners, and a single disciplined accent color.",
     "keyCharacteristics": [
-      "Empirical Transparency",
-      "Subtle Precision",
-      "Warm Authority"
+      "Restraint",
+      "Editorial Craft",
+      "Literal Naming"
     ],
     "rules": [
-      { "name": "The Tinted Neutral Rule", "body": "Never use pure white (#fff) for large background areas. Every surface should be tinted toward the primary hue or the warm base to reduce eye strain.", "section": "colors" },
-      { "name": "The Border-First Rule", "body": "Use subtle borders as the primary method of separation. Shadows should only be added to elements that need to appear interactive or floating.", "section": "elevation" }
+      { "name": "The Tinted Neutral Rule", "body": "Never use pure white (#fff) for large background areas. Use the wall tone (#FBFBF9) as the base; reserve paper (#FFFFFF) for framed plates and cards set against it.", "section": "colors" },
+      { "name": "The Single-Accent Rule", "body": "Navy is the only color that means 'interactive.' Oxide never appears on anything clickable — it marks marginalia details only (figure numbers, margin-note markers, small rules).", "section": "colors" },
+      { "name": "The Border-First Rule", "body": "Hairline borders are the primary method of separation. Shadow is reserved for plates that need to read as physically framed and lifted off the wall.", "section": "elevation" },
+      { "name": "The Margin Asymmetry Rule", "body": "On wide screens, break the single reading column with a narrow Tufte-style margin-note rail rather than symmetric multi-column grids.", "section": "layout" },
+      { "name": "The Direct Naming Rule", "body": "Section headings and UI labels are literal ('Four examples,' 'Who it's for,' 'Install,' 'On CSL,' 'News'). Never metaphorical framing like 'exhibits' or 'wall text' — the museum quality is visual only.", "section": "content" },
+      { "name": "The Square Corner Rule", "body": "Corners are square to 2px at most. No pill shapes, no rounded cards.", "section": "shape" }
     ],
     "dos": [
-      "Do use the compatibility report's 'evidence-first' layout for any feature claims.",
-      "Do maintain the 64ch line length for readability."
+      "Do use framed plates (paper + plate shadow) to present featured output.",
+      "Do maintain the ~62ch measure for running text.",
+      "Do use Newsreader for display and body reading text, Archivo for UI, headings, and labels."
     ],
     "donts": [
-      "Don't use pure black (#000) for text.",
-      "Don't use 'bento box' grids with varied card sizes for core information."
+      "Don't load Tailwind from a CDN, or any external font or script.",
+      "Don't name sections or UI elements metaphorically ('exhibits,' 'wall text,' 'desks').",
+      "Don't use drop caps.",
+      "Don't use pill badges or rounded cards.",
+      "Don't use pure black (#000) for text — ink (#131312) is the floor."
     ]
   }
 }
