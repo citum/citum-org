@@ -1,435 +1,345 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Citum</title>
-  <meta name="description" content="A citation processor built on twenty years of real-world use. Native EDTF dates, style inheritance, and bilingual scripts — from the designer of CSL.">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="theme.css">
-  <style>
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-in {
-      animation: fadeInUp 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-      opacity: 0;
-    }
-    .delay-1 { animation-delay: 0.1s; }
-    .delay-2 { animation-delay: 0.2s; }
-    .diff-label {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 0.4rem;
-    }
-    .diff-before { background: #fee2e2; color: #991b1b; }
-    .diff-after  { background: #dcfce7; color: #166534; }
-    .diff-block  { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem 1.25rem; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Citum — a citation engine</title>
+<meta name="description" content="Citum is a new citation engine built on twenty years of CSL practice. It handles the everyday cases cleanly — and treats the hard ones, uncertain dates, multilingual sources, archival materials, as core features, not workarounds.">
+<meta property="og:title" content="Citum — a citation engine">
+<meta property="og:description" content="Citum is a new citation engine built on twenty years of CSL practice. It handles the everyday cases cleanly — and treats the hard ones, uncertain dates, multilingual sources, archival materials, as core features, not workarounds.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#FBFBF9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23FBFBF9'/%3E%3Ctext%20x='32'%20y='46'%20font-family='Georgia,serif'%20font-size='42'%20text-anchor='middle'%20fill='%23131312'%3EC%3C/text%3E%3C/svg%3E">
+<link rel="preload" as="font" type="font/woff2" href="fonts/Archivo-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/Newsreader-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="fonts/Newsreader-Italic-latin.woff2" crossorigin>
+<link rel="stylesheet" href="theme.css">
 </head>
-<body class="min-h-screen">
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<svg class="grain" aria-hidden="true" focusable="false">
+  <filter id="grainF"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#grainF)"/>
+</svg>
 
-  <header class="glass-nav sticky top-0 z-10">
-    <div class="mx-auto max-w-[1100px] px-5 flex items-center justify-between gap-3 flex-wrap py-2 min-h-[64px]">
-      <a href="https://citum.org" class="flex items-center gap-2 no-underline group">
-        <div class="w-8 h-8 rounded flex items-center justify-center shrink-0" style="background:#2a94d6">
-          <span class="text-white font-bold text-sm" style="font-family:'JetBrains Mono',monospace">C</span>
-        </div>
-        <span class="font-bold text-gray-900" style="font-family:'JetBrains Mono',monospace;font-size:1.05rem;letter-spacing:-0.01em">Citum</span>
-      </a>
-      <nav class="flex gap-1 flex-wrap justify-end" aria-label="Global">
-        <a class="nav-link" href="/news/">News</a>
-        <a class="nav-link" href="https://docs.citum.org">Docs</a>
-        <a class="nav-link" href="https://hub.citum.org">Hub</a>
-        <a class="nav-link" href="https://github.com/citum">GitHub</a>
-      </nav>
-    </div>
-  </header>
+<header class="site" id="siteHeader">
+  <div class="brand">
+    <a class="wordmark" id="wordmark" href="#main">CITUM</a>
+    <span class="subline">A citation engine</span>
+  </div>
+  <nav class="primary" aria-label="Primary">
+    <a href="#why">Why</a>
+    <a href="#for-you">For you</a>
+    <a href="#install">Install</a>
+    <a href="/news/">News</a>
+    <a href="https://docs.citum.org">Docs</a>
+    <a href="https://github.com/citum">GitHub</a>
+  </nav>
+</header>
 
-  <main class="mx-auto max-w-[1100px] px-5 py-14 pb-20">
+<main id="main">
 
-    <!-- Hero -->
-    <div class="asymmetric-grid items-center mb-14 animate-in">
-      <div>
-        <span class="kicker">From the creator of CSL</span>
-        <h1 class="mt-4 mb-0 font-bold leading-tight tracking-tight text-gray-900" style="font-size:clamp(2.5rem,6.5vw,4.2rem);max-width:16ch">
-          Twenty years of practice.<br>One new foundation.
-        </h1>
-        <p class="mt-3 text-[0.98rem] text-gray-700 max-w-[50ch]" style="font-family:'JetBrains Mono',monospace;font-size:0.92rem">
-          A citation engine for scholars, editors, doc tools, and publishers — embeddable via CLI, WASM, C FFI, or a long-running JSON-RPC server.
-        </p>
-        <p class="mt-4 text-[1.12rem] leading-relaxed max-w-[50ch] text-gray-500">
-          CSL mapped what real scholarship needs. Citum builds the engine that can model it — native EDTF dates, true style inheritance, paired bilingual scripts, and output tested against published examples.
-        </p>
-        <div class="flex flex-wrap gap-3 mt-8">
-          <a class="btn-primary" href="https://docs.citum.org">Read the docs</a>
-          <a class="btn-secondary" href="https://docs.citum.org/compat.html">Compatibility report</a>
-        </div>
-      </div>
-      <div class="hidden md:block delay-1 animate-in">
-        <div class="workshop-block shadow-lg transform rotate-1">
-          <div class="workshop-label">Date uncertainty — EDTF</div>
-          <pre class="text-blue-700 text-[0.8rem]">issued: "1923?"  # approximate</pre>
-          <div class="mt-3 space-y-2">
-            <div>
-              <span class="diff-label diff-before">CSL</span>
-              <div class="text-[0.82rem] text-gray-500 line-through">Wittgenstein, L. (1923).</div>
-            </div>
-            <div>
-              <span class="diff-label diff-after">Citum</span>
-              <div class="text-[0.82rem] text-gray-800">Wittgenstein, L. (ca. 1923).</div>
-            </div>
-          </div>
-          <div class="workshop-label mt-4">Bilingual name rendering</div>
-          <div class="text-[0.82rem] text-gray-800 mt-1">Murakami, Haruki [村上春樹]. 2002.</div>
-        </div>
+  <!-- HERO: opening spread -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow reveal">From the creator of CSL · pre-1.0</p>
+      <hr class="hero-rule reveal">
+      <h1 class="statement reveal">
+        <span class="line1">Every source, every script, every date —</span>
+        <span class="line2">rendered faithfully.</span>
+      </h1>
+      <p class="deck reveal">Citum is a new citation engine built on twenty years of CSL practice. It handles the everyday cases cleanly — and treats the hard ones, uncertain dates, multilingual sources, archival materials, as core features, not workarounds.</p>
+      <div class="actions reveal">
+        <a class="btn primary" href="#install">Install Citum</a>
+        <a class="btn secondary" href="https://docs.citum.org">Read the docs</a>
       </div>
     </div>
+  </section>
 
-    <!-- What practice revealed -->
-    <section class="mt-14" aria-label="Gaps revealed by real-world use">
-      <h2 class="text-[1.4rem] font-semibold mb-2 text-gray-800">What twenty years of real use revealed</h2>
-      <p class="text-[1rem] text-gray-500 mb-7 max-w-[64ch]">
-        CSL was designed in 2004 without knowing the full scope of what scholars would need. A decade of styles, edge cases, and community feedback showed three gaps the data model couldn't close.
-      </p>
-      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-        <article class="card delay-1 animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Date uncertainty gets dropped</h3>
-          <p class="text-[0.95rem] leading-relaxed">
-            EDTF's uncertainty markers (<code class="text-blue-700 text-[0.88rem]">?</code>, <code class="text-blue-700 text-[0.88rem]">~</code>), open date ranges, and approximate decades map to year/month/day only. Archival and historical scholarship loses precision silently, with no error and no warning.
-          </p>
-        </article>
-        <article class="card delay-1 animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Styles diverge instead of extending</h3>
-          <p class="text-[0.95rem] leading-relaxed">
-            Adapting APA for a specific journal means forking the entire style. CSL has no inheritance model, so every house-style variant is a full copy. Changes to the parent never propagate. Maintenance compounds over time.
-          </p>
-        </article>
-        <article class="card delay-2 animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Multilingual names need both scripts</h3>
-          <p class="text-[0.95rem] leading-relaxed">
-            A citation to 村上春樹 should carry both the original script and romanization. CSL's data model has one name field per person. CSL-M added per-language layouts — but only for citeproc-js, leaving Pandoc and other processors without support.
-          </p>
-        </article>
-      </div>
-    </section>
+  <!-- EXAMPLES -->
+  <section id="why">
+    <div class="wrap">
+      <p class="eyebrow reveal">Examples</p>
+      <h2 class="section-head reveal">Four examples</h2>
 
-    <!-- Who is this for? -->
-    <section class="mt-14" aria-label="Audiences and integration paths">
-      <h2 class="text-[1.4rem] font-semibold mb-2 text-gray-800">Who is this for?</h2>
-      <p class="text-[1rem] text-gray-500 mb-7 max-w-[64ch]">
-        Four ways to use Citum today. The pipe-fitting differs; the engine is the same.
-      </p>
-      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
-        <article class="card animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Scholars writing Markdown or Djot</h3>
-          <p class="text-[0.95rem] leading-relaxed mb-3">
-            Process your manuscripts on the command line. <code class="text-blue-700 text-[0.88rem]">citum render doc</code> takes Markdown or Djot with <code class="text-blue-700 text-[0.88rem]">[@key]</code> citations and a bibliography and produces HTML, LaTeX, Typst, or PDF. Pandoc-style citation markers, modern style engine.
-          </p>
-          <a class="text-[0.9rem] text-blue-700 hover:underline" href="https://docs.citum.org/guides/integrations/scholar-cli.html">Read the recipe &rarr;</a>
-        </article>
-        <article class="card delay-1 animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Editor, IDE, and plugin authors</h3>
-          <p class="text-[0.95rem] leading-relaxed mb-3">
-            Run Citum as a long-lived JSON-RPC process and send buffer plus bibliography from your editor or plugin; get back formatted citations and a rendered bibliography in one round-trip.
-          </p>
-          <a class="text-[0.9rem] text-blue-700 hover:underline" href="https://docs.citum.org/guides/integrations/editor-plugin.html">Read the recipe &rarr;</a>
-        </article>
-        <article class="card delay-1 animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Docs and static-site maintainers</h3>
-          <p class="text-[0.95rem] leading-relaxed mb-3">
-            Drop Citum into your build step to render Markdown or Djot with citations into HTML, LaTeX, or Typst — no CSL plumbing of your own. Works in Makefiles, npm scripts, CI jobs.
-          </p>
-          <a class="text-[0.9rem] text-blue-700 hover:underline" href="https://docs.citum.org/guides/integrations/static-site.html">Read the recipe &rarr;</a>
-        </article>
-        <article class="card delay-2 animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Publishers and style maintainers</h3>
-          <p class="text-[0.95rem] leading-relaxed mb-3">
-            Express house styles as YAML that extends a pinned parent (APA, Chicago, …) instead of forking and re-maintaining XML. Changes to your overrides don't break when upstream updates.
-          </p>
-          <a class="text-[0.9rem] text-blue-700 hover:underline" href="https://docs.citum.org/guides/style-authoring/start.html">Start authoring &rarr;</a>
-          <a class="text-[0.85rem] text-gray-500 hover:underline block mt-2" href="https://docs.citum.org/guides/style-authoring-skill.html">AI skill for Claude Code / Codex &rarr;</a>
-        </article>
-      </div>
-    </section>
-
-    <!-- The portability trade-off -->
-    <section class="mt-14 py-10 border-y border-gray-100" aria-label="Design philosophy">
-      <div class="asymmetric-grid items-start animate-in">
-        <div>
-          <h2 class="text-[1.4rem] font-semibold mb-4 text-gray-800">The portability trade-off</h2>
-          <p class="text-[1rem] text-gray-600 mb-4 max-w-[52ch]">
-            CSL was designed implementation-independent from the start — one XML schema, many processors. That was the right call: Zotero, Pandoc, and Mendeley converged on one standard, and it worked.
-          </p>
-          <p class="text-[1rem] text-gray-600 mb-4 max-w-[52ch]">
-            But implementation-independence requires keeping the data model simple. EDTF, paired scripts, and inheritance aren't simple — so they stayed out of the spec. When the community needed more, CSL-M emerged: an extension for legal and multilingual citations, maintained by one developer for citeproc-js. Styles using CSL-M extensions don't run anywhere else.
-          </p>
-          <p class="text-[1rem] text-gray-600 max-w-[52ch]">
-            Citum makes the opposite bet deliberately: one Rust implementation, built with twenty years of hindsight and informed by CSL styles, BibLaTeX, and the full range of community-documented edge cases. The trade-off is real — Citum runs where Citum runs. But the features are first-class, not bolted on.
-          </p>
+      <figure class="exhibit-row spread reveal">
+        <div class="plate">
+          <div class="exhibit-io">
+            <span class="in">"2004?"</span><span class="out">→ 2004?</span>
+            <span class="in">"2004~"</span><span class="out">→ ca. 2004</span>
+            <span class="in">"2023-05/.."</span><span class="out">→ May 2023–</span>
+            <span class="in">"2023-22"</span><span class="out">→ Summer 2023</span>
+            <span class="in">"-0099"</span><span class="out">→ 100 BC</span>
+          </div>
         </div>
-        <aside class="space-y-4 delay-1 animate-in">
-          <div class="callout">
-            <div class="text-[0.8rem] font-semibold text-gray-500 uppercase tracking-wider mb-2">CSL-M</div>
-            <p class="text-[0.92rem] text-gray-700 leading-relaxed">Extended schema for legal &amp; multilingual citations. Supported in citeproc-js and Juris-M. Styles using CSL-M extensions don't validate against the official CSL schema and won't run in Pandoc, Zotero, or other processors.</p>
-          </div>
-          <div class="callout">
-            <div class="text-[0.8rem] font-semibold text-gray-500 uppercase tracking-wider mb-2">Citum</div>
-            <p class="text-[0.92rem] text-gray-700 leading-relaxed">EDTF, paired scripts, and style inheritance are core to the data model and style language — not extensions. WASM, C FFI, CLI, and JSON-RPC interfaces. One implementation, done right.</p>
-          </div>
-        </aside>
-      </div>
-    </section>
+        <figcaption class="margin-note">
+          <hr class="rule">
+          <span class="fig-num">Fig. 1</span>
+          <h3>EDTF dates</h3>
+          <p>EDTF is Citum's native date format. Approximate, seasonal, open-ended, and ancient dates survive the journey from data to page — nothing is silently flattened to a year.</p>
+        </figcaption>
+      </figure>
 
-    <!-- How Citum handles the hard cases -->
-    <section class="mt-14" aria-label="Citum feature demonstrations">
-      <h2 class="text-[1.4rem] font-semibold mb-8 text-gray-800">How Citum handles the hard cases</h2>
-      <div class="grid gap-6">
+      <figure class="exhibit-row spread reveal">
+        <div class="plate">
+          <pre class="wrap-text">Smith, John A. <em>Foundations of Knowledge.</em> Oxford UP, 2019.
+田中一郎。『科学の構造』。東京大学出版会、2020年。
+García, María. «La ciencia moderna.» <em>Ciencias</em>, vol. 5, 2021.</pre>
+        </div>
+        <figcaption class="margin-note">
+          <hr class="rule">
+          <span class="fig-num">Fig. 2</span>
+          <h3>Multilingual bibliographies</h3>
+          <p>Multilingual support is engine-deep: references carry paired original-script and romanized forms, and each entry brings its own locale — terms, contributor labels, punctuation, date formats. Mixed bibliographies partition themselves by script and language, with no manual sorting.</p>
+        </figcaption>
+      </figure>
 
-        <!-- EDTF -->
-        <article class="asymmetric-grid items-center animate-in">
-          <div>
-            <h3 class="font-semibold text-[1.05rem] mb-2 text-gray-800">EDTF dates, preserved</h3>
-            <p class="text-[0.95rem] text-gray-600 leading-relaxed max-w-[44ch]">
-              Uncertainty markers, open ranges, approximate decades, and seasons are stored in the reference data and rendered faithfully by the style. No silent flattening to a bare year.
-            </p>
-          </div>
-          <div class="workshop-block delay-1 animate-in space-y-3">
-            <div class="workshop-label">Reference data (YAML)</div>
-            <pre class="text-blue-700 text-[0.8rem]">issued: "1850/1855"  # date range
-issued: "1923?"      # uncertain
-issued: "1950~"      # approximate</pre>
-            <div class="diff-block space-y-2">
-              <div>
-                <span class="diff-label diff-before">CSL</span>
-                <div class="text-[0.82rem] font-mono text-gray-500">1850 &nbsp;·&nbsp; 1923 &nbsp;·&nbsp; 1950</div>
-              </div>
-              <div>
-                <span class="diff-label diff-after">Citum</span>
-                <div class="text-[0.82rem] font-mono text-gray-800">1850–1855 &nbsp;·&nbsp; ca. 1923 &nbsp;·&nbsp; ca. 1950</div>
-              </div>
-            </div>
-          </div>
-        </article>
+      <figure class="exhibit-row spread reveal">
+        <div class="plate">
+          <pre class="wrap-text">The Community Rule (1QS). Manuscript scroll, 100 BC,
+Israel Antiquities Authority, Shrine of the Book, Jerusalem.</pre>
+        </div>
+        <figcaption class="margin-note">
+          <hr class="rule">
+          <span class="fig-num">Fig. 3</span>
+          <h3>Archival references</h3>
+          <p>Collection hierarchy, shelfmarks, institutional provenance — structured archival fields, not prose crammed into a note.</p>
+        </figcaption>
+      </figure>
 
-        <!-- Style inheritance -->
-        <article class="asymmetric-grid items-center delay-1 animate-in">
-          <div class="hidden md:block workshop-block space-y-3">
-            <div class="workshop-label">Child style (YAML)</div>
-            <pre class="text-blue-700 text-[0.8rem]">extends: apa
-
+      <figure class="exhibit-row spread reveal">
+        <div class="plate">
+          <pre>extends: american-medical-association
 options:
-  bibliography:
-    hanging-indent: false
-    et-al-min: 5</pre>
-            <div class="text-[0.82rem] text-gray-500">Everything else inherits from APA exactly.<br>Pin the parent version for reproducibility.</div>
-          </div>
-          <div>
-            <h3 class="font-semibold text-[1.05rem] mb-2 text-gray-800">Styles that extend, not fork</h3>
-            <p class="text-[0.95rem] text-gray-600 leading-relaxed max-w-[44ch]">
-              Build on any published style with scoped overrides. Pin to a specific parent version so your output doesn't change when upstream updates. Distribute your style without handing out a mystery clone of APA.
-            </p>
-          </div>
-        </article>
+  contributors:
+    name-form: initials
+  dates:
+    month: long
+    approximation-marker: 'ca. '</pre>
+        </div>
+        <figcaption class="margin-note">
+          <hr class="rule">
+          <span class="fig-num">Fig. 4</span>
+          <h3>Style inheritance</h3>
+          <p>A Citum style is readable YAML — diffable, validated at load. Inherit from a parent style and override only what changes.</p>
+        </figcaption>
+      </figure>
 
-        <!-- Bilingual -->
-        <article class="asymmetric-grid items-center delay-2 animate-in">
-          <div>
-            <h3 class="font-semibold text-[1.05rem] mb-2 text-gray-800">Bilingual scripts, first-class</h3>
-            <p class="text-[0.95rem] text-gray-600 leading-relaxed max-w-[44ch]">
-              Author names carry both the original script and a transliteration as separate fields in the data model. The style decides which to render, in what order, and how to delimit them — per locale.
-            </p>
-          </div>
-          <div class="workshop-block delay-1 animate-in space-y-2">
-            <div class="workshop-label">Paired script fields</div>
-            <pre class="text-blue-700 text-[0.8rem]">author:
-  - original:
-      family: 村上
-      given: 春樹
-    lang: "ja"
-    transliterations:
-      ja-Latn-hepburn:
-        family: Murakami
-        given: Haruki</pre>
-            <div class="diff-block">
-              <span class="diff-label diff-after">Citum · Chicago</span>
-              <div class="text-[0.82rem] text-gray-800 mt-1">Murakami, Haruki [村上春樹]. 2002.</div>
-            </div>
-          </div>
-        </article>
+    </div>
+  </section>
 
-      </div>
-    </section>
+  <!-- PERSONAS -->
+  <section id="for-you" class="desks">
+    <div class="wrap">
+      <p class="eyebrow reveal">For you</p>
+      <h2 class="section-head reveal">Who it's for</h2>
 
-    <!-- Bibliographies that organize themselves -->
-    <section class="mt-20" aria-label="Bibliography organization">
-      <div class="asymmetric-grid items-center animate-in">
+      <div class="desk-row reveal">
         <div>
-          <h2 class="text-[1.4rem] font-semibold mb-4 text-gray-800">Bibliographies that organize themselves</h2>
-          <p class="text-[1rem] text-gray-600 mb-4 max-w-[50ch]">
-            Group references by type, language, citation status, or custom criteria — without writing renderer code. Legal hierarchies, multilingual sections, and primary/secondary source divisions are expressed in the style, not patched into the document template.
-          </p>
-          <a class="btn-secondary inline-flex" href="https://docs.citum.org/examples.html">Browse rendered output &rarr;</a>
+          <p class="desk-label"><span class="num">01</span> — For scholars</p>
+          <h3>You manage sources by hand, still.</h3>
+          <p>You manage sources in a desktop app like Zotero and fix the output by hand. If you have romanized a name and lost the original script, watched "ca. 1650" flatten to a bare year, or forced a shelfmark into a note field — Citum treats those as data, not exceptions.</p>
+          <a class="cta" href="https://docs.citum.org/examples.html">See the hard cases →</a>
         </div>
-        <div class="workshop-block delay-1 animate-in">
-          <div class="workshop-label">Bibliography grouping (style fragment)</div>
-          <pre class="text-blue-700 text-[0.8rem]">bibliography:
-  groups:
-    - id: primary
-      heading:
-        literal: "Primary Sources"
-      selector:
-        field:
-          type: [book, article]
-    - id: japanese
-      heading:
-        literal: "日本語文献"
-      selector:
-        field:
-          language: ja</pre>
+        <div class="margin-col"></div>
+      </div>
+
+      <div class="desk-row reveal">
+        <div>
+          <p class="desk-label"><span class="num">02</span> — For authors</p>
+          <h3>Keep the workflow. Change the engine.</h3>
+          <p>You write in pandoc, Typst, or Djot and cite with [@key]. Keep that workflow. Citum renders whole manuscripts, outputs LaTeX, Typst, HTML, Djot, and plain text, and publishes PDF via Typst. Existing CSL styles migrate with citum-migrate.</p>
+          <a class="cta" href="https://docs.citum.org">Authoring guides →</a>
         </div>
+        <div class="margin-col"></div>
       </div>
-    </section>
 
-    <!-- Tested against real output -->
-    <section class="mt-14" aria-label="Validated styles and compatibility">
-      <h2 class="text-[1.4rem] font-semibold mb-6 text-gray-800">Tested against real output</h2>
-      <div class="grid gap-4" style="grid-template-columns:repeat(auto-fit,minmax(340px,1fr))">
-        <article class="panel delay-1 animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">Bundled, validated styles</h3>
-          <p class="text-[0.95rem] leading-relaxed mb-5">
-            APA, Chicago, MLA, and more ship with Citum and are tested against published examples — not just against each other. Use them as-is, or as a pinned parent for your own style.
-          </p>
-          <a class="btn-secondary inline-flex" href="https://docs.citum.org/reports.html">View style reports &rarr;</a>
-        </article>
-        <article class="panel delay-2 animate-in">
-          <h3 class="font-semibold text-[1.05rem] mb-3 text-gray-800">See exactly where Citum stands</h3>
-          <p class="text-[0.95rem] leading-relaxed mb-5">
-            Citum is pre-1.0. The compatibility report tracks how it matches citeproc-js output across the full CSL fixture set. Gaps are visible and documented — because knowing what doesn't work yet matters.
-          </p>
-          <div class="flex flex-wrap gap-2">
-            <a class="btn-secondary" href="https://docs.citum.org/compat.html">Compatibility report</a>
-          </div>
-        </article>
+      <div class="desk-row reveal">
+        <div>
+          <p class="desk-label"><span class="num">03</span> — For builders</p>
+          <h3>One engine, every surface.</h3>
+          <p>You maintain software that formats citations. Citum is one Rust engine behind every surface — CLI, JSON-RPC server, WASM (@citum/engine on JSR), C FFI — with rendering verified against citeproc-js and biblatex in CI, on a public dashboard.</p>
+          <a class="cta" href="https://docs.citum.org/developer.html">Integration guide →</a>
+          <a class="cta" href="https://docs.citum.org/compat.html">Compatibility report →</a>
+        </div>
+        <div class="margin-col"></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Citation lifecycle — for implementers -->
-    <section class="mt-20" aria-label="How citation processing works">
-      <div class="max-w-[700px] mb-10 animate-in">
-        <h2 class="text-[1.4rem] font-semibold mb-2 text-gray-800">For implementers: the citation pipeline</h2>
-        <p class="text-gray-600">WASM, C FFI, CLI, and JSON-RPC entry points. A deterministic pipeline from structured markup to typeset output.</p>
-      </div>
-      <div class="grid gap-6">
-        <article class="asymmetric-grid items-center animate-in">
-          <div class="step">
-            <span class="step-num">1</span>
-            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Data &amp; Markup</h3>
-            <p class="text-[0.93rem] leading-relaxed">References in YAML or JSON. Citation markers directly in Djot or Markdown documents. Existing BibTeX libraries convert with no loss of structured fields.</p>
-          </div>
-          <div class="hidden md:block workshop-block delay-1 animate-in">
-            <div class="workshop-label">Citation markers (Djot)</div>
-            <div class="text-[0.78rem] space-y-1.5 leading-relaxed">
-              <div><span class="text-blue-600">[@kuhn1962]</span> <span class="text-gray-400">&nbsp;# parenthetical</span></div>
-              <div><span class="text-blue-600">[+@kuhn1962, p. 10]</span> <span class="text-gray-400">&nbsp;# integral</span></div>
-              <div><span class="text-blue-600">[-@kuhn1962, p. 10]</span> <span class="text-gray-400">&nbsp;# suppress author</span></div>
-              <div><span class="text-blue-600">[@watson1953; @smith2010]</span> <span class="text-gray-400">&nbsp;# multi-cite</span></div>
-            </div>
-          </div>
-        </article>
-        <article class="asymmetric-grid items-center delay-1 animate-in">
-          <div class="hidden md:block workshop-block">
-            <div class="workshop-label">Resolution trace</div>
-            <div class="text-[0.78rem] space-y-1.5 leading-relaxed">
-              <div class="text-gray-400"># Chapter 1</div>
-              <div><span class="text-blue-600">[+@smith2010]</span> &rarr; <span class="text-gray-700">Jane Doe (2010)</span></div>
-              <div><span class="text-blue-600">[@smith2010, p. 12]</span> &rarr; <span class="text-gray-700 italic">(ibid., 12)</span></div>
-              <div class="text-gray-400 pt-1"># Chapter 2 (scope reset)</div>
-              <div><span class="text-blue-600">[+@smith2010, p. 14]</span> &rarr; <span class="text-gray-700">Jane Doe (2010, 14)</span></div>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-num">2</span>
-            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Semantic Resolution</h3>
-            <p class="text-[0.93rem] leading-relaxed">Disambiguation, ibid tracking, and scope-aware formatting. EDTF dates are resolved to the precision the style requests, not silently truncated.</p>
-          </div>
-        </article>
-        <article class="asymmetric-grid items-center delay-2 animate-in">
-          <div class="step">
-            <span class="step-num">3</span>
-            <h3 class="font-semibold text-[1rem] mb-1 text-gray-800">Output Rendering</h3>
-            <p class="text-[0.93rem] leading-relaxed">Semantic HTML, Typst, LaTeX, or PDF — with zero external dependencies. Output carries structured metadata for post-processing and accessibility.</p>
-          </div>
-          <div class="hidden md:block workshop-block">
-            <div class="workshop-label">Semantic HTML · APA</div>
-            <div class="text-[0.78rem] leading-relaxed">
-              <span class="text-gray-500">(</span><span class="text-blue-500">&lt;span</span>
-              <span class="text-gray-400">class=</span><span class="text-teal-600">"csln-citation"</span>
-              <span class="text-gray-400">data-ref=</span><span class="text-teal-600">"smith2010"</span><span class="text-blue-500">&gt;</span><span class="text-gray-700">Doe,</span>
-              <span class="text-blue-500">&lt;span</span>
-              <span class="text-gray-400">class=</span><span class="text-teal-600">"csln-issued"</span><span class="text-blue-500">&gt;</span><span class="text-gray-700">2010</span><span class="text-blue-500">&lt;/span&gt;</span>
-              <span class="text-blue-500">&lt;/span&gt;</span><span class="text-gray-500">)</span>
-            </div>
-          </div>
-        </article>
-      </div>
-      <div class="mt-8 text-center">
-        <a class="btn-secondary inline-flex" href="https://docs.citum.org/developer.html">Integration guide — WASM, FFI, CLI, RPC &rarr;</a>
-      </div>
-    </section>
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="wrap">
+      <p class="eyebrow reveal">Get started</p>
+      <h2 class="section-head reveal">Install</h2>
 
-    <!-- Word processors -->
-    <section class="mt-20" aria-label="Word-processor plugins">
-      <div class="callout">
-        <h3 class="font-semibold text-[1.1rem] mb-2 text-gray-800">Word, LibreOffice, Pages, Google Docs</h3>
-        <p class="text-[0.95rem] leading-relaxed max-w-[70ch] text-gray-600 mt-2">
-          The same JSON-RPC and WASM surfaces that power editor plugins are exactly what a desktop word-processor add-in or a Google Docs add-on would call. Citum doesn't ship those plugins itself, but the integration path is open — and we're happy to support anyone building one.
-        </p>
-        <div class="flex flex-wrap gap-2 mt-6">
-          <a class="btn-secondary" href="https://github.com/citum/citum-core/discussions/734">Coordinate on GitHub Discussions</a>
+      <div class="reveal" role="tablist" aria-label="Installation methods">
+        <div class="tablist">
+          <button class="tab" role="tab" id="tab-shell" aria-selected="true" aria-controls="panel-shell" tabindex="0">Shell</button>
+          <button class="tab" role="tab" id="tab-cargo" aria-selected="false" aria-controls="panel-cargo" tabindex="-1">Cargo</button>
+          <button class="tab" role="tab" id="tab-js" aria-selected="false" aria-controls="panel-js" tabindex="-1">JavaScript / TypeScript</button>
+        </div>
+
+        <div class="tabpanel active" id="panel-shell" role="tabpanel" aria-labelledby="tab-shell">
+          <div class="cmd">
+            <code>curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | sh
+# optional: select binaries, e.g.
+#   curl -fsSL … | CITUM_COMPONENTS=all sh        # citum, citum-server, citum-migrate</code>
+            <button class="copy-btn" data-copy="curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | sh">Copy</button>
+          </div>
+          <p class="small-print">Verifies SHA-256 against the release manifest. Installs to ~/.local/bin. Then: <code>citum --help</code></p>
+        </div>
+
+        <div class="tabpanel" id="panel-cargo" role="tabpanel" aria-labelledby="tab-cargo" hidden>
+          <div class="cmd">
+            <code>cargo install citum --locked</code>
+            <button class="copy-btn" data-copy="cargo install citum --locked">Copy</button>
+          </div>
+          <p class="small-print">Also available: citum-server (JSON-RPC), citum-migrate (CSL → Citum).</p>
+        </div>
+
+        <div class="tabpanel" id="panel-js" role="tabpanel" aria-labelledby="tab-js" hidden>
+          <div class="cmd">
+            <code>npx jsr add @citum/engine</code>
+            <button class="copy-btn" data-copy="npx jsr add @citum/engine">Copy</button>
+          </div>
+          <p class="small-print">The engine compiled to WebAssembly, on JSR.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Hub / Labs -->
-    <section class="mt-12" aria-label="Interactive tooling">
-      <div class="callout">
-        <h3 class="font-semibold text-[1.1rem] mb-2 text-gray-800">Help shape what comes next <span class="soon">coming soon</span></h3>
-        <p class="text-[0.95rem] leading-relaxed max-w-[70ch] text-gray-600 mt-2">
-          Hub will provide a browser-based interface for testing styles interactively — paste a reference, pick a style, see the output. Labs will surface experimental features before they land in the main engine. Both are in active development and the design is open for input.
-        </p>
-        <div class="flex flex-wrap gap-2 mt-6">
-          <a class="btn-secondary" href="https://github.com/citum/citum-hub">Follow Hub on GitHub</a>
-          <a class="btn-secondary" href="https://github.com/citum">Follow the project</a>
+  <!-- ON CSL -->
+  <section>
+    <div class="wrap spread">
+      <div class="essay reveal">
+        <p class="eyebrow">Background</p>
+        <h2 class="section-head">On CSL</h2>
+        <p>CSL mapped what real scholarship needs. Twenty years of styles, processors, and edge cases are the record — and the record shows where an implementation-independent format has to stop. A portable data model must stay simple; the hard cases stay outside. CSL began as a schema and an XSLT processor built for OpenOffice.org; it grew through collaboration — with Simon Kornblith and a wide community — into the standard it is today.</p>
+        <p>Citum makes the opposite wager: one implementation, built with hindsight. Because there is a single engine, EDTF dates, paired multilingual scripts, and style inheritance can be core semantics instead of extensions. The trade is stated plainly — CSL runs everywhere; Citum runs where Citum runs.<sup class="fnref"><a href="#fn1" id="fnref1">1</a></sup> Every claim of parity is tested, nightly, in public.<sup class="fnref"><a href="#fn2" id="fnref2">2</a></sup></p>
+        <div class="footnotes">
+          <ol>
+            <li id="fn1">The compatibility report → <a href="https://docs.citum.org/compat.html">docs.citum.org/compat.html</a></li>
+            <li id="fn2">Migrating from CSL → <a href="https://docs.citum.org">docs.citum.org</a></li>
+          </ol>
         </div>
       </div>
-    </section>
+      <div class="margin-col"></div>
+    </div>
+  </section>
 
-    <!-- Final CTA — three paths -->
-    <section class="dark-cta mt-20" aria-label="Call to action">
-      <h2 class="font-bold leading-tight text-white mb-2" style="font-size:clamp(1.8rem,4vw,2.4rem)">Where do you want to start?</h2>
-      <p class="mt-2 text-[1.1rem] leading-relaxed max-w-[56ch] text-blue-100">
-        Three entry points. Existing BibTeX libraries and CSL styles import — the migration notes are in the developer docs.
-      </p>
-      <div class="flex flex-wrap gap-4 mt-8">
-        <a class="btn-primary" href="https://docs.citum.org/guides/integrations/scholar-cli.html">Process a document &rarr;</a>
-        <a class="btn-ghost" href="https://docs.citum.org/developer.html">Integrate Citum &rarr;</a>
-        <a class="btn-ghost" href="https://docs.citum.org/guides/style-authoring/start.html">Write a style &rarr;</a>
+  <!-- NEWS -->
+  <section>
+    <div class="wrap">
+      <div class="news-strip reveal">
+        <div>
+          <p class="eyebrow" style="margin-bottom:1.1rem;">News</p>
+          <ul class="news-list">
+            <li><a href="/news/writing-scholarly-documents-with-djot-what-citum-supports-now.html"><span class="title">Djot document authoring</span><span class="date">June 22, 2026</span></a></li>
+            <li><a href="/news/csl-migration-update-why-style-conversion-is-still-hard.html"><span class="title">CSL migration update</span><span class="date">June 12, 2026</span></a></li>
+            <li><a href="/news/citum-for-lualatex-an-experimental-binding.html"><span class="title">A LuaLaTeX binding</span><span class="date">June 8, 2026</span></a></li>
+          </ul>
+        </div>
+        <a class="all-news" href="/news/">All news →</a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer class="mt-12 pt-8 border-t border-gray-100 text-[0.85rem] text-gray-400">
-      Citum &middot; <a href="/news/" class="text-gray-500 hover:text-gray-800 no-underline">News</a> &middot; <a href="https://docs.citum.org" class="text-gray-500 hover:text-gray-800 no-underline">Docs</a> &middot; Hub (soon) &middot; Labs (soon)
-    </footer>
+</main>
 
-  </main>
+<footer class="colophon">
+  <div class="wrap">
+    <p>Citum — a citation engine. Source on <a href="https://github.com/citum">GitHub</a>. <a href="https://docs.citum.org">Docs</a> · <a href="/news/">News</a> · <span>Hub — coming soon</span>.</p>
+    <p class="fine">Set in Archivo and Newsreader. No trackers, no cookies, no external requests.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // whisper header scroll toggle
+  var header = document.getElementById('siteHeader');
+  function onScroll(){
+    if(window.scrollY > 12){ header.classList.add('scrolled'); }
+    else{ header.classList.remove('scrolled'); }
+  }
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive:true });
+
+  // wordmark font-stretch animate-in
+  requestAnimationFrame(function(){
+    setTimeout(function(){
+      document.getElementById('wordmark').classList.add('loaded');
+    }, 80);
+  });
+
+  // reveal on scroll
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var items = document.querySelectorAll('.reveal');
+  if(reduced || !('IntersectionObserver' in window)){
+    items.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+    items.forEach(function(el){ io.observe(el); });
+  }
+
+  // install tabs
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var panels = { 'tab-shell':'panel-shell', 'tab-cargo':'panel-cargo', 'tab-js':'panel-js' };
+  function selectTab(tab){
+    tabs.forEach(function(t){
+      var selected = t === tab;
+      t.setAttribute('aria-selected', selected ? 'true' : 'false');
+      t.tabIndex = selected ? 0 : -1;
+      var panel = document.getElementById(panels[t.id]);
+      if(selected){ panel.hidden = false; panel.classList.add('active'); }
+      else { panel.hidden = true; panel.classList.remove('active'); }
+    });
+    tab.focus();
+  }
+  tabs.forEach(function(tab, idx){
+    tab.addEventListener('click', function(){ selectTab(tab); });
+    tab.addEventListener('keydown', function(e){
+      var next;
+      if(e.key === 'ArrowRight'){ next = tabs[(idx+1) % tabs.length]; }
+      else if(e.key === 'ArrowLeft'){ next = tabs[(idx-1+tabs.length) % tabs.length]; }
+      else if(e.key === 'Home'){ next = tabs[0]; }
+      else if(e.key === 'End'){ next = tabs[tabs.length-1]; }
+      if(next){ e.preventDefault(); selectTab(next); }
+    });
+  });
+
+  // copy buttons
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.getAttribute('data-copy');
+      function done(){
+        var original = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(function(){ btn.textContent = original; }, 1600);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try{ document.execCommand('copy'); } catch(e){}
+        document.body.removeChild(ta);
+        done();
+      }
+    });
+  });
+})();
+</script>
 </body>
 </html>
