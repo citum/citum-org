@@ -319,6 +319,10 @@ Identical input files. The data describes what's true about the source; the styl
 
 Nothing about this is calendar-specific. `note` is a general opaque sub-field on any date — regnal years are simply its first use, not a type of their own. If your field keeps some other wording alongside a date, the same field holds it, and Citum will be equally incurious about what it means.
 
+None of this rules out real calendar support later. Calendar-system identifiers, conversion, and era tables are out of scope *for now* — not out of scope in principle. Opaque text is the right boundary until there's concrete demand for more, and that's a deliberately low bar to clear: if scholars turn up with cases that genuinely need a calendar the engine understands, that's the signal to build it.
+
+The current design is meant to keep that door open rather than shut it. Because `note` is purely descriptive and `value` remains the only date the engine computes with, a structured calendar layer would be an *addition* — records written today would stay valid and keep sorting exactly as they do now. What would have foreclosed the option is the opposite move: guessing at a calendar model before anyone needed one, and having to live with it. So if you work with non-Gregorian sources and opaque text isn't enough, that's worth telling us — it's the kind of demand this is waiting for.
+
 Note also that this `note` is a sub-field of a *date*, and has nothing to do with CSL's top-level `note` variable on a reference. Spec: [`CALENDAR_DATE_ANNOTATIONS.md`](https://github.com/citum/citum-core/blob/main/docs/specs/CALENDAR_DATE_ANNOTATIONS.md).
 
 ## Also landed
