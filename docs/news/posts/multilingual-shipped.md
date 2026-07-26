@@ -1,7 +1,7 @@
 ---
 title: "Multilingual Citum: what you told us, and what shipped"
 date: 2026-07-26
-summary: Two months ago we asked multilingual scholars to find the gaps in Citum's design. They did. This post demos what came out of it — GB/T 7714—2025 support, a punctuation layer that resolves glyphs by script, per-item term languages, and opaque calendar annotations on dates.
+summary: Two months ago we asked multilingual scholars to find the gaps in Citum's design. They did. This post demos what came out of it — GB/T 7714—2025 support, a punctuation layer that resolves glyphs by script, per-item term languages, and dates that carry the source's own wording.
 ---
 
 In May I published [a post asking for help](multilingual-citum-is-the-design-sound-help-us-find-the-gaps.html). It was five open questions and an admission: I'm a monolingual English-language scholar, multilingual citation practice is my biggest blind spot, and I wanted to know whether Citum's design was right before the schema reached 1.0.
@@ -253,13 +253,13 @@ Rawls, John. 2001. _A Theory of Justice_. Edited by Erin Kelly. Harvard Universi
 
 Three languages, three role labels, one template — and the English entry is byte-identical to what it was before. Typography stays with the style: quote characters and collision policy don't follow the item, only the words do. Details in [`PER_ITEM_TERM_LOCALE.md`](https://github.com/citum/citum-core/blob/main/docs/specs/PER_ITEM_TERM_LOCALE.md).
 
-## Dates that remember what calendar they came from
+## Dates that carry the source's own wording
 
 GB/T 7714—2025 requires a Gregorian publication year to carry the source calendar's own year alongside it: `1705（康熙四十四年）` — the 44th year of the Kangxi reign — or `1947（民国三十六年）`, Minguo year 36.
 
 This is a genuinely awkward thing to model. The obvious approach is a calendar system field, era tables, and conversion — which is a large amount of machinery, all of it a liability the moment it's slightly wrong about someone's history.
 
-Citum does the small thing instead. Any date value can carry an opaque `note`:
+Citum does the small thing instead. Any date value can carry an opaque `note` — free text the engine stores and renders but never interprets:
 
 ```yaml
 issued:
@@ -317,7 +317,9 @@ references:
 
 Identical input files. The data describes what's true about the source; the style decides what to show. And the parentheses around the annotation are full-width because the item is Chinese — the punctuation layer from two sections up, doing its job without the style asking.
 
-Note that this `note` is a sub-field of a *date*, and has nothing to do with CSL's top-level `note` variable on a reference. Spec: [`CALENDAR_DATE_ANNOTATIONS.md`](https://github.com/citum/citum-core/blob/main/docs/specs/CALENDAR_DATE_ANNOTATIONS.md).
+Nothing about this is calendar-specific. `note` is a general opaque sub-field on any date — regnal years are simply its first use, not a type of their own. If your field keeps some other wording alongside a date, the same field holds it, and Citum will be equally incurious about what it means.
+
+Note also that this `note` is a sub-field of a *date*, and has nothing to do with CSL's top-level `note` variable on a reference. Spec: [`CALENDAR_DATE_ANNOTATIONS.md`](https://github.com/citum/citum-core/blob/main/docs/specs/CALENDAR_DATE_ANNOTATIONS.md).
 
 ## Also landed
 
