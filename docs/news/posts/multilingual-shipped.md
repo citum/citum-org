@@ -36,7 +36,9 @@ As of 2026-07-26, Citum reading Zotero's built-in CSL-JSON export matches 146 of
 
 The `nocase` difference YDX identified turned out to be a real Citum bug — CSL-JSON carries citeproc-js's `<span class="nocase">` convention on `container-title` as well as `title`, and Citum was only interpreting it on the latter, so it leaked into output verbatim. That's fixed on `main`, with [a regression test](https://github.com/citum/citum-core/blob/main/crates/citum-engine/tests/gb7714_bench_regression.rs) pinned to the exact benchmark entry that surfaced it.
 
-One row on that board is honestly bad: Citum reading **BibTeX** input scores 1 of 344, because `citum convert refs` was dropping author data on the way from `.bib` to Citum YAML. YDX found that too. It's fixed on `main` but not in 0.78.0 — until the next release, export CSL-JSON from Zotero directly rather than going through BibTeX.
+One row on that board is genuinely bad, and it's ours. For `.bib` sources the bench converts to Citum YAML with `citum convert refs` first, and that converter was dropping every contributor — so Citum scores 1 of 344 there, almost every entry losing its author before the renderer ever saw it. YDX found that one too.
+
+Worth being precise, since the row is easy to misread: Citum reads **BibLaTeX**, not BibTeX. That's deliberate — BibLaTeX has the better data model — and it's the only `.bib` flavour Citum targets, so this isn't thin BibTeX support showing through. It's a real bug in the BibLaTeX converter, on BibLaTeX input, and the cause had nothing to do with the format: the converter built records directly rather than through deserialization, so the contributor shorthands it filled were never folded into the field serialization actually writes. CSL-JSON and RIS take a different path, which is why those rows were unaffected. Fixed on `main`, though not in 0.78.0 — until the next release, export CSL-JSON from Zotero rather than going through `.bib`.
 
 ### Demo: three languages, one style
 
@@ -355,7 +357,7 @@ In the spirit of the first post, the things that aren't done:
 
 - **Compound citations that mix scripts** resolve their punctuation from the first item in the cluster, and apply it to the whole thing. If you cite a Chinese and an English source together in one bracket, one of them gets the wrong glyphs.
 - **Bidi is specified but not implemented**, as above.
-- **The BibTeX conversion path is fixed but unreleased.** Export CSL-JSON from Zotero until the next release.
+- **The BibLaTeX conversion path is fixed but unreleased.** Export CSL-JSON from Zotero until the next release.
 - **I have not yet fixed the examples YDX corrected.** The multilingual example file in citum-core still splits 孔子 into family and given parts and still carries the wrong pinyin tone, and the partitioning example still puts Chinese and Japanese in one section. The engine can now tell those apart; the example files haven't caught up. That's on me.
 
 ## How to give feedback
