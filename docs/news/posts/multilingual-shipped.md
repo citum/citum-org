@@ -8,7 +8,7 @@ In May I published [a post asking for help](multilingual-citum-is-the-design-sou
 
 That worked better than I expected. This post is the follow-up. Same structure — but instead of asking questions, it demos what shipped.
 
-The chain went: feedback on the design-review post → [a whole-system multilingual architecture audit](https://github.com/citum/citum-core/blob/main/docs/architecture/audits/2026-07-18_MULTILINGUAL_ARCHITECTURE_AUDIT.md) → an epic of follow-up work → **`citum` v0.78.0**. Everything demonstrated below runs on that release. You can install it with:
+The chain went: feedback on the design-review post → [a whole-system multilingual architecture audit](https://github.com/citum/citum-core/blob/main/docs/architecture/audits/2026-07-18_MULTILINGUAL_ARCHITECTURE_AUDIT.md) → a list of issues for follow-up work → **`citum` v0.78.0**. Everything demonstrated below runs on that release. You can install it with:
 
 ```bash
 curl -fsSL https://github.com/citum/citum-core/releases/latest/download/install.sh | sh
@@ -99,15 +99,15 @@ citum render refs -b gbt-demo.yaml -s gb-t-7714-2025-numeric
 <div class="ba">
 <div class="ba-row">
 <p class="ba-label">gb-t-7714-2025-numeric</p>
-<pre class="ba-out">[1]博伯尔. 银行业的未来与人工智能[M]. 徐超，译. 北京：清华大学出版社，2023：35.
-[2]図書館用語辞典編集委員会. 最新図書館用語大辭典[M]. 東京：柏書房株式會社，2004：154.
-[3]Boobier T. AI and the future of banking[M]. Chichester：John Wiley &amp; Sons，2020：35.</pre>
+<pre class="ba-out"><span class="d">[1]</span>博伯尔. 银行业的未来与人工智能[M]. 徐超，译. 北京：清华大学出版社，2023：35.
+<span class="d">[2]</span>図書館用語辞典編集委員会. 最新図書館用語大辭典[M]. 東京：柏書房株式會社，2004：154.
+<span class="d">[3]</span>Boobier T. AI and the future of banking[M]. Chichester：John Wiley &amp; Sons，2020：35.</pre>
 </div>
 <div class="ba-row">
 <p class="ba-label">gb-t-7714-2025-author-date <span class="ba-note">— same data, <code>-s gb-t-7714-2025-author-date</code></span></p>
-<pre class="ba-out">博伯尔，2023. 银行业的未来与人工智能[M]. 徐超，译. 北京：清华大学出版社：35.
-図書館用語辞典編集委員会，2004. 最新図書館用語大辭典[M]. 東京：柏書房株式會社：154.
-Boobier T，2020. AI and the future of banking[M]. Chichester：John Wiley &amp; Sons：35.</pre>
+<pre class="ba-out"><span class="d">博伯尔，2023</span>. 银行业的未来与人工智能[M]. 徐超，译. 北京：清华大学出版社：35.
+<span class="d">図書館用語辞典編集委員会，2004</span>. 最新図書館用語大辭典[M]. 東京：柏書房株式會社：154.
+<span class="d">Boobier T，2020</span>. AI and the future of banking[M]. Chichester：John Wiley &amp; Sons：35.</pre>
 </div>
 </div>
 
@@ -142,15 +142,15 @@ citum render refs -b gbt-demo.yaml -s gbt-bylan.yaml
 <div class="ba">
 <div class="ba-row">
 <p class="ba-label">As shipped <span class="ba-note">— <code>punctuation-width: mixed</code></span></p>
-<pre class="ba-out">[1]博伯尔. 银行业的未来与人工智能[M]. 徐超，译. 北京：清华大学出版社，2023：35.
-[2]図書館用語辞典編集委員会. 最新図書館用語大辭典[M]. 東京：柏書房株式會社，2004：154.
-[3]Boobier T. AI and the future of banking[M]. Chichester：John Wiley &amp; Sons，2020：35.</pre>
+<pre class="ba-out"><span class="d">[1]</span>博伯尔. 银行业的未来与人工智能<span class="d">[M]</span>. 徐超，译. 北京：清华大学出版社，2023：35.
+<span class="d">[2]</span>図書館用語辞典編集委員会. 最新図書館用語大辭典<span class="d">[M]</span>. 東京：柏書房株式會社，2004：154.
+[3]Boobier T. AI and the future of banking[M]. Chichester<span class="d">：</span>John Wiley &amp; Sons<span class="d">，</span>2020<span class="d">：</span>35.</pre>
 </div>
 <div class="ba-row">
 <p class="ba-label">One line changed <span class="ba-note">— <code>punctuation-width: bylan</code></span></p>
-<pre class="ba-out">【1】博伯尔. 银行业的未来与人工智能【M】. 徐超，译. 北京：清华大学出版社，2023：35.
-【2】図書館用語辞典編集委員会. 最新図書館用語大辭典【M】. 東京：柏書房株式會社，2004：154.
-[3]Boobier T. AI and the future of banking[M]. Chichester: John Wiley &amp; Sons, 2020: 35.</pre>
+<pre class="ba-out"><span class="d">【1】</span>博伯尔. 银行业的未来与人工智能<span class="d">【M】</span>. 徐超，译. 北京：清华大学出版社，2023：35.
+<span class="d">【2】</span>図書館用語辞典編集委員会. 最新図書館用語大辭典<span class="d">【M】</span>. 東京：柏書房株式會社，2004：154.
+[3]Boobier T. AI and the future of banking[M]. Chichester<span class="d">: </span>John Wiley &amp; Sons<span class="d">, </span>2020<span class="d">: </span>35.</pre>
 </div>
 </div>
 
@@ -158,7 +158,7 @@ Under `bylan`, the Chinese and Japanese entries keep full-width punctuation and 
 
 `mixed` is what ships, and it's worth saying why: GB/T 7714 shows the period and the square brackets as ASCII in every example it gives, for Chinese and Western references alike, even where it uses full-width commas and colons. `bylan` is the more mechanically consistent rule; `mixed` is the one the standard actually specifies. The reasoning, and the places where citeproc-js and the published standard disagree, are recorded in Citum's [divergence register](https://github.com/citum/citum-core/blob/main/docs/adjudication/DIVERGENCE_REGISTER.md).
 
-The design is written up in [`PUNCTUATION_REALIZATION.md`](https://github.com/citum/citum-core/blob/main/docs/specs/PUNCTUATION_REALIZATION.md). The old rewrite pass still exists, but it's frozen — kept working for externally authored styles that used literal glyphs, and never extended again.
+The design is written up in [`PUNCTUATION_REALIZATION.md`](https://github.com/citum/citum-core/blob/main/docs/specs/PUNCTUATION_REALIZATION.md). The old rewrite pass is still there for now, keeping externally authored styles that used literal glyphs working, but it isn't being extended.
 
 ## Terms in the language of the source
 
@@ -239,14 +239,14 @@ citum render refs -b autolang-refs.yaml -s autolang-style.yaml
 <div class="ba">
 <div class="ba-row">
 <p class="ba-label">Default <span class="ba-note">— <code>term-locale: style</code>, i.e. <code>-s chicago-author-date-18th</code></span></p>
-<pre class="ba-out">Bourdieu, Pierre. 1979. _La distinction_. Edited by Anne Lefebvre. Les Éditions de Minuit.
-Kant, Immanuel. 1998. _Kritik der reinen Vernunft_. Edited by Jens Timmermann. Felix Meiner Verlag.
+<pre class="ba-out">Bourdieu, Pierre. 1979. _La distinction_. <span class="d">Edited by Anne Lefebvre</span>. Les Éditions de Minuit.
+Kant, Immanuel. 1998. _Kritik der reinen Vernunft_. <span class="d">Edited by Jens Timmermann</span>. Felix Meiner Verlag.
 Rawls, John. 2001. _A Theory of Justice_. Edited by Erin Kelly. Harvard University Press.</pre>
 </div>
 <div class="ba-row">
 <p class="ba-label">Opted in <span class="ba-note">— <code>term-locale: item</code></span></p>
-<pre class="ba-out">Bourdieu, Pierre. 1979. _La distinction_. Édité par Anne Lefebvre. Les Éditions de Minuit.
-Kant, Immanuel. 1998. _Kritik der reinen Vernunft_. Herausgegeben von Jens Timmermann. Felix Meiner Verlag.
+<pre class="ba-out">Bourdieu, Pierre. 1979. _La distinction_. <span class="d">Édité par Anne Lefebvre</span>. Les Éditions de Minuit.
+Kant, Immanuel. 1998. _Kritik der reinen Vernunft_. <span class="d">Herausgegeben von Jens Timmermann</span>. Felix Meiner Verlag.
 Rawls, John. 2001. _A Theory of Justice_. Edited by Erin Kelly. Harvard University Press.</pre>
 </div>
 </div>
@@ -305,13 +305,13 @@ references:
 <div class="ba">
 <div class="ba-row">
 <p class="ba-label">A style with no opt-in <span class="ba-note">— <code>-s apa-7th</code>; the annotation is simply not rendered</span></p>
-<pre class="ba-out">中国第一历史档案馆. (1705). _康熙起居注_. 中华书局.
-李鸿章. (1947). _上海道库洋务外销要款_. 中国第一历史档案馆.</pre>
+<pre class="ba-out">中国第一历史档案馆. <span class="d">(1705)</span>. _康熙起居注_. 中华书局.
+李鸿章. <span class="d">(1947)</span>. _上海道库洋务外销要款_. 中国第一历史档案馆.</pre>
 </div>
 <div class="ba-row">
 <p class="ba-label">A style that opts in <span class="ba-note">— <code>-s gb-t-7714-2025-numeric</code>, which sets <code>note-wrap: parentheses</code></span></p>
-<pre class="ba-out">[1]中国第一历史档案馆. 康熙起居注[M]. 北京：中华书局，1705（康熙四十四年）.
-[2]李鸿章. 上海道库洋务外销要款[M]. 北京：中国第一历史档案馆，1947（民国三十六年）.</pre>
+<pre class="ba-out">[1]中国第一历史档案馆. 康熙起居注[M]. 北京：中华书局，<span class="d">1705（康熙四十四年）</span>.
+[2]李鸿章. 上海道库洋务外销要款[M]. 北京：中国第一历史档案馆，<span class="d">1947（民国三十六年）</span>.</pre>
 </div>
 </div>
 
@@ -375,4 +375,11 @@ That last part matters more than it sounds. The reason GB/T support exists at al
   .ba-out{ font-family:var(--mono); font-size:.84rem; line-height:1.75;
            white-space:pre; overflow-x:auto; margin:0;
            background:none; border:0; padding:0; }
+  /* The changed run itself. Weight + underline carry the signal too, so the
+     diff is not conveyed by colour alone. */
+  .ba-out .d{ font-weight:700; border-radius:2px; padding:.05em .15em;
+              color:var(--oxide); background:rgba(122,43,38,.12);
+              text-decoration:underline; text-decoration-thickness:.09em;
+              text-underline-offset:.18em; }
+  .ba-row + .ba-row .ba-out .d{ color:var(--moss); background:rgba(46,107,79,.14); }
 </style>
