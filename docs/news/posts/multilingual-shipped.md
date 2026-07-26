@@ -1,5 +1,5 @@
 ---
-title: "Multilingual Citum: what you told us, and what shipped"
+title: "Multilingual Citum updates"
 date: 2026-07-26
 summary: Two months ago we asked multilingual scholars to find the gaps in Citum's design. They did. This post demos what came out of it — GB/T 7714—2025 support, a punctuation layer that resolves glyphs by script, per-item term languages, and dates that carry the source's own wording.
 ---
